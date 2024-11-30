@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
-    'employee',
+    'core.apps.CoreConfig',
+    'employee.apps.EmployeeConfig',
     'celery',
 ]
 
