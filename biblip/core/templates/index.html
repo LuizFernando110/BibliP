@@ -1,0 +1,16 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block 'main' %}
+
+<main>
+  <a href="{%url 'search' 'cupcake'%}">cupcake</a>
+  <br />
+  <a href="{%url 'borrow_management'%}">gerenciamento</a>
+  <br />
+  <a href="{%url 'create_book'%}">criar livro</a>
+  <br />
+  <a href="{%url 'update_book'%}">editar livro</a>
+  <br />
+  <a href="{%url 'delete_book'%}">deletar livro</a>
+</main>
+{% endblock %}
