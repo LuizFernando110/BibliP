@@ -10,7 +10,7 @@
 <body>
   <header>
     <div class="ifrn-logo">
-      <img src="assets/logo-if.png" alt="" />
+      <img src="{% static 'assets/logo-if.png' %}" alt="" />
     </div>
 
     <div class="pnld-text">
@@ -23,15 +23,15 @@
         placeholder="Pesquisar por nome, código, autor ... "
       />
       <button class="search-button">
-        <img src="assets/icons/search.svg" alt="" />
+        <img src="{% static 'assets/icons/search.svg' %}" alt="" />
       </button>
     </div>
 
     <button class="header-btn">
-      <img src="/assets/icons/bell.svg" alt="" />
+      <img src="{% static '/assets/icons/bell.svg' %}" alt="" />
     </button>
     <button class="header-btn">
-      <img src="/assets/icons/book.svg" alt="" />
+      <img src="{% static '/assets/icons/book.svg' %}" alt="" />
     </button>
     <button class="sign-in-button">Entrar</button>
   </header>
