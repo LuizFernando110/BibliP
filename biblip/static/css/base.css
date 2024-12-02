@@ -37,9 +37,10 @@ header{
   padding: 3.4rem 4.2rem;
   z-index: 10;
   background-color: white;
+  user-select: none;
 }
 header .ifrn-logo{
-  width: 6rem;
+  width: 6rem; 
 }
 header .ifrn-logo img{
   width: 100%;
@@ -55,6 +56,7 @@ header .pnld-text span{
   font-size: 1.6rem;
   font-weight: 600;
   border-bottom: 1px solid var(--cinza-palido);
+  user-select: none;
 }
 header .search-input-container{
   position: relative;
