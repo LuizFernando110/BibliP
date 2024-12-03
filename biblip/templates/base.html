@@ -4,8 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BibliP</title>
+  <title>BibliP{%if titulo%}: {{titulo}}{%endif%}</title>
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  {%block 'head'%}{%endblock%}
 </head>
 <body>
   <header>
@@ -35,6 +36,7 @@
     </button>
     <button class="sign-in-button">Entrar</button>
   </header>
-    {% block 'main' %} {% endblock %}
+    {% block 'main' %}{% endblock %}
+    {% block 'scripts' %}{% endblock %}
 </body>
 </html>
