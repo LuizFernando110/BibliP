@@ -95,6 +95,47 @@ header .sign-in-button{
   background-color: var(--main-color);
 }
 
+footer{
+  margin-top: auto;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3.6rem;
+  padding: 2.8rem 8.2rem;
+  font-size: 1.6rem;
+  color: white;
+  background-color: var(--main-color);
+}
+.footer-logo{
+  width: 5.7rem;
+}
+.footer-logo img{
+  width: 100%;
+}
+.footer-sections{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+footer a {
+  color: white;
+}
+footer .footer-about-section{
+  width: 45%;
+}
+footer .footer-about-section ul li a{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.footer-faq-section, .footer-contacts-section{
+  width: 20%;
+}
+footer h3{
+  font-size: 2.4rem;
+}
+
+
 main{
   flex: 1;
   padding: 16rem 8.5rem ;
