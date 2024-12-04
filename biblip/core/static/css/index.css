@@ -29,3 +29,9 @@
   border: 1px solid var(--cinza-palido);
   cursor: pointer;
 }
+
+.catalog .books-container {
+  width: 100%;
+  padding: 5%;
+  margin: auto;
+}
