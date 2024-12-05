@@ -12,108 +12,20 @@
     </div>
   </div>
   <div class="books-container">
+    {% for book in books %}
     <div class="book">
       <div class="book-img-container">
-        <img
-          src="{% static 'assets/image-book-test.png' %}"
-          alt="capa do livro"
-        />
-        <div class="book-status">Livre</div>
-        <div class="book-quantity">25 unidades</div>
+        <img src="{% static book.image %}" alt="capa do livro" />
+        <div
+          class="book-status {% if book.status == 'Reservado' %}book-reserved{% endif %}"
+        >
+          {{ book.status }}
+        </div>
+        <div class="book-quantity">{{ book.quantity }} unidades</div>
       </div>
-      <span class="clamp-2">Os Sertões</span>
+      <span class="clamp-2">{{ book.title }}</span>
     </div>
-    <div class="book">
-      <div class="book-img-container">
-        <img
-          src="{% static 'assets/image-book-test.png' %}"
-          alt="capa do livro"
-        />
-        <div class="book-status book-reserved">Reservado</div>
-        <div class="book-quantity">25 unidades</div>
-      </div>
-      <span class="clamp-2"
-        >Os Sertões, titulo grande para testar a limitação de linhas exibidas no
-        componente</span
-      >
-    </div>
-    <div class="book">
-      <div class="book-img-container">
-        <img
-          src="{% static 'assets/image-book-test.png' %}"
-          alt="capa do livro"
-        />
-        <div class="book-status">Livre</div>
-        <div class="book-quantity">25 unidades</div>
-      </div>
-      <span class="clamp-2">Os Sertões</span>
-    </div>
-    <div class="book">
-      <div class="book-img-container">
-        <img
-          src="{% static 'assets/image-book-test.png' %}"
-          alt="capa do livro"
-        />
-        <div class="book-status">Livre</div>
-        <div class="book-quantity">25 unidades</div>
-      </div>
-      <span class="clamp-2">Os Sertões</span>
-    </div>
-    <div class="book">
-      <div class="book-img-container">
-        <img
-          src="{% static 'assets/image-book-test.png' %}"
-          alt="capa do livro"
-        />
-        <div class="book-status book-reserved">Reservado</div>
-        <div class="book-quantity">25 unidades</div>
-      </div>
-      <span class="clamp-2">Os Sertões</span>
-    </div>
-    <div class="book">
-      <div class="book-img-container">
-        <img
-          src="{% static 'assets/image-book-test.png' %}"
-          alt="capa do livro"
-        />
-        <div class="book-status">Livre</div>
-        <div class="book-quantity">25 unidades</div>
-      </div>
-      <span class="clamp-2">Os Sertões</span>
-    </div>
-    <div class="book">
-      <div class="book-img-container">
-        <img
-          src="{% static 'assets/image-book-test.png' %}"
-          alt="capa do livro"
-        />
-        <div class="book-status">Livre</div>
-        <div class="book-quantity">25 unidades</div>
-      </div>
-      <span class="clamp-2">Os Sertões</span>
-    </div>
-    <div class="book">
-      <div class="book-img-container">
-        <img
-          src="{% static 'assets/image-book-test.png' %}"
-          alt="capa do livro"
-        />
-        <div class="book-status">Livre</div>
-        <div class="book-quantity">25 unidades</div>
-      </div>
-      <span class="clamp-2">Os Sertões</span>
-    </div>
-    <div class="book">
-      <div class="book-img-container">
-        <img
-          src="{% static 'assets/image-book-test.png' %}"
-          alt="capa do livro"
-        />
-        <div class="book-status">Livre</div>
-        <div class="book-quantity">25 unidades</div>
-      </div>
-      <span class="clamp-2">Os Sertões</span>
-    </div>
+    {% endfor %}
   </div>
 </main>
 {% endblock %}
