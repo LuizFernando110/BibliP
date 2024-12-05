@@ -1,12 +1,7 @@
-{% extends "base.html" %}
-{% load static %} 
+{% extends "base.html" %} {% load static %} {%block 'head'%}
 
-{%block 'head'%}
-
-<link rel="stylesheet" href="{%static 'css/index.css'%}">
-{%endblock%}
-
-{% block 'main' %}
+<link rel="stylesheet" href="{%static 'css/index.css'%}" />
+{%endblock%} {% block 'main' %}
 
 <main class="catalog">
   <div class="catalog-header">
@@ -16,7 +11,88 @@
       <div>categorias...</div>
     </div>
   </div>
-
-  <div class="books-container"></div>
+  <div class="books-container">
+    <div class="book">
+      <div class="book-img-container">
+        <img
+          src="{% static 'assets/image-book-test.png' %}"
+          alt="capa do livro"
+        />
+      </div>
+      <span>Os Sertões</span>
+    </div>
+    <div class="book">
+      <div class="book-img-container">
+        <img
+          src="{% static 'assets/image-book-test.png' %}"
+          alt="capa do livro"
+        />
+      </div>
+      <span>Os Sertões</span>
+    </div>
+    <div class="book">
+      <div class="book-img-container">
+        <img
+          src="{% static 'assets/image-book-test.png' %}"
+          alt="capa do livro"
+        />
+      </div>
+      <span>Os Sertões</span>
+    </div>
+    <div class="book">
+      <div class="book-img-container">
+        <img
+          src="{% static 'assets/image-book-test.png' %}"
+          alt="capa do livro"
+        />
+      </div>
+      <span>Os Sertões</span>
+    </div>
+    <div class="book">
+      <div class="book-img-container">
+        <img
+          src="{% static 'assets/image-book-test.png' %}"
+          alt="capa do livro"
+        />
+      </div>
+      <span>Os Sertões</span>
+    </div>
+    <div class="book">
+      <div class="book-img-container">
+        <img
+          src="{% static 'assets/image-book-test.png' %}"
+          alt="capa do livro"
+        />
+      </div>
+      <span>Os Sertões</span>
+    </div>
+    <div class="book">
+      <div class="book-img-container">
+        <img
+          src="{% static 'assets/image-book-test.png' %}"
+          alt="capa do livro"
+        />
+      </div>
+      <span>Os Sertões</span>
+    </div>
+    <div class="book">
+      <div class="book-img-container">
+        <img
+          src="{% static 'assets/image-book-test.png' %}"
+          alt="capa do livro"
+        />
+      </div>
+      <span>Os Sertões</span>
+    </div>
+    <div class="book">
+      <div class="book-img-container">
+        <img
+          src="{% static 'assets/image-book-test.png' %}"
+          alt="capa do livro"
+        />
+      </div>
+      <span>Os Sertões</span>
+    </div>
+  </div>
 </main>
 {% endblock %}
