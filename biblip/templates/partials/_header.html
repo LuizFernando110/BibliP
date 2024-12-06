@@ -1,0 +1,28 @@
+{%load static%}
+<header>
+    <div class="ifrn-logo">
+      <img src="{% static 'assets/logo-if.png' %}" alt="" />
+    </div>
+
+    <div class="pnld-text">
+      <p><span>PNLD</span> Programa Nacional do Livro Didático</p>
+    </div>
+
+    <div class="search-input-container">
+      <input
+        type="text"
+        placeholder="Pesquisar por nome, código, autor ... "
+      />
+      <button class="search-button">
+        <img src="{% static 'assets/icons/search.svg' %}" alt="" />
+      </button>
+    </div>
+
+    <button class="header-btn">
+      <img src="{% static '/assets/icons/bell.svg' %}" alt="" />
+    </button>
+    <button class="header-btn">
+      <img src="{% static '/assets/icons/book.svg' %}" alt="" />
+    </button>
+    <button class="sign-in-button">Entrar</button>
+  </header>

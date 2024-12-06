@@ -9,66 +9,10 @@
     {%block 'head'%}{%endblock%}
   </head>
   <body>
-    <header>
-      <div class="ifrn-logo">
-        <img src="{% static 'assets/logo-if.png' %}" alt="" />
-      </div>
-
-      <div class="pnld-text">
-        <p><span>PNLD</span> Programa Nacional do Livro Didático</p>
-      </div>
-
-      <div class="search-input-container">
-        <input
-          type="text"
-          placeholder="Pesquisar por nome, código, autor ... "
-        />
-        <button class="search-button">
-          <img src="{% static 'assets/icons/search.svg' %}" alt="" />
-        </button>
-      </div>
-
-      <button class="header-btn">
-        <img src="{% static '/assets/icons/bell.svg' %}" alt="" />
-      </button>
-      <button class="header-btn">
-        <img src="{% static '/assets/icons/book.svg' %}" alt="" />
-      </button>
-      <button class="sign-in-button">Entrar</button>
-    </header>
+    {%include 'partials/_header.html'%}
 
     {% block 'main' %}{% endblock %} {% block 'scripts' %}{% endblock %}
 
-    <footer>
-      <div class="footer-logo">
-        <img src="{% static 'assets/logo-if-white.png' %}" alt="" />
-      </div>
-      <div class="footer-sections">
-        <section class="footer-about-section">
-          <h3>Sobre a biblioteca PNLD</h3>
-          <p>
-            O acervo de livros PNLD (Programa nacional do livro didático) .
-            Oferece uma variadade de obras indícadas para uso do professores em
-            sala de aula, com livros de diversos assuntos.(e)
-          </p>
-        </section>
-        <section class="footer-faq-section">
-          <h3>Faq</h3>
-          <ul>
-            <li><a href="#">Como alugar um livro?</a></li>
-            <li><a href="#">Oque é PNLD</a></li>
-            <li><a href="#">Como funcionam os alugueis</a></li>
-            <li><a href="#">Onde é o recebimento dos livros?</a></li>
-          </ul>
-        </section>
-        <section class="footer-contacts-section">
-          <h3>Contatos</h3>
-          <ul>
-            <li>funcionario@escolar.ifrn.edu.br</li>
-            <li>(84) 55555-5555</li>
-          </ul>
-        </section>
-      </div>
-    </footer>
+    {%include 'partials/_footer.html'%}
   </body>
 </html>
