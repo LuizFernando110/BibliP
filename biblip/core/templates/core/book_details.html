@@ -1,2 +1,48 @@
-{% extends "base.html" %}
-{% load static %} 
+{% extends "base.html" %} {% load static %} {%block 'head'%}
+
+<link rel="stylesheet" href="{%static 'css/book-details.css'%}" />
+{%endblock%} {% block 'main' %}
+    <main>
+        <div class="book-info">
+            <!--<img src="" alt="Voltar">-->
+            <img id="book-cover" src="{%static "assets/image-book-test.png"%}" alt="Foto do livro">
+            <div class = "book-content">
+                <div class="main-book-info">
+                    <h1 id="book-title">Os sertões</h1>
+                    <p id="book-writer">da Cunha, Euclides</p>
+                </div>
+    
+                <div class="book-details">
+                    <p>Páginas: 152</p>
+                    <p>Editora: Ática</p>
+                    <p>Edição: 1º</p>
+                </div>
+    
+                <div class="pnld-details">
+                    <p>Código PNLD: <b>5B55R5A</b></p>
+                    <p>Q. Estoque: 25 uni.</p>
+                </div>
+    
+                <div id="book-tags">
+                    <span>Tags: #ossertoes #cultura #brasileiro #brasileira #euclides #cunha</span>
+                </div>
+
+            </div>
+
+            <div id="storage-status">
+                <p>Livre</p>
+            </div>
+
+        </div>
+
+
+
+        <div id="book-description">
+            <h2>Descrição</h2>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi, illo! Aliquid aut molestias odio nulla earum asperiores quia necessitatibus ipsum ipsam beatae ad inventore aspernatur, quaerat nam aperiam rerum quas.</p>
+        </div>
+        <div id="borrow-button">
+            <p>Alugar</p>
+        </div>
+    </main>
+{% endblock%}
