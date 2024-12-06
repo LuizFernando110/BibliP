@@ -28,4 +28,4 @@ def borrow(request,book_pk):
     return render(request,'core/book_borrow.html',context)
 
 def borrow_history(request):
-    return HttpResponse('<h1> historico de alugueis</h1>')
+    return render(request,'core/index.html',{'filter_tittle':'Histórico de alugueis'})
