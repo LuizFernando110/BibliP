@@ -1,9 +1,16 @@
 from django.shortcuts import render,HttpResponse
-
+#importançoes temporararias para o json:
+import json
+from django.conf import settings
+import os
 
 #arquivos com _temp no final são temporários
+#leituras de jsons por agora são temporarias
 def index(request):
-    return render(request,'core/index.html')
+    json_path_temp = os.path.join(settings.BASE_DIR, 'core', 'books.json') 
+    with open (json_path_temp, 'r') as file:
+        books = json.load(file)
+    return render(request,'core/index.html', {'books': books})
 
 def search(request,search):
     context={'search':search}

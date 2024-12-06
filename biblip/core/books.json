@@ -1,0 +1,50 @@
+[
+  {
+      "title": "Os Sertões",
+      "status": "Livre",
+      "quantity": 25,
+      "image": "assets/image-book-test.png"
+  },
+  {
+      "title": "Livro 2",
+      "status": "Reservado",
+      "quantity": 15,
+      "image": "assets/image-book-test.png"
+  },
+  {
+      "title": "Livro 3, titulo grande para testar a limitação de linhas exibidas no componente",
+      "status": "Livre",
+      "quantity": 10,
+      "image": "assets/image-book-test.png"
+  },
+  {
+      "title": "Livro 4",
+      "status": "Reservado",
+      "quantity": 5,
+      "image": "assets/image-book-test.png"
+  },
+  {
+      "title": "Livro 5",
+      "status": "Livre",
+      "quantity": 8,
+      "image": "assets/image-book-test.png"
+  },
+  {
+      "title": "Livro 6",
+      "status": "Reservado",
+      "quantity": 3,
+      "image": "assets/image-book-test.png"
+  },
+  {
+    "title": "Livro 7",
+    "status": "Reservado",
+    "quantity": 40,
+    "image": "assets/image-book-test.png"
+  },
+  {
+    "title": "Livro 8",
+    "status": "Livre",
+    "quantity": 34,
+    "image": "assets/image-book-test.png"
+  }
+]
