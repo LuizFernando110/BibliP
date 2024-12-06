@@ -3,8 +3,8 @@
 <link rel="stylesheet" href="{%static 'css/book-details.css'%}" />
 {%endblock%} {% block 'main' %}
     <main>
+        <a href="#"><img id="back-arrow" src="{%static "assets/arrow.svg"%}" alt="Voltar"></a>
         <div class="book-info">
-            <!--<img src="" alt="Voltar">-->
             <img id="book-cover" src="{%static "assets/image-book-test.png"%}" alt="Foto do livro">
             <div class = "book-content">
                 <div class="main-book-info">
@@ -41,8 +41,11 @@
             <h2>Descrição</h2>
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi, illo! Aliquid aut molestias odio nulla earum asperiores quia necessitatibus ipsum ipsam beatae ad inventore aspernatur, quaerat nam aperiam rerum quas.</p>
         </div>
-        <div id="borrow-button">
-            <p>Alugar</p>
-        </div>
+        <a href="#">
+            <div id="borrow-button">
+                <p>Alugar</p>
+            </div>
+        </a>
+        
     </main>
 {% endblock%}
