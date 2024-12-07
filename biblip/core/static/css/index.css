@@ -1,34 +1,4 @@
-.catalog{
-  flex: 1;
-  padding: 16rem 8.5rem ;
-}
-.catalog-header{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 3.8rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--cinza-palido);
-}
 
-.catalog-header h2{
-  font-size: 2.4rem;
-  font-weight: 400;
-}
-.catalog-header .filter-container{
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  font-size: 2rem;
-}
-.catalog-header .filter-container div{
-  font-size: 1.6rem;
-  padding: .2rem .9rem;
-  border-radius: 5rem;
-  color: var(--cinza-palido);
-  border: 1px solid var(--cinza-palido);
-  cursor: pointer;
-}
 
 .catalog .books-container {
   display: grid;
