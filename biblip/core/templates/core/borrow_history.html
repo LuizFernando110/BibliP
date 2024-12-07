@@ -16,54 +16,34 @@
           <th id="delivery-date">Data de entrega</th>
           <th id="actions">Ações</th>
         </tr>
+        {% for borrow in borrow_history %}
         <tr>
-          <td>O Auto</td>
-          <td>4 INFO</td>
-          <td>20/12/2024</td>
-          <td>05/01/2025</td>
+          <td>{{ borrow.book_name }}</td>
+          <td>{{ borrow.school_class }}</td>
+          <td>{{ borrow.receipt_date }}</td>
+          <td>{{ borrow.delivery_date }}</td>
           <td class="actions-td">
-            <button>
+            <a href="">
               <img
                 src="{% static 'assets/icons/eye.svg' %}"
                 alt="botão ver empréstimo"
-              /></button
-            ><button>
+              />
+            </a>
+            <a href="">
               <img
                 src="{% static 'assets/icons/edit_fill.svg' %}"
                 alt="botão editar empréstimo"
-              /></button
-            ><button>
+              />
+            </a>
+            <a href="">
               <img
                 src="{% static 'assets/icons/cancel.svg' %}"
                 alt="botão cancelar empréstimo"
               />
-            </button>
+            </a>
           </td>
         </tr>
-        <tr>
-          <td>Nome do livro</td>
-          <td>Sala</td>
-          <td>20/12/2024</td>
-          <td>05/01/2025</td>
-          <td class="actions-td">
-            <button>
-              <img
-                src="{% static 'assets/icons/eye.svg' %}"
-                alt="botão ver empréstimo"
-              /></button
-            ><button>
-              <img
-                src="{% static 'assets/icons/edit_fill.svg' %}"
-                alt="botão editar empréstimo"
-              /></button
-            ><button>
-              <img
-                src="{% static 'assets/icons/cancel.svg' %}"
-                alt="botão cancelar empréstimo"
-              />
-            </button>
-          </td>
-        </tr>
+        {% endfor %}
       </table>
     </div>
   </div>

@@ -52,16 +52,13 @@
   width: 23%;
 }
 .history-table #actions{
-  width: 8.8%;
+  width: 8%;
 }
 .history-table .actions-td{
   display: flex;
   justify-content: space-between;
 }
-.history-table .actions-td button{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.history-table .actions-td a {
   width: 24px;
   background-color: transparent;
   border: none;
