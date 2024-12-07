@@ -12,8 +12,10 @@
 
 .form-container .form-content{
     border-left: solid var(--cinza-palido) 1px;
-    flex:2;
     padding:8rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .form-container .img-form{
@@ -35,9 +37,12 @@
     font-size: bold;
     display: flex;
     flex-direction: column;
-    position: relative;
 }
 
+
+.input-relative{
+    position: relative;
+}
 
 .form-widget input{
     width: 100%;
@@ -90,7 +95,7 @@
 }
 .form-widget .form-widget-icon{
     position: absolute;
-    top:4rem;
+    top:1rem;
     left: 1rem;
     width: 24px;
 }

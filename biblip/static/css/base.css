@@ -95,6 +95,7 @@ header .header-btn{
   color: white;
   cursor: pointer;
   background-color: var(--main-color);
+  justify-content: center;
 }
 
 footer{

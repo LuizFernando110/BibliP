@@ -7,20 +7,22 @@
 {%block 'main'%}
 <main class="catalog">
     <div class="form-container">
-        <form action="">
+        <form action="" method="post">
             {%csrf_token%}
             <div class="img-form"><img src="{%static 'assets/torto_arado.jpg'%}" alt=""></div>
             <div class="form-content">
                 <h2>Torto Arado</h2>
                 <div class="form-widget">
                     <label for="Sala">Sala</label> <br>
-                    <select name="sala" id="sala">
-                        
-                        <option value="1">sala 1</option>
-                        <option value="2">sala 2</option>
-                        <option value="2">sala 3</option>
-                    </select>
-                    <img src="{% static 'assets/icons/calendar.svg' %}" class="form-widget-icon" alt="">
+                    <div class="input-relative">
+                        <select name="sala" id="sala">
+                            <option value="1">sala 1</option>
+                            <option value="2">sala 2</option>
+                            <option value="2">sala 3</option>
+                        </select>
+                        <img src="{% static 'assets/icons/calendar.svg' %}" class="form-widget-icon" alt="">
+                    </div>
+                    
                 </div>
 
 
@@ -40,8 +42,10 @@
                 <div class="inline-widget">
                     <div class="form-widget fx-50">
                         <label for="quantidade de livros">Quantidade de Livros</label>
-                        <input type="text" name="quantidade" placeholder="quantidade" id="quantidade">
-                        <img src="{% static 'assets/icons/calendar.svg' %}" class="form-widget-icon" alt="">
+                        <div class="input-relative">
+                            <input type="text" name="quantidade" placeholder="quantidade" id="quantidade">
+                            <img src="{% static 'assets/icons/calendar.svg' %}" class="form-widget-icon" alt="">
+                        </div>  
                     </div>
 
                     <div class="form-widget fx-50">
