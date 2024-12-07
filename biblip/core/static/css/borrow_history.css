@@ -1,3 +1,36 @@
-h1{
-  color: blue;
+.borrow-history{
+  padding-left: 8.4rem;
+  padding-right: 8.4rem;
+}
+.borrow-history-container{
+  margin: 0 8.3rem;
+}
+.borrow-history-container .table-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4.6rem 0;
+}
+
+.history-table{
+  width: 100%;
+  border: 1px solid var(--cinza-palido);
+  border-collapse: collapse;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--cinza-palido);
+  border-radius: .8rem .8rem 0 0;
+  overflow: hidden;
+}
+.history-table .history-table-header{
+  color: white;
+  background-color: var(--main-color);
+}
+.history-table .history-table-header th{
+  text-align: start;
+  padding: 1.3rem 1rem;
+}
+.history-table tr td{
+  text-align: start;
+  padding: 1rem 1rem;
 }

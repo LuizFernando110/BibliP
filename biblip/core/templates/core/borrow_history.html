@@ -1,7 +1,42 @@
 {% extends "base.html" %} {% load static %} {%block 'head'%}
 <link rel="stylesheet" href="{%static 'css/borrow_history.css'%}" />
 {%endblock%} {% block 'main' %}
-<main>
-  {%include 'partials/_filter_header.html'%}
+<main class="borrow-history">
+  <div><</div>
+  <div class="borrow-history-container">
+    {%include 'partials/_filter_header.html'%}
+    <div class="table-container">
+      <table class="history-table">
+        <tr class="history-table-header">
+          <th id="bookname">Nome do livro</th>
+          <th id="school-class">Sala</th>
+          <th id="receipt-date">Data de recebimento</th>
+          <th id="delivery-date">Data de entrega</th>
+          <th id="actions">Ações</th>
+        </tr>
+        <tr>
+          <td>Nome do livro</td>
+          <td>Sala</td>
+          <td>20/12/2024</td>
+          <td>05/01/2025</td>
+          <td>o o o</td>
+        </tr>
+        <tr>
+          <td>Nome do livro</td>
+          <td>Sala</td>
+          <td>20/12/2024</td>
+          <td>05/01/2025</td>
+          <td>o o o</td>
+        </tr>
+        <tr>
+          <td>Nome do livro</td>
+          <td>Sala</td>
+          <td>20/12/2024</td>
+          <td>05/01/2025</td>
+          <td>o o o</td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </main>
 {% endblock %}
