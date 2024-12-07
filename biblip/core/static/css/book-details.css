@@ -58,6 +58,10 @@ main{
     
 }
 
+#storage-status .reserverd{
+    background-color: #EECA00;
+}
+
 #storage-status{
     align-self: flex-end;
     justify-self: flex-end; 
