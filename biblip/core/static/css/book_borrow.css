@@ -1,0 +1,96 @@
+.form-container{
+    display: flex;
+    width: 100%;
+    padding: 5%;
+    justify-content: center;
+}
+
+.form-container form{
+    display: flex;
+
+}
+
+.form-container .form-content{
+    border-left: solid var(--cinza-palido) 1px;
+    flex:2;
+    padding:8rem 2rem;
+}
+
+.form-container .img-form{
+    padding: 2rem;
+    padding-right: 4rem;
+    flex: 1;
+}
+.form-container .img-form img{
+    height: 42rem;
+}
+
+.form-container .form-content h2{
+    font-size: 4rem;
+    display: flex;
+}
+.form-container .form-content .form-widget{
+    font-size: 2rem;
+    color: var(--cinza-palido);
+    font-size: bold;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+
+.form-widget input{
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    border: solid var(--cinza-palido) .2rem;
+    border-radius: .8rem;
+    padding: 1.2rem 2rem 1.2rem 5rem;
+
+}
+
+.form-widget input:focus{
+    outline: none;
+}
+
+
+.fx-33{
+    flex-basis: 33%;
+
+}
+.fx-50{
+    flex-basis: 50%;
+}
+
+.form-widget select{
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    border: solid var(--cinza-palido) .2rem;
+    border-radius: .8rem;
+    padding: 1.2rem 2rem 1.2rem 5rem;
+
+}
+
+.form-widget input[type='date']{
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    border: solid var(--cinza-palido) .2rem;
+    border-radius: .8rem;
+    padding: 1.2rem 2rem 1.2rem 5rem;
+    background-image: url("/biblip/static/assets/icons/calendar.svg");
+}
+
+
+
+.form-content .inline-widget{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap:1rem;
+    align-items: end;
+}
+.form-widget .form-widget-icon{
+    position: absolute;
+    top:4rem;
+    left: 1rem;
+    width: 24px;
+}
