@@ -86,13 +86,16 @@ header .header-btn{
   background-color: transparent;
 }
 
-header .sign-in-button{
+
+
+.sign-in-button{
   padding: 1.6rem 3.5rem;
   border: none;
   border-radius: 0.8rem;
   color: white;
   cursor: pointer;
   background-color: var(--main-color);
+  justify-content: center;
 }
 
 footer{
