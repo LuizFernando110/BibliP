@@ -1,0 +1,67 @@
+.borrow-history{
+  padding-left: 8.4rem;
+  padding-right: 8.4rem;
+}
+
+.back-arrow{
+  display: flex;
+  justify-content: start;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+.back-arrow img{
+  width: 1.7rem;
+}
+
+.borrow-history-container{
+  margin: 0 8.3rem;
+}
+.borrow-history-container .table-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4.6rem 0;
+}
+
+.history-table{
+  width: 100%;
+  border: 1px solid var(--cinza-palido);
+  border-collapse: collapse;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--cinza-palido);
+  border-radius: .8rem .8rem 0 0;
+  overflow: hidden;
+}
+.history-table .history-table-header{
+  color: white;
+  background-color: var(--main-color);
+}
+.history-table .history-table-header th{
+  text-align: start;
+  padding: 1.3rem 1rem;
+}
+.history-table tr td{
+  text-align: start;
+  padding: 1rem 1rem;
+}
+.history-table #book-name{
+  width: 27%;
+}
+.history-table #school-class{
+  width: 23%;
+}
+.history-table #actions{
+  width: 8%;
+}
+.history-table .actions-td{
+  display: flex;
+  justify-content: space-between;
+}
+.history-table .actions-td a {
+  width: 24px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
