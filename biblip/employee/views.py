@@ -1,7 +1,7 @@
 from django.shortcuts import render,HttpResponse
 
 def borrow_management(request):
-    return HttpResponse('<h1>gerenciamento de livros</h1>')
+    return render(request, 'index.html')
 
 def create_book(request):
     return HttpResponse('<h1>Livro Criado!!</h1>')
