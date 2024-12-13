@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+html{
+    font-size: 10px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+
+form label {
+    font-size: 1.6rem;
+    font-family: "Merriweather Sans";
+    color: #4b4b4b;
+}
+
+.form-style {
+    padding: 1.2rem 1.6rem 1.2rem 1.6rem;
+    font-family: "Merriweather Sans";
+    height: 4rem;
+    width: 52rem;
+    border-radius: 0.8rem;
+    border: 0.2rem solid #4b4b4b;
+}
+
+.form-style::placeholder {
+    color: #4b4b4b;
+}
+
+.form-style label {
+    color: red;
+}
+
+.remeber-me{
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.remeber-me span{
+    font-size: 1.2rem;
+    font-family: "Merriweather Sans";
+    color: #4b4b4b;
+}
+
+form button {
+    background-color: #2F9E41;
+    color: white;
+    width: 52rem;
+    height: 4.6rem;
+    border: none;
+    font-family: "Poppins";
+    font-size: 1.6rem;
+    border-radius: 0.8rem;
+}
+
+.remeber-me input{
+    border: 0.2rem solid #4b4b4b;
+    appearance: none;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 0.4rem;
+}
+
+.remeber-me input:checked{
+    background-image: url("../assets/check.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 1.2rem;
+}
+
+.form-side{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+}
+
+.institution-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.institution-info img{
+    padding-left: 1.6rem;
+}
+
+.institution-info h1{
+    font-size: 2.4rem;
+    font-family: "Poppins";
+    font-weight: 600;
+    color: #4b4b4b;
+    text-align: center;
+    width: 24rem;
+    line-height: 2.6rem;
+}
+
+.login{
+    display: flex;
+    justify-content: space-between;
+}
+
+.image-side{
+    width: 40%;
+}
+
+.image-side img{
+    height: 97.9vh;
+    width: 100%;
+    background-size: cover;
+    position: relative;
+}
+
+.image-text h2{
+    font-size: 2.4rem;
+    font-family: "Poppins";
+}
+
+.image-text p{
+    font-family: "Poppins";
+    font-size: 1.6rem;
+    text-align: justify;
+    width: 56rem;
+}
+
+.image-side.image-text{
+    background-image: linear-gradient(to top, red,rgba(0,0,0,0));
+    width: 100%;
+    position: absolute;
+}
+
+#institution{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.4rem;
+    position: absolute;
+    bottom: 1.2rem;
+    right: 2rem;
+    z-index: 5;
+}
+
+#institution img{
+    width: 4rem;
+}

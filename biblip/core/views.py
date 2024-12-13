@@ -3,6 +3,7 @@ from django.shortcuts import render,HttpResponse
 import json
 from django.conf import settings
 import os
+from .forms import loginTeacherForm
 
 #arquivos com _temp no final são temporários
 #leituras de jsons por agora são temporarias
@@ -29,3 +30,7 @@ def borrow(request,book_pk):
 
 def borrow_history(request):
     return HttpResponse('<h1> historico de alugueis</h1>')
+
+def loginTeacher(request):
+    form = loginTeacherForm()
+    return render(request, 'core/loginTeacher.html', {'form': form})
