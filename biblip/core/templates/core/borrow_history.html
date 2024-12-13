@@ -3,7 +3,9 @@
 {%endblock%} {% block 'main' %}
 <main class="borrow-history">
   <div class="back-arrow">
-    <img src="{% static 'assets/icons/back-arrow.svg' %}" alt="" />
+    <a href="{% url 'index' %}"
+      ><img src="{% static 'assets/icons/back-arrow.svg' %}" alt=""
+    /></a>
   </div>
   <div class="borrow-history-container">
     {%include 'partials/_filter_header.html'%}
