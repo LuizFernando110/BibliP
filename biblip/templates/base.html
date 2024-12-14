@@ -9,7 +9,11 @@
     {%block 'head'%}{%endblock%}
   </head>
   <body>
-    {%include 'partials/_header.html'%}
+    {%if employer%}
+      {%include 'partials/_employer_header.html'%}
+    {%else%}
+      {%include 'partials/_header.html'%}
+    {%endif%}
 
     {% block 'main' %}{% endblock %} {% block 'scripts' %}{% endblock %}
 
