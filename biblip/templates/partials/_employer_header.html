@@ -1,11 +1,7 @@
 {%load static%}
-<header>
+<header class="employer-header">
   <div class="ifrn-logo">
-    <img src="{% static 'assets/IFRN-Logo-default.png' %}" alt="" />
-  </div>
-
-  <div class="pnld-text">
-    <p><span>PNLD</span> Programa Nacional do Livro Didático</p>
+    <img src="{% static 'assets/IFRN-Logo-white.png' %}" alt="" />
   </div>
 
   <div class="search-input-container">
@@ -16,10 +12,11 @@
   </div>
 
   <a href="" class="header-btn">
-    <img src="{% static '/assets/icons/bell.svg' %}" alt="" />
+    Livros
   </a>
+
   <a href="{% url 'borrow_history' %}" class="header-btn">
-    <img src="{% static '/assets/icons/book.svg' %}" alt="" />
+    Alugueis
   </a>
-  <button class="sign-in-button">Entrar</button>
+  {%include 'partials/_profile_icon.html'%}
 </header>
