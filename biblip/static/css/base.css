@@ -180,6 +180,11 @@ main{
   padding: 16rem 0rem ;
 }
 
+.employee-base-style{
+  background-color: var(--employee-bg);
+  color: white;
+}
+
 /* classes */
 .clamp-1 {
   display: -webkit-box; 
@@ -221,3 +226,4 @@ main{
   border: 1px solid var(--cinza-palido);
   cursor: pointer;
 }
+

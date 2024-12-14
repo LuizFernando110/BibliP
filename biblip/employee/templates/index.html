@@ -1,11 +1,7 @@
-{% load static %}
-
-<head>
-  <title>Biblip</title>
-  <link rel="stylesheet" href="{% static 'css/base.css' %}" />
-  <link rel="stylesheet" href="{% static 'css/index-employee.css' %}" />
-</head>
-
+{% extends "base.html" %} {% load static %} {%block 'head'%}<link
+  rel="stylesheet"
+  href="{% static 'css/index-employee.css' %}"
+/>{%endblock%} {%block 'main'%}
 <main class="employee">
   <section class="appointments-section">
     <h2>Agendados para</h2>
@@ -30,8 +26,7 @@
   <section class="appointments-section">
     <h2>Pendencias</h2>
     <section class="appointments-container">
-      {% for appointment in appointments %}
-      {% if appointment.pendency %}
+      {% for appointment in appointments %} {% if appointment.pendency %}
       <a href="#">
         <div class="appointment-content">
           <span class="school-class">{{ appointment.school_class }}</span>
@@ -42,10 +37,10 @@
           <span class="book-name clamp-1">{{appointment.book_name}}</span>
         </div>
       </a>
-      {% endif %}
-      {% endfor %}
+      {% endif %} {% endfor %}
     </section>
     <button class="employee-button">Ver mais</button>
   </section>
   <section></section>
 </main>
+{%endblock%}
