@@ -37,8 +37,16 @@ def employer_borrow_list(request):
             'borrow_history': borrow_history}
     return render(request,'employer_borrow_list.html',context)
 
+
 def employer_borrow_details(request,borrow_pk):
-    pass
+    json_path_temp = os.path.join(settings.BASE_DIR, 'core', 'borrow_history.json') 
+    with open (json_path_temp, 'r') as file:
+        borrow_history = json.load(file)
+
+    context={'employer':True,
+            'borrow_history': borrow_history}
+    return render(request,'employer_borrow_details.html',context)
+
 def create_book(request):
     return HttpResponse('<h1>Livro Criado!!</h1>')
 

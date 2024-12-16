@@ -1,0 +1,55 @@
+{% extends "base.html" %} {% load static %} {%block 'head'%}
+<link rel="stylesheet" href="{%static 'css/table.css'%}" />
+{%endblock%} {% block 'main' %}
+<main class="borrow-history">
+  
+  <div class="borrow-history-container">
+
+    <div class="table-tittle">
+      
+      <div class="tittle-div">
+        <div class="back-arrow">
+          <a href="{% url 'index' %}"
+            ><img src="{% static 'assets/icons/back-arrow.svg' %}" alt=""
+          /></a>
+        </div>
+        <h1>Lista de Alunos</h1>
+      </div>
+      
+      <div class="table-label">
+        <p>Mitos e Lendas do Brasil</p>
+        <p>03/11/2024-16/12/2024</p>
+        <p>Prof.John Doe</p>
+      </div>
+    </div>
+    
+  
+    <h2>Turma 3° ano Apicultura</h2>
+
+
+    <div class="table-container">
+      <table class="history-table">
+        <tr class="history-table-header">
+          <th id="book-name">Nome</th>
+          <th id="receipt-date">Data de recebimento</th>
+          <th id="delivery-date">Data de entrega</th>
+          <th id="actions">Status</th>
+        </tr>
+        {% for borrow in borrow_history %}
+        <tr>
+          <td>{{ borrow.book_name }}</td>
+          <td>{{ borrow.receipt_date }}</td>
+          <td>{{ borrow.delivery_date }}</td>
+          <td class="status">
+              <img
+                src="{% static 'assets/icons/edit_fill.svg' %}"
+                alt="botão editar empréstimo"
+              />
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</main>
+{% endblock %}
