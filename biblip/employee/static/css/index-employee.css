@@ -27,6 +27,9 @@
   font-size: 1.6rem;
   font-weight: 400;
 }
+.appointments-section span{
+  font-size: 1.2rem;
+}
 .appointments-container{
   display: grid;
   width: 100%;
@@ -60,6 +63,7 @@
   justify-content: center;
   align-items: center;
   padding: 1.8rem;
+  gap: .5rem;
   font-size: 2rem;
   border: none;
   outline: none;
@@ -67,4 +71,15 @@
   color: white;
   background-color: #222222;
   cursor: pointer;
+}
+
+.see-more-btn span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.6rem;
+  border-radius: 50%;
+  background-color: #3C3C3C;
 }

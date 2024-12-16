@@ -49,5 +49,45 @@
     "delivery_date": "2024-08-01",
     "teacher": "professor",
     "pendency": true
+  },
+  {
+    "book_name": "Memórias Póstumas de Brás Cubas",
+    "school_class": "3 ALI VESP",
+    "receipt_date": "2024-12-10",
+    "delivery_date": "2024-12-25",
+    "teacher": "Clarisse",
+    "pendency": false
+  },
+  {
+    "book_name": "Vidas Secas",
+    "school_class": "4 INFO MAT",
+    "receipt_date": "2024-11-05",
+    "delivery_date": "2024-11-20",
+    "teacher": "Carla",
+    "pendency": true
+  },
+  {
+    "book_name": "O Guarani",
+    "school_class": "2 API MAT",
+    "receipt_date": "2024-10-15",
+    "delivery_date": "2024-10-30",
+    "teacher": "Fernando",
+    "pendency": false
+  },
+  {
+    "book_name": "Quincas Borba",
+    "school_class": "1 API VESP",
+    "receipt_date": "2024-09-01",
+    "delivery_date": "2024-09-20",
+    "teacher": "Tereza",
+    "pendency": true
+  },
+  {
+    "book_name": "O Cortiço",
+    "school_class": "3 INFO MAT",
+    "receipt_date": "2024-08-05",
+    "delivery_date": "2024-08-25",
+    "teacher": "Augusto",
+    "pendency": false
   }
 ]
