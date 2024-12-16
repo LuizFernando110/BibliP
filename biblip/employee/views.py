@@ -28,7 +28,14 @@ def borrow_management(request):
 
 
 def employer_borrow_list(request):
-    pass
+    json_path_temp = os.path.join(settings.BASE_DIR, 'core', 'borrow_history.json') 
+    with open (json_path_temp, 'r') as file:
+        borrow_history = json.load(file)
+
+    context={'employer':True,
+             'filter_title': 'Histórico de alugueis',
+            'borrow_history': borrow_history}
+    return render(request,'employer_borrow_list.html',context)
 
 def employer_borrow_details(request,borrow_pk):
     pass

@@ -1,0 +1,53 @@
+{% extends "base.html" %} {% load static %} {%block 'head'%}
+<link rel="stylesheet" href="{%static 'css/table.css'%}" />
+{%endblock%} {% block 'main' %}
+<main class="borrow-history">
+  <div class="back-arrow">
+    <a href="{% url 'index' %}"
+      ><img src="{% static 'assets/icons/back-arrow.svg' %}" alt=""
+    /></a>
+  </div>
+  <div class="borrow-history-container">
+    {%include 'partials/_filter_header.html'%}
+    <div class="table-container">
+      <table class="history-table">
+        <tr class="history-table-header">
+          <th id="book-name">Nome do livro</th>
+          <th id="school-class">Sala</th>
+          <th id="receipt-date">Data de recebimento</th>
+          <th id="delivery-date">Data de entrega</th>
+          <th id="actions">Ações</th>
+        </tr>
+        {% for borrow in borrow_history %}
+        <tr>
+          <td>{{ borrow.book_name }}</td>
+          <td>{{ borrow.school_class }}</td>
+          <td>{{ borrow.receipt_date }}</td>
+          <td>{{ borrow.delivery_date }}</td>
+          <td class="actions-td">
+            <a href="">
+              <img
+                src="{% static 'assets/icons/eye.svg' %}"
+                alt="botão ver empréstimo"
+              />
+            </a>
+            <a href="">
+              <img
+                src="{% static 'assets/icons/edit_fill.svg' %}"
+                alt="botão editar empréstimo"
+              />
+            </a>
+            <a href="">
+              <img
+                src="{% static 'assets/icons/cancel.svg' %}"
+                alt="botão cancelar empréstimo"
+              />
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</main>
+{% endblock %}
