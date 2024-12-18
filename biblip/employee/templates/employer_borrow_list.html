@@ -12,7 +12,7 @@
     <div class="table-container">
       <table class="history-table">
         <tr class="history-table-header">
-          <th id="book-name">Nome do livro</th>
+          <th id="teacher">Professor</th>
           <th id="school-class">Sala</th>
           <th id="receipt-date">Data de recebimento</th>
           <th id="delivery-date">Data de entrega</th>
@@ -20,7 +20,7 @@
         </tr>
         {% for borrow in borrow_history %}
         <tr>
-          <td>{{ borrow.book_name }}</td>
+          <td>{{ borrow.teacher }}</td>
           <td>{{ borrow.school_class }}</td>
           <td>{{ borrow.receipt_date }}</td>
           <td>{{ borrow.delivery_date }}</td>

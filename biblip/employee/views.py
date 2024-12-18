@@ -28,7 +28,7 @@ def borrow_management(request):
 
 
 def employer_borrow_list(request):
-    json_path_temp = os.path.join(settings.BASE_DIR, 'core', 'borrow_history.json') 
+    json_path_temp = os.path.join(settings.BASE_DIR, 'employee', 'appointment.json') 
     with open (json_path_temp, 'r') as file:
         borrow_history = json.load(file)
 
