@@ -1,10 +1,11 @@
 from django.urls import path
-from .views import borrow_management,delete_book,update_book,create_book
+from .views import borrow_management, books_management, delete_book, update_book, create_book
 
 urlpatterns = [
-    path('employer/borrow_management',borrow_management,name='borrow_management'),
-    path('employer/create_book',create_book,name='create_book'),
-    path('employer/update_book',update_book,name='update_book'),
-    path('employer/delete_book',delete_book,name='delete_book'),
+    path('employer/borrow_management', borrow_management, name='borrow_management'),
+    path('employer/books_management', books_management, name='books_management'),
+    path('employer/create_book', create_book, name='create_book'),
+    path('employer/update_book', update_book, name='update_book'),
+    path('employer/delete_book', delete_book, name='delete_book'),
 
 ]

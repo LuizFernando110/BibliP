@@ -26,6 +26,10 @@ def borrow_management(request):
     }
     return render(request, 'index.html', context)
 
+def books_management(request):
+    context = {'employer': True}
+    return render(request, 'books-management.html', context)
+
 def create_book(request):
     return HttpResponse('<h1>Livro Criado!!</h1>')
 
