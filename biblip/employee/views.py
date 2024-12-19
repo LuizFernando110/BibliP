@@ -27,7 +27,10 @@ def borrow_management(request):
     return render(request, 'index.html', context)
 
 def books_management(request):
-    context = {'employer': True}
+    json_path_temp = os.path.join(settings.BASE_DIR, 'core', 'books.json') 
+    with open (json_path_temp, 'r') as file:
+        books = json.load(file)
+    context = {'employer': True, 'books': books}
     return render(request, 'books-management.html', context)
 
 def create_book(request):

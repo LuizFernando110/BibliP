@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{%block 'head'%}
+<link rel="stylesheet" href="{%static 'css/books_managment.css'%}" />
+{%endblock%} 
+
 {% block 'main' %}
-<main>
-  gerenciamento de livros
+<main class="books-management">
+  {% include 'partials/_books_section.html' %}
 </main>
 {% endblock %}
