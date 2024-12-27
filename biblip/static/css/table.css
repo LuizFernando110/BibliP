@@ -1,129 +1,149 @@
 .borrow-history{
-    padding-left: 8.4rem;
-    padding-right: 8.4rem;
-  }
+  padding-left: 8.4rem;
+  padding-right: 8.4rem;
+}
   
-  .back-arrow{
-    display: flex;
-    justify-content: start;
-    margin-top: 1rem;
-    cursor: pointer;
-  }
-  .back-arrow img{
-    width: 1.7rem;
-  }
+.back-arrow{
+  display: flex;
+  justify-content: start;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+.back-arrow img{
+  width: 1.7rem;
+}
+
+.borrow-history-container{
+  margin: 0 8.3rem;
+}
+.borrow-history-container .table-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4.6rem 0;
+}
+
+.history-table{
+  width: 100%;
+  border: 1px solid var(--cinza-palido);
+  border-collapse: collapse;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--cinza-palido);
+  border-radius: .8rem .8rem 0 0;
+  overflow: hidden;
   
-  .borrow-history-container{
-    margin: 0 8.3rem;
-  }
-  .borrow-history-container .table-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 4.6rem 0;
-  }
+}
+.history-table .history-table-header{
+  color: white;
+  background-color: var(--main-color);
+}
+.history-table .history-table-header th{
+  text-align: start;
+  padding: 1.3rem 1rem;
+}
+.history-table tr td{
+  text-align: start;
+  padding: 1rem 1rem;
+}
+.history-table #book-name{
+  width: 27%;
+}
+.history-table #school-class{
+  width: 23%;
+}
+.history-table #actions{
+  width: 8%;
+}
+.history-table .actions-td{
+  display: flex;
+  justify-content: space-between;
+}
+.history-table .actions-td a {
+  width: 24px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+
+
+.employee-base-style .history-table{
+  color: white;
+}
+
+.employee-base-style .actions-td img,.employee-base-style .back-arrow img,.history-table .status{
+  filter: invert(100%) sepia(0%) saturate(649%) hue-rotate(9deg) brightness(120%) contrast(100%);
+}
+.history-table .status{
+  display: flex;
+  justify-content: center;
+
+}
+
+
+.borrow-history h1{
+  font-size: 3.5rem;
+  font-weight: 500;
+  text-align: center;
+}
+.borrow-history h2{
+  font-size: 2.4rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 3.2rem 0 .5rem;
+}
+.employ-borrow-detail .back-arrow{
+  position: absolute;
+  left: 0;
+}
+
+.table-title{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: solid .1rem white;
+  gap: 4.5rem;
+  padding: 1rem;
+}
+
+.table-title span{
+  font-size: 1.6rem;
+}
+.employ-borrow-detail .table-title .title-div{
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 36%;
   
-  .history-table{
-    width: 100%;
-    border: 1px solid var(--cinza-palido);
-    border-collapse: collapse;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--cinza-palido);
-    border-radius: .8rem .8rem 0 0;
-    overflow: hidden;
-  }
-  
-
-  
-  .history-table .history-table-header{
-    color: white;
-    background-color: var(--main-color);
-  }
-  .history-table .history-table-header th{
-    text-align: start;
-    padding: 1.3rem 1rem;
-  }
-  .history-table tr td{
-    text-align: start;
-    padding: 1rem 1rem;
-  }
-  .history-table #book-name{
-    width: 27%;
-  }
-  .history-table #school-class{
-    width: 23%;
-  }
-  .history-table #actions{
-    width: 8%;
-  }
-  .history-table .actions-td{
-    display: flex;
-    justify-content: space-between;
-  }
-  .history-table .actions-td a {
-    width: 24px;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    cursor: pointer;
-  }
+}
+.table-title .table-label{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
 
 
-  .employee-base-style .history-table{
-    color: white;
-  }
-  
-  .employee-base-style .actions-td img,.employee-base-style .back-arrow img,.history-table .status{
-    filter: invert(100%) sepia(0%) saturate(649%) hue-rotate(9deg) brightness(120%) contrast(100%);
-  }
-  .history-table .status{
-    display: flex;
-    justify-content: center;
+.employ-table.history-table #teacher{
+  width: 15%;
+}
 
-  }
+.employ-table.history-table #book-name{
+  width: 32%;
+}
 
-  .borrow-history h2{
-    font-size: 3.2rem;
-    font-weight: 500;
-    text-align: center;
-    padding: 2rem;
-  }
+.employ-table.history-table #school-class{
+  width: 15%;
+}
 
-  .borrow-history h1{
-    font-size: 4.8rem;
-    font-weight: 500;
-    text-align: center;
-  }
+.employ-table.history-table #delivery-date, .employ-table.history-table #receipt-date{
+  width: max-content;
+}
 
-  .table-tittle{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: solid .1rem white;
-    gap: 1rem;
-    padding: 1rem;
-  }
-
-  .table-tittle p{
-    font-size: 2rem;
-  }
-  .table-tittle .tittle-div{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: start;
-    gap: 36%;
-    
-  }
-
-
-  .table-tittle .table-label{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }

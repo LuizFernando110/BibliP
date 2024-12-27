@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% load static %} {%block 'head'%}
 <link rel="stylesheet" href="{%static 'css/table.css'%}" />
 {%endblock%} {% block 'main' %}
-<main class="borrow-history">
+<main class="borrow-history ">
   <div class="back-arrow">
     <a href="{% url 'index' %}"
       ><img src="{% static 'assets/icons/back-arrow.svg' %}" alt=""
@@ -10,10 +10,10 @@
   <div class="borrow-history-container">
     {%include 'partials/_filter_header.html'%}
     <div class="table-container">
-      <table class="history-table">
+      <table class="history-table employ-table">
         <tr class="history-table-header">
           <th id="teacher">Professor</th>
-          <th id="teacher">Livro</th>
+          <th id="book-name">Livro</th>
           <th id="school-class">Sala</th>
           <th id="receipt-date">Data de recebimento</th>
           <th id="delivery-date">Data de entrega</th>
