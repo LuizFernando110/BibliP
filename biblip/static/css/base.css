@@ -97,13 +97,24 @@ header.employer-header a{
   font-size: 1.6rem;
   font-weight: 600 ;
 }
+header.employer-header .ifrn-logo-section{
+  flex: 1
+}
 
 header.employer-header .search-input-container input{
+  flex: 2;
   background-color: var(--cinza-palido);
   color: white;
 }
 header.employer-header .search-input-container .search-button{
   filter: invert(100%) sepia(0%) saturate(649%) hue-rotate(9deg) brightness(120%) contrast(100%);
+}
+header.employer-header .header-btn-section{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5rem;
+  flex: 1
 }
 
  .profile-icon{
