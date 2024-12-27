@@ -1,7 +1,7 @@
 .borrow-history{
-    padding-left: 8.4rem;
-    padding-right: 8.4rem;
-  }
+  padding-left: 8.4rem;
+  padding-right: 8.4rem;
+}
   
 .back-arrow{
   display: flex;
@@ -83,17 +83,20 @@
 }
 
 
-
-.borrow-history h2{
-  font-size: 3.2rem;
-  font-weight: 500;
-  text-align: center;
-  padding: 2rem;
-}
 .borrow-history h1{
-  font-size: 4.8rem;
+  font-size: 3.5rem;
   font-weight: 500;
   text-align: center;
+}
+.borrow-history h2{
+  font-size: 2.4rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 3.2rem 0 .5rem;
+}
+.employ-borrow-detail .back-arrow{
+  position: absolute;
+  left: 0;
 }
 
 .table-title{
@@ -102,19 +105,20 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: solid .1rem white;
-  gap: 1rem;
+  gap: 4.5rem;
   padding: 1rem;
 }
 
-.table-title p{
-  font-size: 2rem;
+.table-title span{
+  font-size: 1.6rem;
 }
-.table-title .title-div{
+.employ-borrow-detail .table-title .title-div{
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: start;
+  justify-content: center;
   gap: 36%;
   
 }
