@@ -21,11 +21,11 @@
         </tr>
         {% for borrow in borrow_history %}
         <tr>
-          <td>{{ borrow.teacher }}</td>
-          <td>{{ borrow.book_name }}</td>
-          <td>{{ borrow.school_class }}</td>
-          <td>{{ borrow.receipt_date }}</td>
-          <td>{{ borrow.delivery_date }}</td>
+          <td id="professor-name">{{ borrow.teacher }}</td>
+          <td id="book-name">{{ borrow.book_name }}</td>
+          <td id="class-name">{{ borrow.school_class }}</td>
+          <td id="delivery-date">{{ borrow.receipt_date }}</td>
+          <td id="receipt-date">{{ borrow.delivery_date }}</td>
           <td class="actions-td">
             <a href="">
               <img
