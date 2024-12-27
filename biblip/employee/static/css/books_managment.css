@@ -1,4 +1,11 @@
 .books-management{
+  display: flex;
   padding-left: 8.4rem;
   padding-right: 8.4rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.books-management h1{
+  font-size: 3rem;
 }
