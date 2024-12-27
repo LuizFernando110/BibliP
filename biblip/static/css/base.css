@@ -227,3 +227,11 @@ main{
   cursor: pointer;
 }
 
+.employee-base-style .catalog-header {
+  border-color: white;
+}
+
+.employee-base-style .catalog-header .filter-container div{
+  border-color: white;
+  color: white;
+}
