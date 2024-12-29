@@ -29,8 +29,14 @@ def borrow(request,book_pk):
     return render(request,'core/book_borrow.html',context)
 
 def borrow_history(request):
-    return HttpResponse('<h1> historico de alugueis</h1>')
-
-def loginTeacher(request):
-    form = loginTeacherForm()
-    return render(request, 'core/loginTeacher.html', {'form': form})
+    json_path_temp = os.path.join(settings.BASE_DIR, 'core', 'borrow_history.json') 
+    with open (json_path_temp, 'r') as file:
+        borrow_history = json.load(file)
+    return render(
+        request,
+        'core/borrow_history.html',
+        {
+            'filter_title': 'Histórico de alugueis',
+            'borrow_history': borrow_history
+        }
+    )

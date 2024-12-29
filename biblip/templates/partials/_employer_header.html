@@ -1,0 +1,22 @@
+{%load static%}
+<header class="employer-header">
+  <div class="ifrn-logo">
+    <img src="{% static 'assets/IFRN-Logo-white.png' %}" alt="" />
+  </div>
+
+  <div class="search-input-container">
+    <input type="text" placeholder="Pesquisar por nome, código, autor ... " />
+    <button class="search-button">
+      <img src="{% static 'assets/icons/search.svg' %}" alt="" />
+    </button>
+  </div>
+
+  <a href="" class="header-btn">
+    Livros
+  </a>
+
+  <a href="{% url 'borrow_history' %}" class="header-btn">
+    Alugueis
+  </a>
+  {%include 'partials/_profile_icon.html'%}
+</header>

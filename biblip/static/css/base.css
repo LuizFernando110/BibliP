@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); */
 html{
   font-size: 10px;
 }
@@ -9,7 +8,7 @@ html{
   box-sizing: border-box;
   text-decoration: none;
   list-style: none;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 button{
   display: flex;
@@ -25,6 +24,7 @@ body{
 :root{
   --main-color: #2F9E41;
   --cinza-palido: #4B4B4B;
+  --employee-bg: #1E1E1E
 }
 
 header{
@@ -86,13 +86,57 @@ header .header-btn{
   background-color: transparent;
 }
 
-header .sign-in-button{
+
+
+header.employer-header{
+  background-color: black;
+}
+
+header.employer-header a{
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 600 ;
+}
+
+header.employer-header .search-input-container input{
+  background-color: var(--cinza-palido);
+  color: white;
+}
+header.employer-header .search-input-container .search-button{
+  filter: invert(100%) sepia(0%) saturate(649%) hue-rotate(9deg) brightness(120%) contrast(100%);
+}
+
+ .profile-icon{
+  display: flex;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+}
+
+ .profile-icon img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-icon p{
+  color: white;
+  font-size: 2.8rem;
+  font-weight: 500;
+}
+
+
+.sign-in-button{
   padding: 1.6rem 3.5rem;
   border: none;
   border-radius: 0.8rem;
   color: white;
   cursor: pointer;
   background-color: var(--main-color);
+  justify-content: center;
 }
 
 footer{
@@ -134,4 +178,60 @@ footer h3{
 main{
   flex: 1;
   padding: 16rem 0rem ;
+}
+
+.employee-base-style{
+  background-color: var(--employee-bg);
+  color: white;
+}
+
+/* classes */
+.clamp-1 {
+  display: -webkit-box; 
+  -webkit-line-clamp: 1; 
+  -webkit-box-orient: vertical; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
+}
+
+/* partial filter header*/
+.catalog{
+  flex: 1;
+  padding: 16rem 8.5rem ;
+}
+.catalog-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 3.8rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--cinza-palido);
+}
+
+.catalog-header h2{
+  font-size: 2.4rem;
+  font-weight: 400;
+}
+.catalog-header .filter-container{
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-size: 2rem;
+}
+.catalog-header .filter-container div{
+  font-size: 1.6rem;
+  padding: .2rem .9rem;
+  border-radius: 5rem;
+  color: var(--cinza-palido);
+  border: 1px solid var(--cinza-palido);
+  cursor: pointer;
+}
+
+.employee-base-style .catalog-header {
+  border-color: white;
+}
+
+.employee-base-style .catalog-header .filter-container div{
+  border-color: white;
+  color: white;
 }

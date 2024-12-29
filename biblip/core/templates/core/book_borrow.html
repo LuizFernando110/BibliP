@@ -1,2 +1,83 @@
-{% extends "base.html" %}
-{% load static %} 
+{% extends "base.html" %} {% load static %} {%block 'head'%}
+<link rel="stylesheet" href="{%static 'css/book_borrow.css'%}" />
+{%endblock%} {%block 'main'%}
+<main class="book-borrow">
+  <div class="form-container">
+    <form action="" method="post">
+      {%csrf_token%}
+      <div class="img-form">
+        <img src="{%static 'assets/torto_arado.jpg'%}" alt="" />
+      </div>
+      <div class="form-content">
+        <h2>Torto Arado</h2>
+        <div class="form-widget">
+          <label for="Sala">Sala</label>
+          <div class="input-relative">
+            <select name="sala" id="sala">
+              <option value="1">sala 1</option>
+              <option value="2">sala 2</option>
+              <option value="2">sala 3</option>
+            </select>
+            <img
+              src="{% static 'assets/icons/backpack.svg' %}"
+              class="form-widget-icon"
+              alt=""
+            />
+          </div>
+        </div>
+
+        <div class="inline-widget">
+          <div class="form-widget input-relative fx-33">
+            <label for="data-recebimento"> Data Recebimento</label>
+            <input
+              type="date"
+              name="data-recebimento"
+              id="data-recebimento"
+              class="date-input"
+            />
+            <img src="" alt="" />
+          </div>
+
+          <div class="right-arrow-container">
+            <img src="{% static 'assets/right-arrow.svg' %}" alt="" />
+          </div>
+
+          <div class="form-widget input-relative fx-33">
+            <label for="data-entrega"> Data Entrega</label>
+            <input
+              type="date"
+              name="data-entrega"
+              id="data-entrega"
+              class="date-input"
+            />
+          </div>
+        </div>
+
+        <div class="inline-widget">
+          <div class="form-widget fx-50">
+            <label for="quantidade de livros">Quantidade de Livros</label>
+            <div class="input-relative">
+              <input
+                type="text"
+                name="quantidade"
+                placeholder="quantidade"
+                id="quantidade"
+              />
+              <img
+                src="{% static 'assets/icons/book.svg' %}"
+                class="form-widget-icon"
+                alt=""
+              />
+            </div>
+          </div>
+
+          <div class="form-widget fx-50">
+            <button class="button">Pedir Empréstimo</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>
+
+{%endblock%}

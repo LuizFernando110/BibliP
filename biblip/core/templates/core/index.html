@@ -4,13 +4,7 @@
 {%endblock%} {% block 'main' %}
 
 <main class="catalog">
-  <div class="catalog-header">
-    <h2>Catálogo</h2>
-    <div class="filter-container">
-      <span>filtrar por: </span>
-      <div>categorias...</div>
-    </div>
-  </div>
+  {%include 'partials/_filter_header.html'%}
   <div class="books-container">
     {% for book in books %}
     <div class="book">

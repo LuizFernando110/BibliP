@@ -1,0 +1,66 @@
+{% extends "base.html" %} 
+{% load static %} 
+{%block 'head'%}<link
+  rel="stylesheet"
+  href="{% static 'css/index-employee.css' %}"
+/>
+{%endblock%} 
+
+{%block 'main'%}
+<main class="employee">
+  <section class="appointments-section">
+    <h2>Agendados para</h2>
+    <h3>Esta semana</h3>
+    <section class="appointments-container">
+      {% for appointment in appointments %}
+      <a href="">
+        <div class="appointment-content">
+          <span class="school-class">{{ appointment.school_class }}</span>
+          <div class="dates-line">
+            <span>{{appointment.receipt_date}}</span> -
+            <span>{{appointment.delivery_date}}</span>
+          </div>
+          <span class="book-name clamp-1">{{appointment.book_name}}</span>
+        </div>
+      </a>
+      {% empty %}
+      <span>Não há agendamentos para essa semana</span>
+      {% endfor %}
+    </section>
+    {% if hidden_appointments > 0%}
+    <button class="employee-button see-more-btn">
+      Ver mais 
+      <span>+{{hidden_appointments}}</span>
+    </button>
+    {% endif %}
+  </section>
+
+  <section class="appointments-section">
+    <h2>Pendencias</h2>
+    <section class="appointments-container">
+      {% for appointment in appointments %} {% if appointment.pendency %}
+      <a href="#">
+        <div class="appointment-content">
+          <span class="school-class">{{ appointment.school_class }}</span>
+          <div class="dates-line">
+            <span>{{appointment.receipt_date}}</span> -
+            <span>{{appointment.delivery_date}}</span>
+          </div>
+          <span class="book-name clamp-1">{{appointment.book_name}}</span>
+        </div>
+      </a>
+      {% endif %} 
+      {% empty %}
+      <span>Não há pendencias</span>
+      {% endfor %}
+    </section>
+    {% if hidden_pending > 0%}
+    <button class="employee-button see-more-btn">
+      Ver mais 
+      <span>+{{hidden_pending}}</span>
+    </button>
+    {% endif %}
+  </section>
+  <section></section>
+</main>
+{%endblock%}
