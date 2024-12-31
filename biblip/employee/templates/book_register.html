@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "book-register.css" %}">
+    <title>Registrar livro</title>
+</head>
+<body>
+    {% block main %}
+        <main>
+            <h1>{{book.name}}</h1>
+            <a href="#"><img src="#" alt="Editar"></a>
+            <a href="#"><img src="#" alt="Excluir"></a>
+            <a href="#"><img src="#" alt="Voltar"></a>
+            {% csrf_token %}
+            {{ form.as_p }}
+        </main>
+    {% endblock main %}
+</body>
+</html>

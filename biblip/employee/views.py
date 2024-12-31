@@ -3,6 +3,7 @@ from django.shortcuts import render,HttpResponse
 import json
 from django.conf import settings
 import os
+from .forms import bookRegisterForm
 
 def borrow_management(request):
     json_path_temp = os.path.join(settings.BASE_DIR, 'employee', 'appointment.json')
@@ -55,3 +56,7 @@ def update_book(request):
 
 def delete_book(request):
     return HttpResponse('<h1>Livro Deletado</h1>')
+
+def book_register(request):
+    context = {'form': bookRegisterForm()}
+    return render(request, 'book_register.html', context)
