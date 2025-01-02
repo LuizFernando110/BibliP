@@ -13,6 +13,9 @@ html{
 button{
   display: flex;
   align-items: center;
+  border: none;
+  outline: none;
+  cursor: pointer;
 }
 body{
   position: relative;
@@ -261,6 +264,7 @@ main{
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  cursor: pointer;
 }
 .books-section .book .book-img-section{
   position: relative;

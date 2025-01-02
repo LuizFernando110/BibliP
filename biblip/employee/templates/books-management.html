@@ -8,6 +8,11 @@
 {% block 'main' %}
 <main class="books-management">
   <h1>Gerenciar Livro</h1>
-  {% include 'partials/_books_section.html' %}
+  <div class="books-management-container">
+    <div class="books-management-actions" >
+      <button>Adicionar livro <img src="{% static "assets/icons/add_icon.svg" %}" alt=""></button>
+    </div>
+    {% include 'partials/_books_section.html' %}
+  </div>
 </main>
 {% endblock %}
