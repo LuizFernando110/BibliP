@@ -40,3 +40,7 @@ def borrow_history(request):
             'borrow_history': borrow_history
         }
     )
+
+def login_teacher(request):
+    context={'form':loginTeacherForm()}
+    return render(request,'core/login_teacher.html',context)
