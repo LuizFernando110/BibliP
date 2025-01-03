@@ -35,15 +35,15 @@ form label {
     color: #4b4b4b;
 }
 
-form label.invalid {
+form label.error-input{
     color: red;
 }
 
-.form-style.invalid{
+.form-style.error-input{
     border: 0.2rem solid red;
 }
 
-.form-style.invalid::placeholder {
+.form-style.error-input::placeholder {
     color: red;
 }
 
@@ -79,10 +79,10 @@ form button {
 }
 
 .remeber-me input:checked{
-    background-image: url("../assets/check.svg");
+    background-image: url("/biblip/static/assets/icons/check.svg");
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 1.2rem;
+    background-size: 1.1rem;
 }
 
 .form-side{
@@ -120,25 +120,31 @@ form button {
 }
 
 .image-side{
-    width: 40%;
+    width: 41%;
     position: relative;
 }
 
 .image-side img{
-    height: 97.8vh;
+    height: 95vh;
     width: 100%;
     background-size: cover;
 }
 
-.image-text{
+.image-text-content{
     position: absolute;
+    display: flex;
+    flex-direction: column;
     left: 50%;
     bottom: 0;
     width: 100%;
-    height: 34%;
     border-radius: 0.4rem;
     transform: translateX(-50%);
     background-image: linear-gradient(to top, white, transparent);
+    align-items: end;
+}
+
+.image-text{
+    width: 100%;
 }
 
 .image-text h2{
@@ -156,9 +162,7 @@ form button {
 }
 
 .image-side.image-text{
-    background-image: linear-gradient(to top, red,rgba(0,0,0,0));
     width: 100%;
-    position: absolute;
 }
 
 #institution{
@@ -170,25 +174,23 @@ form button {
     position: absolute;
     bottom: 1.2rem;
     right: 2rem;
-    z-index: 5;
 }
 
 #institution img{
-    width: 4rem;
+    width: 4rem; 
 }
 
 #logo-side{
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
-    position: absolute;
     align-items: center;
-    bottom: 3.2rem;
-    right: 2rem;
+    gap: 0.4rem;
+    padding: 0 1.4rem;
 }
 
 #logo-side img{
     width: 4rem;
+    height: auto;
 }
 
 #logo-side p{
