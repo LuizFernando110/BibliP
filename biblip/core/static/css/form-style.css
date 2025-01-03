@@ -79,7 +79,7 @@ form button {
 }
 
 .remeber-me input:checked{
-    background-image: url("/biblip/static/assets/icons/check.svg");
+    background-image: url("../../static/assets/check.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 1.1rem;
