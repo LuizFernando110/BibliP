@@ -46,6 +46,10 @@
   text-align: start;
   padding: 1rem 1rem;
 }
+.history-table tr:hover td{
+  background-color: #c4c4c450;
+  transition: .5s;
+}
 .history-table #book-name{
   width: 27%;
 }

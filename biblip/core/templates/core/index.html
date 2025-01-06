@@ -1,25 +1,9 @@
-{% extends "base.html" %} {% load static %} {%block 'head'%}
+{% extends "base.html" %} 
+{% load static %} 
 
-<link rel="stylesheet" href="{%static 'css/index.css'%}" />
-{%endblock%} {% block 'main' %}
-
+{% block 'main' %}
 <main class="catalog">
-  {%include 'partials/_filter_header.html'%}
-  <div class="books-container">
-    {% for book in books %}
-    <div class="book">
-      <div class="book-img-container">
-        <img src="{% static book.image %}" alt="capa do livro" />
-        <div
-          class="book-status {% if book.status == 'Reservado' %}book-reserved{% endif %}"
-        >
-          {{ book.status }}
-        </div>
-        <div class="book-quantity">{{ book.quantity }} unidades</div>
-      </div>
-      <span class="clamp-2">{{ book.title }}</span>
-    </div>
-    {% endfor %}
-  </div>
+  {% include 'partials/_filter_header.html' %}
+  {% include 'partials/_books_section.html' %}
 </main>
 {% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block 'head'%}
+<link rel="stylesheet" href="{%static 'css/books_managment.css'%}" />
+{%endblock%} 
+
+{% block 'main' %}
+<main class="books-management">
+  <h1>Gerenciar Livro</h1>
+  <div class="books-management-container">
+    <div class="books-management-actions" >
+      <button>Adicionar livro <img src="{% static "assets/icons/add_icon.svg" %}" alt=""></button>
+    </div>
+    {% include 'partials/_books_section.html' %}
+  </div>
+</main>
+{% endblock %}
