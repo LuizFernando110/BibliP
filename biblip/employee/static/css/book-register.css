@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+main p{
+    font-family: "Merriweather Sans";
+    font-size: 1.6rem;
+}
+
+h1{
+    font-family: "Poppins";
+    font-weight: 400;
+    font-size: 3rem;
+}
+
+form{
+    width: 80%;
+}
+
+input, textarea {
+    border: solid white 0.2rem;
+    background-color: transparent;
+    border-radius: 0.8rem;
+    height: 3.6rem;
+    width: 100%;
+    padding: 1.2rem;
+    caret-color: white;
+    color: white;
+    font-family: "Merriweather Sans";
+}
+
+input::placeholder {
+    color: white;
+}
+
+.integer-field{
+    display: flex;
+    justify-content: space-between;
+    gap: 8rem;
+}
+
+.integer-field p{
+    display: flex;
+    flex-direction: column;
+}
+
+.integer-field input{
+    width: 15rem;
+}
+
+input#id_book_cover{
+    height: 30rem;
+    width: 20rem;
+}
+
+.core-infos{
+    display: flex;
+    gap: 3rem;
+}
+
+.writabel-inputs{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+textarea{
+    height: 100%;
+}

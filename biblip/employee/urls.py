@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import borrow_management, books_management, delete_book,update_book,create_book, employer_borrow_list,employer_borrow_details
+from .views import borrow_management, books_management, delete_book,update_book,create_book, employer_borrow_list,employer_borrow_details, book_register
 
 urlpatterns = [
     path('employer/borrow_management',borrow_management,name='borrow_management'),

@@ -3,7 +3,6 @@ from django.shortcuts import render,HttpResponse
 import json
 from django.conf import settings
 import os
-from .forms import loginTeacherForm
 
 #arquivos com _temp no final são temporários
 #leituras de jsons por agora são temporarias

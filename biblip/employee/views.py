@@ -65,5 +65,5 @@ def delete_book(request):
     return HttpResponse('<h1>Livro Deletado</h1>')
 
 def book_register(request):
-    context = {'form': bookRegisterForm()}
+    context = {'employer':True, 'form': bookRegisterForm()}
     return render(request, 'book_register.html', context)
