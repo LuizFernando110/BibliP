@@ -20,6 +20,9 @@ h1{
 
 form{
     width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 input, textarea {
@@ -56,19 +59,44 @@ input::placeholder {
 input#id_book_cover{
     height: 30rem;
     width: 20rem;
+    border-radius: 0;
 }
 
 .core-infos{
     display: flex;
     gap: 3rem;
+    width: 100%;
 }
 
 .writabel-inputs{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 100%;
+}
+
+#discription p{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
 }
 
 textarea{
-    height: 100%;
+    height: 20rem;
+}
+
+button{
+    background-color: #2F9E41;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    border-radius: 0.8rem;
+    width: 17rem;
+    height: 6rem;
+    font-weight: 500;
+    align-self: flex-end;
 }
