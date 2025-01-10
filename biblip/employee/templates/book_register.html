@@ -8,22 +8,49 @@
 
 {%block 'main'%}
   <main>
-    <h1>Mitos e Lendas do Brasil</h1>
-    <a href="#">link</a>
+    <div class="book-actions">
+      <a id="back-button" href="{%url "books_management"%}"><img src="{%static "assets/icons/back-arrow-white.svg"%}" alt="Voltar"></a>
+      <h1>Mitos e Lendas do Brasil</h1>
+    </div>
     <form action="post">
       {% csrf_token %}
       <div class="core-infos">
-        <p>{{ form.book_cover }}</p>
+        <p class="file-input">
+          <label for="book-cover">
+            {{ form.book_cover }}
+          </label>
+        </p>
         <div class="writabel-inputs">
-          <p>Título: {{ form.book_title }}</p>
-          <p>Autor: {{ form.writer }}</p>
-          <p>Editora: {{ form.publisher }}</p>
-          <div class="integer-field">
-            <p>Edição: {{ form.edition }}</p>
-            <p>Nº de Páginas: {{ form.number_of_pages }}</p>
-            <p>Cód.Livro: {{ form.pnld_code }}</p>
-            <p>Q.Estoque: {{ form.storage_quantity }}</p>
-          </div>
+            <p>
+              <label>Título:</label>
+              {{ form.book_title }}
+            </p>
+            <p>
+              <label for="writer">Autor:</label>
+              {{ form.writer }}
+            </p>
+            <p>
+              <label for="publisher">Editora:</label>
+              {{ form.publisher }}
+            </p>
+            <div class="integer-field">
+              <p>
+                <label for="edition">Edição:</label>
+                {{ form.edition }}
+              </p>
+              <p>
+                <label for="number_of_pages">Nº de Páginas:</label>
+                {{ form.number_of_pages }}
+              </p>
+              <p>
+                <label for="pnld_code">Cód.Livro:</label>
+                {{ form.pnld_code }}
+              </p>
+              <p>
+                <label for="storage_quantity">Q.Estoque:</label>
+                {{ form.storage_quantity }}
+              </p>
+            </div>
         </div>
       </div>
       <div id="discription">

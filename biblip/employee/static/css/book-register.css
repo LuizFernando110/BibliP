@@ -5,6 +5,8 @@ main{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 4rem;
+    margin-top: 4rem;
 }
 
 main p{
@@ -35,6 +37,14 @@ input, textarea {
     caret-color: white;
     color: white;
     font-family: "Merriweather Sans";
+}
+
+#id_book_cover{
+    cursor: pointer;
+    background-image: url(../../../static/assets/icons/Export.svg);
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 input::placeholder {
@@ -99,4 +109,23 @@ button{
     height: 6rem;
     font-weight: 500;
     align-self: flex-end;
+}
+
+.book-actions{
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    position: relative;
+}
+
+.book-actions #back-button{
+    position: absolute;
+    left: 0;
+}
+
+.book-actions img{
+    height: 2.8rem;
+    width: 2.8rem;
 }
