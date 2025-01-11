@@ -9,4 +9,4 @@ class bookRegisterForm(forms.Form):
     number_of_pages = forms.IntegerField()
     pnld_code = forms.CharField(max_length = 100)
     storage_quantity = forms.IntegerField()
-    description = forms.CharField(widget=forms.Textarea)
+    description = forms.CharField(widget=forms.Textarea())
