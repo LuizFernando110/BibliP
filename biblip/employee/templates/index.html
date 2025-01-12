@@ -13,7 +13,7 @@
     <h3>Esta semana</h3>
     <section class="appointments-container">
       {% for appointment in appointments %}
-      <a href="">
+      <a href="{% url 'employer_borrow_details' appointment.id %}">
         <div class="appointment-content">
           <span class="school-class">{{ appointment.school_class }}</span>
           <div class="dates-line">
@@ -28,10 +28,10 @@
       {% endfor %}
     </section>
     {% if hidden_appointments > 0%}
-    <button class="employee-button see-more-btn">
+    <a href="{% url 'employer_borrow_list' %}" class="employee-button see-more-btn">
       Ver mais 
       <span>+{{hidden_appointments}}</span>
-    </button>
+    </a>
     {% endif %}
   </section>
 
