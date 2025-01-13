@@ -7,9 +7,6 @@ main{
     justify-content: center;
     gap: 4rem;
     margin-top: 4rem;
-}
-
-main p{
     font-family: "Merriweather Sans";
     font-size: 1.6rem;
 }
@@ -75,11 +72,12 @@ input::placeholder {
 
 .integer-field{
     display: flex;
+    width: 100%;
+    flex-wrap: wrap;
     justify-content: space-between;
-    gap: 8rem;
 }
 
-.integer-field p{
+.integer-field div{
     display: flex;
     flex-direction: column;
 }
@@ -90,19 +88,19 @@ input::placeholder {
 
 .core-infos{
     display: flex;
-    gap: 3rem;
     width: 100%;
+    gap: 3rem;
     height: 36rem;
 }
 
 .writabel-inputs{
     display: flex;
+    width: 100%;
     flex-direction: column;
     justify-content: space-between;
-    width: 100%;
 }
 
-#discription p{
+#discription div{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -151,6 +149,6 @@ button{
     border: solid red 0.2rem;
 }
 
-p:has(textarea.error-input){
+div:has(textarea.error-input){
     color: red;
 }
