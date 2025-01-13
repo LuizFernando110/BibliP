@@ -108,9 +108,12 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  border-bottom: solid .1rem white;
+  border-bottom: solid .1rem black;
   gap: 4.5rem;
   padding: 1rem;
+}
+.employee-base-style .table-title{
+  border-bottom: solid .1rem white;
 }
 
 .table-title span{
