@@ -15,11 +15,11 @@
     <form action="post">
       {% csrf_token %}
       <div class="core-infos">
-        <p class="file-input">
-          <label for="book-cover">
+        <div class="file-input">
+          <label for="id_book_cover">
             {{ form.book_cover }}
           </label>
-        </p>
+        </div>
         <div class="writabel-inputs">
             <p>
               <label>Título:</label>
