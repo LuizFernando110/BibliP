@@ -1,7 +1,7 @@
 {% load static %}
 <link rel="stylesheet" href="{%static 'css/form-style.css'%}">
 
-<div class="login">
+<div class="login register">
     <div class="form-side">
         <div class="institution-info">
             <img src="{%static 'assets/icons/logo-if.svg'%}" alt="Logo do IF(Instituto Federal)">
@@ -11,19 +11,22 @@
     
         <form method = "post">
             {% csrf_token %}
+            {{ form.account_type }}
+            <label for="name">Nome</label>
+            {{form.name}}
+            <label for="email">Email</label>
+            {{form.email}}
             <label>Matrícula</label>
             {{ form.teacherEnrollment }}
             <label>Senha</label>
             {{ form.password }}
-            <div class="remeber-me">
-                {{ form.checkBox }}
-                <span>Lembrar de mim</span>
-            </div>
+            <label for="password confirm">Confirmar Senha</label>
+            {{ form.confirm_password}}
             <button type="submit">
                 Entrar
             </button>
             <div class="have-an-account">
-                <span>Ainda não tem uma conta</span><a href="{% url "user_register" %}">Criar conta</a>
+                <span>Já tem uma conta?</span><a href="{%url 'login_teacher'%}">Entrar</a>
             </div>
         </form>
     </div>
