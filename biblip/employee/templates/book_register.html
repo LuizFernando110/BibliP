@@ -1,0 +1,72 @@
+{% extends "base.html" %} 
+{% load static %} 
+{%block 'head'%}<link
+  rel="stylesheet"
+  href="{% static 'css/book-register.css' %}"
+/>
+{%endblock%} 
+
+{%block 'main'%}
+  <main>
+    <div class="book-actions">
+      <a id="back-button" href="{%url "books_management"%}"><img src="{%static "assets/icons/back-arrow-white.svg"%}" alt="Voltar"></a>
+      <h1>Mitos e Lendas do Brasil</h1>
+    </div>
+    <form action="post">
+      {% csrf_token %}
+      <div class="core-infos">
+        <div class="file-input">
+          <label for="id_book_cover">
+            {{ form.book_cover }}
+          </label>
+        </div>
+        <div class="writabel-inputs">
+            <div>
+              <label>Título:</label>
+              {{ form.book_title }}
+            </div>
+            <div>
+              <label for="writer">Autor:</label>
+              <div class="author-div-input">
+                <div class="author-list"></div>
+                {{ form.writer }}
+              </div>
+            </div>
+            <div>
+              <label for="publisher">Editora:</label>
+              {{ form.publisher }}
+            </div>
+            <div>
+              <label for="genrer">Gênero</label>
+              {{ form.genrer }}
+            </div>
+            <div class="integer-field">
+              <div>
+                <label for="edition">Edição:</label>
+                {{ form.edition }}
+              </div>
+              <div>
+                <label for="number_of_pages">Nº de Páginas:</label>
+                {{ form.number_of_pages }}
+              </div>
+              <div>
+                <label for="pnld_code">Cód.Livro:</label>
+                {{ form.pnld_code }}
+              </div>
+              <div>
+                <label for="storage_quantity">Q.Estoque:</label>
+                {{ form.storage_quantity }}
+              </div>
+            </div>
+        </div>
+      </div>
+      <div id="discription">
+        <div>
+          <label for="description">Descrição:</label>
+          {{ form.description }}
+        </div>
+      </div>
+      <button>Salvar</button>
+    </form>
+  </main>
+{%endblock%}

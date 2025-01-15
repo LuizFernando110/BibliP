@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+    margin-top: 4rem;
+    font-family: "Merriweather Sans";
+    font-size: 1.6rem;
+}
+
+h1{
+    font-family: "Poppins";
+    font-weight: 400;
+    font-size: 3rem;
+}
+
+form{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+main input, textarea {
+    border: solid white 0.2rem;
+    background-color: transparent;
+    border-radius: 0.8rem;
+    height: 3.6rem;
+    width: 100%;
+    padding: 1.2rem;
+    caret-color: white;
+    color: white;
+    font-family: "Merriweather Sans";
+    resize: none;
+}
+
+.file-input{
+    position: relative;
+    border: solid white 0.2rem;
+    background-color: transparent;
+    caret-color: white;
+    height: 36rem;
+    width: 26.4rem;
+    border-radius: 0;
+    cursor: pointer;
+    background-image: url(../../../static/assets/icons/Export.svg);
+    background-size: 80% 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.file-input label{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+#id_book_cover{
+    visibility: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+input::placeholder {
+    color: white;
+}
+
+.integer-field{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.integer-field div{
+    display: flex;
+    flex-direction: column;
+}
+
+.integer-field input{
+    width: 15rem;
+}
+
+.core-infos{
+    display: flex;
+    width: 100%;
+    gap: 3rem;
+    height: 36rem;
+}
+
+.writabel-inputs{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.author-div-input{
+    border: solid white 0.2rem;
+    background-color: transparent;
+    border-radius: 0.8rem;
+    width: 100%;
+    padding: 1rem;
+    caret-color: white;
+    color: white;
+    font-family: "Merriweather Sans";
+    resize: none;
+}
+.author-div-input input{
+    border: none;
+}
+.author-list{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 1rem;
+}
+.author-list .author-item{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: .1rem .8rem;
+    border-radius: .8rem;
+    font-family: 1rem;
+    background-color: rgba(0, 128, 0, 0.50);
+}
+.author-list .author-item button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: min-content;
+    height: min-content;
+    line-height: inherit;
+    padding: 0;
+    font-family: .8rem;
+    background-color: transparent;
+}
+
+#discription div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+}
+
+textarea{
+    height: 20rem;
+}
+
+main button{
+    background-color: #2F9E41;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    border-radius: 0.8rem;
+    width: 17rem;
+    height: 6rem;
+    font-weight: 500;
+    align-self: flex-end;
+}
+
+.book-actions{
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    position: relative;
+}
+
+.book-actions #back-button{
+    position: absolute;
+    left: 0;
+}
+
+.book-actions img{
+    height: 2.8rem;
+    width: 2.8rem;
+}
+
+.error-input{
+    border: solid red 0.2rem;
+}
+
+div:has(textarea.error-input){
+    color: red;
+}
