@@ -11,7 +11,10 @@
     
         <form method = "post">
             {% csrf_token %}
-            {{ form.account_type }}
+            <div class="account-type-switch">
+                {{ form.account_type }}
+            </div>
+        
             <label for="name">Nome</label>
             {{form.name}}
             <label for="email">Email</label>
@@ -26,7 +29,7 @@
                 Entrar
             </button>
             <div class="have-an-account">
-                <span>Já tem uma conta?</span> <a href="#">Entrar</a>
+                <span>Já tem uma conta?</span><a href="#">Entrar</a>
             </div>
         </form>
     </div>

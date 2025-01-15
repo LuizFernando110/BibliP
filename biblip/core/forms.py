@@ -11,7 +11,7 @@ class loginTeacherForm(forms.Form):
 
 
 class userRegisterForm(forms.Form):
-    account_type = forms.ChoiceField(choices = [('teacher', 'Professor'), ('employee', 'Funcionário')])
+    account_type = forms.ChoiceField(choices = [('Servidor', 'Servidor'), ('Professor', 'Professor')], widget=forms.RadioSelect)
 
     name = forms.CharField(max_length = 100,
     widget = forms.TextInput(attrs={'class': 'form-style', 'placeholder': 'Digite seu nome'}))

@@ -199,3 +199,39 @@ form button {
     margin: 0;
     font-size: 1.2rem;
 }
+
+.have-an-account{
+    font-family: 'Merriweather Sans';
+    font-size: 1.2rem;
+}
+
+.have-an-account span{
+    font-weight: 400;
+}
+
+.have-an-account a{
+    font-weight: 800;
+    color: #4285F4;
+}
+
+#id_account_type{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 0.2rem solid #222222;
+    border-radius: 0.8rem;
+    height: 3.6rem;
+    padding: 0.4rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
+}
+
+#id_account_type label{
+    font-weight: 500;
+    font-size: 2rem;
+    text-align: start;
+}
+
+#id_account_type input{
+    visibility: hidden;
+}
