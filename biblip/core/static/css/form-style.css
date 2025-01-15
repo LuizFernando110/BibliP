@@ -12,7 +12,7 @@ html{
 form {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 1rem;
 }
 
 
@@ -103,6 +103,9 @@ form button {
 .institution-info img{
     padding-left: 1.6rem;
 }
+.register .institution-info img{
+    width: 7rem;
+}
 
 .institution-info h1{
     font-size: 2.4rem;
@@ -114,6 +117,10 @@ form button {
     line-height: 2.6rem;
 }
 
+.register .institution-info h1{
+    font-size: 1.6rem;
+}
+
 .login{
     display: flex;
     justify-content: space-between;
@@ -121,11 +128,15 @@ form button {
 
 .image-side{
     width: 41%;
-    position: relative;
+    height: 95vh;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
 }
 
 .image-side img{
-    height: 95vh;
+    height: 100%;
     width: 100%;
     background-size: cover;
 }
@@ -175,7 +186,6 @@ form button {
     bottom: 1.2rem;
     right: 2rem;
 }
-
 #institution img{
     width: 4rem; 
 }
@@ -199,3 +209,46 @@ form button {
     margin: 0;
     font-size: 1.2rem;
 }
+
+.have-an-account{
+    font-family: 'Merriweather Sans';
+    font-size: 1.2rem;
+}
+
+.have-an-account span{
+    font-weight: 400;
+}
+
+.have-an-account a{
+    font-weight: 800;
+    color: #4285F4;
+}
+
+#id_account_type{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 0.2rem solid #222222;
+    border-radius: 0.8rem;
+    height: 2.6rem;
+    padding: 0.4rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
+}
+
+#id_account_type label{
+    font-weight: 500;
+    font-size: 1.6rem;
+    text-align: start;
+    cursor: pointer;
+}
+
+#id_account_type input{
+    /* display: none; */
+}
+
+input[for="id_account_type_0"]:checked > label{
+    background-color: #4285F4;
+    padding: .8rem;
+}
+
