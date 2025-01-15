@@ -40,6 +40,14 @@ def borrow_history(request):
         }
     )
 
+def borrow_details(request, borrow_pk):
+    json_path_temp = os.path.join(settings.BASE_DIR, 'core', 'borrow_history.json') 
+    with open (json_path_temp, 'r') as file:
+        borrow_history = json.load(file)
+
+    context={'borrow_history': borrow_history}
+    return render(request, "employer_borrow_details.html", context)
+
 def login_teacher(request):
     context={'form':loginTeacherForm()}
     return render(request,'core/login_teacher.html',context)
