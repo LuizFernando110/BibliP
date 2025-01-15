@@ -24,7 +24,7 @@ form{
     gap: 2rem;
 }
 
-input, textarea {
+main input, textarea {
     border: solid white 0.2rem;
     background-color: transparent;
     border-radius: 0.8rem;
@@ -99,6 +99,46 @@ input::placeholder {
     flex-direction: column;
     justify-content: space-between;
 }
+.author-div-input{
+    border: solid white 0.2rem;
+    background-color: transparent;
+    border-radius: 0.8rem;
+    width: 100%;
+    padding: 1rem;
+    caret-color: white;
+    color: white;
+    font-family: "Merriweather Sans";
+    resize: none;
+}
+.author-div-input input{
+    border: none;
+}
+.author-list{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 1rem;
+}
+.author-list .author-item{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: .1rem .8rem;
+    border-radius: .8rem;
+    font-family: 1rem;
+    background-color: rgba(0, 128, 0, 0.50);
+}
+.author-list .author-item button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: min-content;
+    height: min-content;
+    line-height: inherit;
+    padding: 0;
+    font-family: .8rem;
+    background-color: transparent;
+}
 
 #discription div{
     display: flex;
@@ -112,7 +152,7 @@ textarea{
     height: 20rem;
 }
 
-button{
+main button{
     background-color: #2F9E41;
     color: white;
     display: flex;
