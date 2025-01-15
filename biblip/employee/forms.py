@@ -1,7 +1,7 @@
 from django import forms
 
 class bookRegisterForm(forms.Form):
-    book_cover = forms.ImageField()
+    book_cover = forms.ImageField(widget=forms.ClearableFileInput(attrs={'accept': 'image/*'}))
     book_title = forms.CharField(max_length = 100)
     writer = forms.CharField(max_length = 100)
     publisher = forms.CharField(max_length = 100)
