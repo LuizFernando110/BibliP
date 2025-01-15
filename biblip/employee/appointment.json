@@ -1,5 +1,6 @@
 [
   {
+    "id": 1,
     "book_name": "O Auto da Compadecida",
     "school_class": "4 INFO Mat",
     "receipt_date": "2024-12-20",
@@ -8,6 +9,7 @@
     "pendency": false
   },
   {
+    "id": 2,
     "book_name": "Dom Casmurro",
     "school_class": "3 ALI VESP",
     "receipt_date": "2024-11-15",
@@ -17,6 +19,7 @@
 
   },
   {
+    "id": 3,
     "book_name": "A Moreninha",
     "school_class": "2 ALi MAT",
     "receipt_date": "2024-10-10",
@@ -26,6 +29,7 @@
 
   },
   {
+    "id": 4,
     "book_name": "Senhora",
     "school_class": "1 API VESP",
     "receipt_date": "2024-09-05",
@@ -35,6 +39,7 @@
 
   },
   {
+    "id": 5,
     "book_name": "Iracema",
     "school_class": "1 API MAT",
     "receipt_date": "2024-08-20",
@@ -43,6 +48,7 @@
     "pendency": true
   },
   {
+    "id": 6,
     "book_name": "Capitães da Areia",
     "school_class": "3 API MAT",
     "receipt_date": "2024-07-15",
@@ -51,6 +57,7 @@
     "pendency": true
   },
   {
+    "id": 7,
     "book_name": "Memórias Póstumas de Brás Cubas",
     "school_class": "3 ALI VESP",
     "receipt_date": "2024-12-10",
@@ -59,6 +66,7 @@
     "pendency": false
   },
   {
+    "id": 8,
     "book_name": "Vidas Secas",
     "school_class": "4 INFO MAT",
     "receipt_date": "2024-11-05",
@@ -67,6 +75,7 @@
     "pendency": true
   },
   {
+    "id": 9,
     "book_name": "O Guarani",
     "school_class": "2 API MAT",
     "receipt_date": "2024-10-15",
@@ -75,6 +84,7 @@
     "pendency": false
   },
   {
+    "id": 10,
     "book_name": "Quincas Borba",
     "school_class": "1 API VESP",
     "receipt_date": "2024-09-01",
@@ -83,6 +93,7 @@
     "pendency": true
   },
   {
+    "id": 11,
     "book_name": "O Cortiço",
     "school_class": "3 INFO MAT",
     "receipt_date": "2024-08-05",

@@ -25,7 +25,7 @@
           <td>{{ borrow.receipt_date }}</td>
           <td>{{ borrow.delivery_date }}</td>
           <td class="actions-td">
-            <a href="">
+            <a href="{% url 'borrow_history_details' 5 %}">
               <img
                 src="{% static 'assets/icons/eye.svg' %}"
                 alt="botão ver empréstimo"

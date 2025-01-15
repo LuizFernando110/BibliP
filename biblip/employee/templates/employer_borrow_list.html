@@ -3,7 +3,7 @@
 {%endblock%} {% block 'main' %}
 <main class="borrow-history ">
   <div class="back-arrow">
-    <a href="{% url 'index' %}"
+    <a href="{% if employer %}{% url 'borrow_management' %}{% else %}{% url 'index' %}{% endif %}"
       ><img src="{% static 'assets/icons/back-arrow.svg' %}" alt=""
     /></a>
   </div>
@@ -27,7 +27,7 @@
           <td>{{ borrow.receipt_date }}</td>
           <td>{{ borrow.delivery_date }}</td>
           <td class="actions-td">
-            <a href="">
+            <a href="{% if employer %}{% url 'employer_borrow_details' 1 %}{% else %}{% url 'borrow_history_details' 1 %}{% endif %}">
               <img
                 src="{% static 'assets/icons/eye.svg' %}"
                 alt="botão ver empréstimo"
