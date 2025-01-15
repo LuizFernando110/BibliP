@@ -1,7 +1,7 @@
 {% load static %}
 <link rel="stylesheet" href="{%static 'css/form-style.css'%}">
 
-<div class="login">
+<div class="login register">
     <div class="form-side">
         <div class="institution-info">
             <img src="{%static 'assets/icons/logo-if.svg'%}" alt="Logo do IF(Instituto Federal)">
@@ -11,10 +11,7 @@
     
         <form method = "post">
             {% csrf_token %}
-            <div class="account-type-switch">
-                {{ form.account_type }}
-            </div>
-        
+            {{ form.account_type }}
             <label for="name">Nome</label>
             {{form.name}}
             <label for="email">Email</label>
@@ -29,7 +26,7 @@
                 Entrar
             </button>
             <div class="have-an-account">
-                <span>Já tem uma conta?</span><a href="#">Entrar</a>
+                <span>Já tem uma conta?</span><a href="{%url 'login_teacher'%}">Entrar</a>
             </div>
         </form>
     </div>
