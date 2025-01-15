@@ -3,7 +3,7 @@
 {%endblock%} {% block 'main' %}
 <main class="borrow-history ">
   <div class="back-arrow">
-    <a href="{% url 'borrow_management' %}"
+    <a href="{% if employ %}{% url 'borrow_management' %}{% else %}{% url 'employer_borrow_details' %}{% endif %}"
       ><img src="{% static 'assets/icons/back-arrow.svg' %}" alt=""
     /></a>
   </div>
