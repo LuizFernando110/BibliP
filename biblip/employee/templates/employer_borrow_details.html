@@ -40,11 +40,8 @@
           <td>{{ borrow.book_name }}</td>
           <td>{{ borrow.receipt_date }}</td>
           <td>{{ borrow.delivery_date }}</td>
-          <td class="status">
-              <img
-                src="{% static 'assets/icons/edit_fill.svg' %}"
-                alt="botão editar empréstimo"
-              />
+          <td>
+            <span class="student-status delivered">status</span>
           </td>
         </tr>
         {% endfor %}
