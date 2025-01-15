@@ -10,7 +10,7 @@
   <h1>Gerenciar Livro</h1>
   <div class="books-management-container">
     <div class="books-management-actions" >
-      <button>Adicionar livro <img src="{% static "assets/icons/add_icon.svg" %}" alt=""></button>
+      <a href="{% url 'book_register' %}">Adicionar livro <img src="{% static "assets/icons/add_icon.svg" %}" alt=""></a>
     </div>
     {% include 'partials/_books_section.html' %}
   </div>
