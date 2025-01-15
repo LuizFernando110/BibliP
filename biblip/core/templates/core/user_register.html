@@ -1,0 +1,47 @@
+{% load static %}
+<link rel="stylesheet" href="{%static 'css/form-style.css'%}">
+
+<div class="login">
+    <div class="form-side">
+        <div class="institution-info">
+            <img src="{%static 'assets/icons/logo-if.svg'%}" alt="Logo do IF(Instituto Federal)">
+        <h1>Programa nacional do livro didático</h1>
+        </div>
+        
+    
+        <form method = "post">
+            {% csrf_token %}
+            {{ form.account_type }}
+            <label for="name">Nome</label>
+            {{form.name}}
+            <label for="email">Email</label>
+            {{form.email}}
+            <label>Matrícula</label>
+            {{ form.teacherEnrollment }}
+            <label>Senha</label>
+            {{ form.password }}
+            <label for="password confirm">Confirmar Senha</label>
+            {{ form.confirm_password}}
+            <button type="submit">
+                Entrar
+            </button>
+            <div class="have-an-account">
+                <span>Já tem uma conta?</span> <a href="#">Entrar</a>
+            </div>
+        </form>
+    </div>
+    
+    <div class="image-side">
+        <img src="{%static 'assets/library.png' %}" alt="Imagem de uma biblioteca">
+        <div class="image-text-content">
+            <div class="image-text">
+                <h2>Um bom livro nos transforma!</h2>
+                <p>A biblioteca PNLD, busca trazer uma aproximação mais saúdavel entre aluno e professor. Além disso, os livros do nosso acervo buscam democraticar esse acesso tão fundamental</p>
+            </div>
+            <div id="logo-side">
+                <img src="{%static 'assets/icons/logo-if.svg'%}" alt="Logo IF">
+            </div>
+        </div>
+    </div>
+</div>
+
