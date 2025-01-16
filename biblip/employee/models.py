@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 def bookpath(instance,filename):
-    return f'books/{instance.title}/{filename}'
+    return f'books/{instance.book_title}/{filename}'
 
 
 class Profile(models.Model):
@@ -41,7 +41,7 @@ class Book(models.Model):
     book_author=models.ManyToManyField(Author)
     book_publisher=models.CharField(max_length=244)
     book_edition_number=models.IntegerField()
-    book_pnld_code=models.IntegerField()
+    book_pnld_code=models.CharField(max_length=50)
     book_description=models.TextField()
     number_in_stock=models.IntegerField()
     number_available=models.IntegerField()
