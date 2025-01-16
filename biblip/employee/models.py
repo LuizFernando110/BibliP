@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from core.models import Student
 
 def bookpath(instance,filename):
     return f'books/{instance.title}/{filename}'
@@ -46,7 +45,7 @@ class Book(models.Model):
     book_description=models.TextField()
     number_in_stock=models.IntegerField()
     number_available=models.IntegerField()
-    book_status=models.IntegerField(choices=STATUS_CHOICES,max_length=1)
+    book_status=models.IntegerField(choices=STATUS_CHOICES)
     book_genre=models.ManyToManyField(Genre)
 
 
@@ -81,7 +80,7 @@ class BorrowStudent(models.Model):
 
 
     borrow_holder=models.ForeignKey(Borrow,on_delete=models.CASCADE)
-    borrow_student=models.ForeignKey(Student,on_delete=models.CASCADE)
+    borrow_student=models.ForeignKey('core.Student',on_delete=models.CASCADE)
     borrow_student_receipt_date=models.DateField()
     borrow_student_delivery_date=models.DateField()
     borrow_student_status=models.IntegerField(choices=BORROW_STUDENT_STATUS)
