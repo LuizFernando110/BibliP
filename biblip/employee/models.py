@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from core.models import Student
 
 def bookpath(instance,filename):
     return f'books/{instance.title}/{filename}'
@@ -30,6 +30,8 @@ class Author(models.Model):
 
 class Genre(models.Model):
     genre_name=models.CharField(max_length=100)
+    def __str__(self):
+        return self.genre_name
 
 class Book(models.Model):
     STATUS_CHOICES=((1,'Disponível'),
@@ -52,5 +54,39 @@ class Book(models.Model):
         return self.book_title
 
 
+class Borrow(models.Model):
+    BORROW_STATUS=((1,'analise'),
+                   (2,'aberto'),
+                   (3,'pendente'),
+                   (4,'fechado'))
+    
+
+    borrow_teacher=models.ForeignKey(Profile,on_delete=models.CASCADE)
+    borrow_book=models.ForeignKey(Book,on_delete=models.CASCADE)
+    borrow_receipt_date=models.DateField()
+    borrow_delivery_date=models.DateField()
+    borrow_status=models.IntegerField(choices=BORROW_STATUS)
+
+    def __str__(self):
+        return f'{self.borrow_teacher}:{self.borrow_book}'
+
+
+class BorrowStudent(models.Model):
+    BORROW_STUDENT_STATUS=((1,'Em espera'),
+                           (2,'Emprestado'),
+                           (3,'Devolvido'),
+                           (4,'Atrasado'),
+                           (5,'Devolvido com atraso')
+                           )
+
+
+    borrow_holder=models.ForeignKey(Borrow,on_delete=models.CASCADE)
+    borrow_student=models.ForeignKey(Student,on_delete=models.CASCADE)
+    borrow_student_receipt_date=models.DateField()
+    borrow_student_delivery_date=models.DateField()
+    borrow_student_status=models.IntegerField(choices=BORROW_STUDENT_STATUS)
+
+    def __str__(self):
+        return f'{self.borrow_student}:{self.borrow_student_status}'
 
     
