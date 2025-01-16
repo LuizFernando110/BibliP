@@ -9,7 +9,7 @@ class Student(models.Model):
     student_registration=models.CharField(max_length=14)
 
 
-    def _str_(self):
+    def __str__(self):
         return self.student_name
 
 class SchoolClass(models.Model):
@@ -17,5 +17,5 @@ class SchoolClass(models.Model):
     school_class_teacher=models.ForeignKey(Profile,on_delete=models.CASCADE)
     school_class_students=models.ManyToManyField(Student)
 
-    def _str_(self):
+    def __str__(self):
         return self.school_class_name
