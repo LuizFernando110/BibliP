@@ -3,7 +3,7 @@ from django.shortcuts import render,HttpResponse
 import json
 from django.conf import settings
 import os
-from .forms import loginTeacherForm, userRegisterForm
+from .forms import loginTeacherForm, userRegisterForm,SchoolClassForm
 
 #arquivos com _temp no final são temporários
 #leituras de jsons por agora são temporarias
@@ -56,3 +56,10 @@ def login_teacher(request):
 def user_register(request):
     context = {'form': userRegisterForm()}
     return render(request, 'core/user_register.html', context)
+
+def school_class_creation(request):
+    form=SchoolClassForm(request.POST or None,request.FILES or None)
+    if request.method=='POST':
+        if form.is_valid():
+            form.save(profile=request.user.profile)
+    return HttpResponse('criado')
