@@ -1,0 +1,21 @@
+{%include 'partials/_modals_base.html'%}
+{% load static %}
+
+{% block modal %}
+    <dialog>
+        <p>Adicionar Turma</p>
+        <div class="form_content">
+            <div class="form_camps">
+                <label for="scholl_class_name">Nome da turma</label>
+                {{form.school_class_name}}
+            </div>
+            
+            <label class="file-input" for="{{ form.school_class_students_wid.id_for_label }}"></label>        
+            {{form.school_class_students_wid}}
+        </div>
+        <div class="buttons-area">
+            <button id="neutral-button">Cancelar</button>
+            <button id="confirm-button">Enviar</button>
+        </div>
+    </dialog>
+{% endblock modal %}
