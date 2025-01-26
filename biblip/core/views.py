@@ -62,7 +62,7 @@ def school_class_creation(request):
     if request.method=='POST':
         if form.is_valid():
             form.save(profile=request.user.profile)
-    return HttpResponse('criado')
+    return render(request,'core/class_register_modal.html',{'form':form})
 
 def teste(request):
     context = {'form':SchoolClassForm}
