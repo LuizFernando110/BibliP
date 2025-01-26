@@ -34,14 +34,11 @@ class userRegisterForm(forms.Form):
     widget=forms.PasswordInput(attrs={'class': 'form-style', 'placeholder': 'Confirme sua senha'}))
 
 class SchoolClassForm(forms.ModelForm):
-
     school_class_students_wid=forms.FileField()
 
-    def clean(self):
-        #pegando o valor padrão do clean
-        cleaned_data=super().clean()
+    def csv_file_clean(self):
         #recebendo o arquivo do input
-        temp_file=cleaned_data.get('school_class_students_wid')
+        temp_file=self.cleaned_data.get('school_class_students_wid')
         lista=[]
         for chunk in temp_file.chunks():
             #usamos decode para transformar o arquivo de bytes para string
@@ -58,7 +55,26 @@ class SchoolClassForm(forms.ModelForm):
                 if nome.strip()=='' or matricula.strip()=='':
                     raise ValidationError('aluno com dados faltando')
                 lista.append({'matricula':matricula,'nome':nome})
-        cleaned_data['school_class_students_dict']=lista
+            self.cleaned_data['school_class_students_dict']=lista
+
+    def csv_save(self,relation):
+
+            #lendo dicionario de cleaned data
+        for s in self.cleaned_data.get('school_class_students_dict'):
+            student=Student.objects.filter(student_registration=s.get('matricula')).first()
+            if student:
+                relation.append(student)
+            else:
+                student=Student.objects.create(student_name=s.get('nome'),student_registration=s.get('matricula'))
+                relation.append(student)
+        return relation
+
+    def clean(self):
+        #pegando o valor padrão do clean
+        cleaned_data=super().clean()
+
+        self.csv_file_clean()
+        
         return cleaned_data 
     
 
@@ -69,16 +85,7 @@ class SchoolClassForm(forms.ModelForm):
 
         if commit:
             relation=[]
-
-            #lendo dicionario de cleaned data
-            for s in self.cleaned_data.get('school_class_students_dict'):
-                student=Student.objects.filter(student_registration=s.get('matricula')).first()
-                if student:
-                    relation.append(student)
-                else:
-                    student=Student.objects.create(student_name=s.get('nome'),student_registration=s.get('matricula'))
-                    relation.append(student)
-
+            self.csv_save(relation=relation)
             #salvando no db
             instance.save()
             #adicionando as relações
