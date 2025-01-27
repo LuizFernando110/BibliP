@@ -4,13 +4,12 @@ import json
 from django.conf import settings
 import os
 from .forms import loginTeacherForm, userRegisterForm
+from employee.models import Book 
 
 #arquivos com _temp no final são temporários
 #leituras de jsons por agora são temporarias
 def index(request):
-    json_path_temp = os.path.join(settings.BASE_DIR, 'core', 'books.json') 
-    with open (json_path_temp, 'r') as file:
-        books = json.load(file)
+    books = Book.objects.all()
     return render(request,'core/index.html', {'books': books})
 
 def search(request,search):
