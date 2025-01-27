@@ -35,7 +35,7 @@ class userRegisterForm(forms.Form):
 
 class SchoolClassForm(forms.ModelForm):
     school_class_students_wid=forms.FileField()
-
+      
     def csv_file_clean(self):
         #recebendo o arquivo do input
         temp_file=self.cleaned_data.get('school_class_students_wid')
@@ -57,7 +57,7 @@ class SchoolClassForm(forms.ModelForm):
                 lista.append({'matricula':matricula,'nome':nome})
             self.cleaned_data['school_class_students_dict']=lista
 
-    def csv_save(self,relation):
+    def csv_file_save(self,relation):
 
             #lendo dicionario de cleaned data
         for s in self.cleaned_data.get('school_class_students_dict'):
@@ -85,7 +85,7 @@ class SchoolClassForm(forms.ModelForm):
 
         if commit:
             relation=[]
-            self.csv_save(relation=relation)
+            self.csv_file_save(relation=relation)
             #salvando no db
             instance.save()
             #adicionando as relações
