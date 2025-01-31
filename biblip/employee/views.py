@@ -4,7 +4,7 @@ import json
 from django.conf import settings
 import os
 from .forms import bookRegisterForm
-from .models import Book 
+from .models import Book, Borrow
 
 def borrow_management(request):
     json_path_temp = os.path.join(settings.BASE_DIR, 'employee', 'appointment.json')
@@ -34,10 +34,11 @@ def books_management(request):
     return render(request, 'books-management.html', context)
 
 def employer_borrow_list(request):
-    json_path_temp = os.path.join(settings.BASE_DIR, 'employee', 'appointment.json') 
-    with open (json_path_temp, 'r') as file:
-        borrow_history = json.load(file)
-
+    # json_path_temp = os.path.join(settings.BASE_DIR, 'employee', 'appointment.json') 
+    # with open (json_path_temp, 'r') as file:
+    #     borrow_history = json.load(file)
+    borrow_history = Borrow.objects.all()
+    
     context={'employer':True,
              'filter_title': 'Histórico de alugueis',
             'borrow_history': borrow_history}
