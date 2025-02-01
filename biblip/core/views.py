@@ -4,7 +4,7 @@ import json
 from django.conf import settings
 import os
 from .forms import loginTeacherForm, userRegisterForm
-from employee.models import Book 
+from employee.models import Book, Borrow, Profile
 
 #arquivos com _temp no final são temporários
 #leituras de jsons por agora são temporarias
@@ -28,9 +28,15 @@ def borrow(request,book_pk):
     return render(request,'core/book_borrow.html',context)
 
 def borrow_history(request):
-    json_path_temp = os.path.join(settings.BASE_DIR, 'core', 'borrow_history.json') 
-    with open (json_path_temp, 'r') as file:
-        borrow_history = json.load(file)
+    # json_path_temp = os.path.join(settings.BASE_DIR, 'core', 'borrow_history.json') 
+    # with open (json_path_temp, 'r') as file:
+    #     borrow_history = json.load(file)
+    try:
+        profile = Profile.objects.get(user=request.user)
+        borrow_history = Borrow.objects.filter(borrow_teacher=profile)
+    except Profile.DoesNotExist():
+        borrow_history = []
+
     return render(
         request,
         'core/borrow_history.html',

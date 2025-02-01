@@ -10,6 +10,7 @@
   <div class="borrow-history-container">
     {%include 'partials/_filter_header.html'%}
     <div class="table-container">
+      {% if borrow_history %}
       <table class="history-table">
         <tr class="history-table-header">
           <th id="book-name">Nome do livro</th>
@@ -20,10 +21,10 @@
         </tr>
         {% for borrow in borrow_history %}
         <tr>
-          <td>{{ borrow.book_name }}</td>
+          <td>{{ borrow.borrow_book }}</td>
           <td>{{ borrow.school_class }}</td>
-          <td>{{ borrow.receipt_date }}</td>
-          <td>{{ borrow.delivery_date }}</td>
+          <td>{{ borrow.borrow_receipt_date|date:"d/m/Y" }}</td>
+          <td>{{ borrow.borrow_delivery_date|date:"d/m/Y" }}</td>
           <td class="actions-td">
             <a href="{% url 'borrow_history_details' 5 %}">
               <img
@@ -47,6 +48,9 @@
         </tr>
         {% endfor %}
       </table>
+      {% else %}
+        <span>Nenhum empréstimo foi feito</span>
+      {% endif %}
     </div>
   </div>
 </main>
