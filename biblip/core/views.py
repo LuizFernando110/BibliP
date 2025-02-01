@@ -28,11 +28,7 @@ def borrow(request,book_pk):
     return render(request,'core/book_borrow.html',context)
 
 def borrow_history(request):
-    try:
-        profile = Profile.objects.get(user=request.user)
-        borrow_history = Borrow.objects.filter(borrow_teacher=profile)
-    except Profile.DoesNotExist():
-        borrow_history = []
+    borrow_history = Borrow.objects.filter(borrow_teacher=request.user.profile)
 
     return render(
         request,
