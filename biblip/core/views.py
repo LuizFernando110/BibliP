@@ -40,6 +40,7 @@ def borrow_history(request):
         }
     )
 
+
 def borrow_details(request, borrow_pk):
     json_path_temp = os.path.join(settings.BASE_DIR, 'core', 'borrow_history.json') 
     with open (json_path_temp, 'r') as file:

@@ -3,6 +3,40 @@
   <h2>{%if filter_title%}{{filter_title}}{%else%}Catálogo{%endif%}</h2>
   <div class="filter-container">
     <span>filtrar por: </span>
-    <div>categorias...</div>
+    <button class="filter-button">categorias...</button>
+    <div class="dropdown-menu">
+      <ul class="dropdown-column">
+        <li><span>Categoria</span></li>
+        <li><span>Categoria</span></li>
+        <li><span>Categoria</span></li>
+      </ul>
+      <ul class="dropdown-column">
+        <li><span>Categoria</span></li>
+        <li><span>Categoria</span></li>
+        <li><span>Categoria</span></li>
+      </ul>
+      <ul class="dropdown-column">
+        <li><span>Categoria</span></li>
+        <li><span>Categoria</span></li>
+        <li><span>Categoria</span></li>
+      </ul>
+    </div>
   </div>
 </div>
+
+<script>
+  const button = document.querySelector('.filter-button');
+  const dropdown = document.querySelector('.dropdown-menu');
+
+  button.addEventListener('click', () => {
+    dropdown.classList.toggle('open');
+    console.log('open')
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!dropdown.contains(e.target) && !button.contains(event.target)) {
+      dropdown.classList.remove('open');
+      console.log('remove open')
+    }
+  });
+</script>
