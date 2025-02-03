@@ -15,7 +15,7 @@ class Student(models.Model):
 class SchoolClass(models.Model):
     school_class_name=models.CharField(max_length=244)
     school_class_teacher=models.ForeignKey(Profile,on_delete=models.CASCADE)
-    school_class_students=models.ManyToManyField(Student)
+    school_class_students=models.ManyToManyField('Student')
 
     def __str__(self):
         return self.school_class_name
