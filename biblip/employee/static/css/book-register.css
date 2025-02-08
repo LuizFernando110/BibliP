@@ -24,7 +24,7 @@ form{
     gap: 2rem;
 }
 
-main input, textarea {
+main input, textarea, select {
     border: solid white 0.2rem;
     background-color: transparent;
     border-radius: 0.8rem;
@@ -60,7 +60,7 @@ main input, textarea {
     cursor: pointer;
 }
 
-#id_book_cover{
+#id_book_picture{
     visibility: hidden;
     width: 100%;
     height: 100%;
@@ -70,19 +70,18 @@ input::placeholder {
     color: white;
 }
 
-.integer-field{
+.metadatas-field{
     display: flex;
     width: 100%;
-    flex-wrap: wrap;
     justify-content: space-between;
 }
 
-.integer-field div{
+.metadatas-field div{
     display: flex;
     flex-direction: column;
 }
 
-.integer-field input{
+.metadatas-field input{
     width: 15rem;
 }
 
@@ -90,16 +89,16 @@ input::placeholder {
     display: flex;
     width: 100%;
     gap: 3rem;
-    height: 36rem;
 }
 
 .writabel-inputs{
     display: flex;
     width: 100%;
     flex-direction: column;
-    justify-content: space-between;
+    gap: 2rem;
 }
-.author-div-input{
+
+.author-div-input, .genre-div-input{
     border: solid white 0.2rem;
     background-color: transparent;
     border-radius: 0.8rem;
@@ -110,25 +109,33 @@ input::placeholder {
     font-family: "Merriweather Sans";
     resize: none;
 }
-.author-div-input input{
+.author-div-input input, .genre-div-input input{
     border: none;
 }
-.author-list{
+.author-list, .genre-list{
     display: flex;
-    align-items: center;
-    justify-content: start;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
     gap: 1rem;
 }
-.author-list .author-item{
+
+#selected-authors, #selected-genres{
+    display: flex;
+    gap: 0.4rem;
+}
+
+#selected-authors .item, #selected-genres .item{
     display: flex;
     gap: 1rem;
     align-items: center;
+    justify-content: center;
     padding: .1rem .8rem;
     border-radius: .8rem;
     font-family: 1rem;
     background-color: rgba(0, 128, 0, 0.50);
 }
-.author-list .author-item button{
+#selected-authors .item button, #selected-genres .item button{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -140,7 +147,7 @@ input::placeholder {
     background-color: transparent;
 }
 
-#discription div{
+#description{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -191,4 +198,11 @@ main button{
 
 div:has(textarea.error-input){
     color: red;
+}
+
+select option{
+    background-color: #4B4B4B;
+    color: white;
+    font-family: "Merriweather Sans";
+    display: flex;
 }

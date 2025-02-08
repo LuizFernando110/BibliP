@@ -1,9 +1,15 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render, HttpResponse
+from django.views.generic.edit import CreateView
 #importançoes temporararias para o json:
 import json
 from django.conf import settings
 import os
-from .forms import bookRegisterForm
+from .forms import BookForm
+from .models import Book, Author, Genre, BookAuthor, BookGenre
+from django.http import JsonResponse
+from django.views import View
+from django.views.generic import ListView
+from django.urls import reverse_lazy
 
 def borrow_management(request):
     json_path_temp = os.path.join(settings.BASE_DIR, 'employee', 'appointment.json')
@@ -64,6 +70,68 @@ def update_book(request):
 def delete_book(request):
     return HttpResponse('<h1>Livro Deletado</h1>')
 
-def book_register(request):
-    context = {'employer':True, 'form': bookRegisterForm()}
-    return render(request, 'book_register.html', context)
+class BookFormCreateView(CreateView):
+    form_class = BookForm
+    model = Book
+    template_name = "book_register.html"
+    context_object_name = 'books'
+    success_url = reverse_lazy('books_management')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['employer'] = True
+        return context
+    
+    def form_invalid(self, form):
+        # Exibindo os erros no terminal
+        print(form.errors)  # Aqui você verá todos os erros no terminal
+        # Também pode exibir erros específicos:
+        for field in form:
+            for error in field.errors:
+                print(f"Erro no campo {field.name}: {error}")
+        
+        # Retorna a resposta com o formulário inválido para o template
+        return super().form_invalid(form)
+
+class SearchGenreView(ListView):
+    model = Genre
+
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get("q", "")
+        results = self.model.objects.filter(genre_name__icontains=query)[:5]
+        data = {'id': [obj.id for obj in results], 
+                'results': [obj.genre_name for obj in results]}
+        return JsonResponse(data)
+
+   
+class SearchAuthorView(ListView):
+    model = Author
+
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get("q", "")
+        results = self.model.objects.filter(author_name__icontains=query)[:5]
+        data = {'id': [obj.id for obj in results], 
+                'results': [obj.author_name for obj in results]}
+        return JsonResponse(data)
+
+
+class BookCreateAjaxView(View):
+
+    def post(self, request, *args, **kwargs):
+        form = BookForm(request.POST, request.FILES)
+        if form.is_valid():
+            book = form.save(commit=False)
+            book.save()
+
+            authors_ids = request.POST.getlist('book_author')
+            genre_ids = request.POST.getlist('book_genre')
+
+            for author_id in authors_ids:
+                BookAuthor.objects.create(book = book, author_id = author_id)
+
+            for genre_id in genre_ids:
+                BookGenre.objects.create(book = book, genre_id = genre_id)
+
+            return JsonResponse({'message': 'Livro criado com sucesso', "book_id": book.id}, status=201)
+        else:
+            return JsonResponse({"erros": form.errors}, status=400)
