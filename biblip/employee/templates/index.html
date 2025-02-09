@@ -17,8 +17,8 @@
         <div class="appointment-content">
           <span class="school-class">a</span>
           <div class="dates-line">
-            <span>{{appointment.borrow_receipt_date}}</span> -
-            <span>{{appointment.borrow_delivery_date}}</span>
+            <span>{{appointment.borrow_receipt_date|date:"d/m/Y"}}</span> -
+            <span>{{appointment.borrow_delivery_date|date:"d/m/Y"}}</span>
           </div>
           <span class="book-name clamp-1">{{appointment.borrow_book}}</span>
         </div>
@@ -43,8 +43,8 @@
         <div class="appointment-content">
           <span class="school-class">a</span>
           <div class="dates-line">
-            <span>{{appointment.borrow_receipt_date}}</span> -
-            <span>{{appointment.borrow_delivery_date}}</span>
+            <span>{{appointment.borrow_receipt_date|date:"d/m/Y"}}</span> -
+            <span>{{appointment.borrow_delivery_date|date:"d/m/Y"}}</span>
           </div>
           <span class="book-name clamp-1">{{appointment.borrow_book}}</span>
         </div>
