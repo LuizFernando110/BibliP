@@ -4,17 +4,24 @@ import json
 from django.conf import settings
 import os
 from .forms import bookRegisterForm
-from .models import Book 
+from .models import Book,Borrow
+from datetime import datetime, timedelta
 
 def borrow_management(request):
-    json_path_temp = os.path.join(settings.BASE_DIR, 'employee', 'appointment.json')
-    with open (json_path_temp, 'r') as file:
-        appointments = json.load(file)
-    #Não esta acontecendo aqui mais a ideia é que o appointments seja os da semana, mas pendencias é entre todos 
+    today = datetime.today()
+
+    day_of_week = (datetime.weekday(today)+1)%7 
+
+    first_day_of_the_week=datetime.date(today-timedelta(days=day_of_week))
+    last_day_of_the_week=datetime.date(today+timedelta(days=(6-day_of_week)))
+
+
+    appointments=Borrow.objects.filter(borrow_delivery_date__range=(first_day_of_the_week,last_day_of_the_week))
+    pending_appointments=Borrow.objects.filter(borrow_status=3)
+
+
     appointments_limit = 8
     hidden_appointments_count = max(len(appointments) - appointments_limit, 0)
-
-    pending_appointments = [app for app in appointments if app.get('pendency')]
 
     pending_limit = 4
     hidden_pending_count = max(len(pending_appointments) - pending_limit, 0)

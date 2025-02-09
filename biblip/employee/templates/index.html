@@ -15,12 +15,12 @@
       {% for appointment in appointments %}
       <a href="{% url 'employer_borrow_details' appointment.id %}">
         <div class="appointment-content">
-          <span class="school-class">{{ appointment.school_class }}</span>
+          <span class="school-class">a</span>
           <div class="dates-line">
-            <span>{{appointment.receipt_date}}</span> -
-            <span>{{appointment.delivery_date}}</span>
+            <span>{{appointment.borrow_receipt_date}}</span> -
+            <span>{{appointment.borrow_delivery_date}}</span>
           </div>
-          <span class="book-name clamp-1">{{appointment.book_name}}</span>
+          <span class="book-name clamp-1">{{appointment.borrow_book}}</span>
         </div>
       </a>
       {% empty %}
@@ -38,18 +38,17 @@
   <section class="appointments-section">
     <h2>Pendencias</h2>
     <section class="appointments-container">
-      {% for appointment in appointments %} {% if appointment.pendency %}
+      {% for appointment in pending_appointments %}
       <a href="#">
         <div class="appointment-content">
-          <span class="school-class">{{ appointment.school_class }}</span>
+          <span class="school-class">a</span>
           <div class="dates-line">
-            <span>{{appointment.receipt_date}}</span> -
-            <span>{{appointment.delivery_date}}</span>
+            <span>{{appointment.borrow_receipt_date}}</span> -
+            <span>{{appointment.borrow_delivery_date}}</span>
           </div>
-          <span class="book-name clamp-1">{{appointment.book_name}}</span>
+          <span class="book-name clamp-1">{{appointment.borrow_book}}</span>
         </div>
       </a>
-      {% endif %} 
       {% empty %}
       <span>Não há pendencias</span>
       {% endfor %}
