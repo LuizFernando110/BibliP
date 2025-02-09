@@ -82,16 +82,6 @@ class BookFormCreateView(CreateView):
         context['employer'] = True
         return context
     
-    def form_invalid(self, form):
-        # Exibindo os erros no terminal
-        print(form.errors)  # Aqui você verá todos os erros no terminal
-        # Também pode exibir erros específicos:
-        for field in form:
-            for error in field.errors:
-                print(f"Erro no campo {field.name}: {error}")
-        
-        # Retorna a resposta com o formulário inválido para o template
-        return super().form_invalid(form)
 
 class SearchGenreView(ListView):
     model = Genre
@@ -132,6 +122,9 @@ class BookCreateAjaxView(View):
             for genre_id in genre_ids:
                 BookGenre.objects.create(book = book, genre_id = genre_id)
 
-            return JsonResponse({'message': 'Livro criado com sucesso', "book_id": book.id}, status=201)
+            return JsonResponse({'message': 'Livro criado com sucesso', 
+                                 "book_id": book.id,
+                                 "success": True,
+                                 "redirect_url": reverse_lazy("books_management")}, status=201)
         else:
             return JsonResponse({"erros": form.errors}, status=400)

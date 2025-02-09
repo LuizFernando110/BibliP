@@ -177,19 +177,32 @@
       })
       .then(response => response.json())
       .then(data => {
-          if (data.errors) {
-              alert("Erro: " + JSON.stringify(data.errors));
+          if (data.success) {  // Agora pega o valor correto
+            window.location.href = data.redirect_url;
+          } else if (data.errors) {
+            alert("Erro: " + JSON.stringify(data.errors));
           } else {
-              document.getElementById("book-form").reset();
-              $("#selected-authors").empty();
-              $("#selected-genres").empty();
-              selectedAuthors = [];
-              selectedGenres = [];
-          }
+            document.getElementById("book-form").reset();
+            $("#selected-authors").empty();
+            $("#selected-genres").empty();
+            selectedAuthors = [];
+            selectedGenres = [];
+        }
       })
       .catch(error => console.error("Erro:", error));
     });
   });
+
+  var fileInput = document.querySelector('.file-input input')
+  var fileDiv = document.querySelector('.file-input')
+
+  fileInput.addEventListener('change', function () {
+    if (fileInput.files.length > 0) {
+        var fileURL = URL.createObjectURL(fileInput.files[0])
+        fileDiv.style.backgroundImage = `url('${fileURL}')`
+        fileDiv.style.backgroundSize = `cover`
+    }
+  })
 </script>
   
 {%endblock%}

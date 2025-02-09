@@ -44,7 +44,7 @@ main input, textarea, select {
     caret-color: white;
     height: 36rem;
     width: 26.4rem;
-    border-radius: 0;
+    border-radius: 0.8rem;
     cursor: pointer;
     background-image: url(../../../static/assets/icons/Export.svg);
     background-size: 80% 80%;
@@ -204,5 +204,4 @@ select option{
     background-color: #4B4B4B;
     color: white;
     font-family: "Merriweather Sans";
-    display: flex;
 }
