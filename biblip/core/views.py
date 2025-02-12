@@ -1,16 +1,29 @@
 from django.shortcuts import render,HttpResponse
+from django.views.generic import ListView,DetailView
+from .forms import loginTeacherForm, userRegisterForm,SchoolClassForm
+from employee.models import Book 
+
 #importançoes temporararias para o json:
 import json
 from django.conf import settings
 import os
-from .forms import loginTeacherForm, userRegisterForm,SchoolClassForm
-from employee.models import Book 
+
 
 #arquivos com _temp no final são temporários
 #leituras de jsons por agora são temporarias
-def index(request):
-    books = Book.objects.all()
-    return render(request,'core/index.html', {'books': books})
+
+class index(ListView):
+    model=Book
+    context_object_name='books'
+    template_name='core/index.html'
+
+    def get_queryset(self):
+        search=self.request.GET.get('search')
+        if search:
+            queryset=Book.objects.filter(book_title__icontains=search)
+            return queryset
+        queryset=super().get_queryset()
+        return queryset
 
 def search(request,search):
     context={'search':search}
@@ -19,9 +32,12 @@ def search(request,search):
     return render(request,"core/search_temp.html",context)
 
 
-def details(request,book_pk):
-    context={'book_pk':book_pk}
-    return render(request,'core/book_details.html',context)
+
+class details(DetailView):
+    model=Book
+    template_name='core/book_details.html'
+    pk_url_kwarg='book_pk'
+    context_object_name='book'
 
 def borrow(request,book_pk):
     context={'book_pk':book_pk}
