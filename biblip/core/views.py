@@ -60,13 +60,12 @@ class borrow_history(ListView):
         return context
     
 
-def borrow_details(request, borrow_pk):
-    json_path_temp = os.path.join(settings.BASE_DIR, 'core', 'borrow_history.json') 
-    with open (json_path_temp, 'r') as file:
-        borrow_history = json.load(file)
 
-    context={'borrow_history': borrow_history}
-    return render(request, "employer_borrow_details.html", context)
+class borrow_details(DetailView):
+    template_name="employer_borrow_details.html"
+    model=Borrow
+    context_object_name='borrow'
+    pk_url_kwarg='borrow_pk'
 
 def login_teacher(request):
     context={'form':loginTeacherForm()}
