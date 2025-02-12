@@ -3,8 +3,10 @@ from django.shortcuts import render,HttpResponse
 import json
 from django.conf import settings
 import os
-from .forms import loginTeacherForm, userRegisterForm,SchoolClassForm
-
+from django.views.generic import CreateView 
+from .forms import loginTeacherForm, SchoolClassForm, ProfileRegistrationForm
+from django.contrib.auth.models import User
+from django.urls import reverse_lazy
 #arquivos com _temp no final são temporários
 #leituras de jsons por agora são temporarias
 def index(request):
@@ -53,9 +55,21 @@ def login_teacher(request):
     context={'form':loginTeacherForm()}
     return render(request,'core/login_teacher.html',context)
 
-def user_register(request):
-    context = {'form': userRegisterForm()}
-    return render(request, 'core/user_register.html', context)
+class ProfileRegistrationCreateView(CreateView):
+    form_class = ProfileRegistrationForm
+    model = User
+    template_name = "core/user_register.html"
+    success_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        password = form.cleaned_data.get('password')
+        confirm_password = form.cleaned_data.get('confirm_password')
+
+        if password != confirm_password:
+            form.add_erro('confirm_password', 'As senhas não são compatíveis.')
+            return super().form_invalid(form)
+        
+        return super().form_valid(form)
 
 def school_class_creation(request):
     form=SchoolClassForm(request.POST or None,request.FILES or None)

@@ -1,10 +1,11 @@
 from django import forms 
 from .models import SchoolClass,Student
-
+from employee.models import Profile
+from django.contrib.auth.models import User
 from django.core.files.temp import NamedTemporaryFile
 import csv
 
-class loginTeacherForm(forms.Form):
+class loginTeacherForm(forms.ModelForm):
     teacherEnrollment = forms.CharField(max_length = 14,
     widget = forms.TextInput(attrs={'class': 'form-style', 'placeholder': 'Digite sua matrícula'}))
 
@@ -14,23 +15,31 @@ class loginTeacherForm(forms.Form):
     checkBox = forms.BooleanField(required = False)
 
 
-class userRegisterForm(forms.Form):
-    account_type = forms.ChoiceField(choices = [('Servidor', 'Servidor'), ('Professor', 'Professor')], widget=forms.RadioSelect)
+class ProfileRegistrationForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
+    profile_registration = forms.CharField(max_length = 14)
+    profile_type = forms.ChoiceField(choices=Profile.USER_TYPE, widget=forms.RadioSelect)
 
-    name = forms.CharField(max_length = 100,
-    widget = forms.TextInput(attrs={'class': 'form-style', 'placeholder': 'Digite seu nome'}))
+    class Meta:
+        model = User
+        fields = ['first_name', 'email', 'password']
 
-    email = forms.EmailField(max_length = 100,
-    widget = forms.EmailInput(attrs={'class': 'form-style', 'placeholder': 'Digite seu email'}))
-    
-    teacherEnrollment = forms.CharField(max_length = 14,
-    widget = forms.TextInput(attrs={'class': 'form-style', 'placeholder': 'Digite sua matrícula'}))
-
-    password = forms.CharField(
-    widget=forms.PasswordInput(attrs={'class': 'form-style', 'placeholder': 'Digite sua senha'}))
-
-    confirm_password = forms.CharField(
-    widget=forms.PasswordInput(attrs={'class': 'form-style', 'placeholder': 'Confirme sua senha'}))
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password'])
+        user.username(self.cleaned_data['profile_registration'])
+        
+        if commit:
+            user.save()
+            Profile.objects.create(
+                user=user, 
+                profile_type = self.cleaned_data['profile_type'], 
+                profile_registration = self.cleaned_data['profile_registration']
+            )
+            
+        return user
+            
 
 class SchoolClassForm(forms.ModelForm):
 
