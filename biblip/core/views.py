@@ -1,7 +1,7 @@
 from django.shortcuts import render,HttpResponse
 from django.views.generic import ListView,DetailView
 from .forms import loginTeacherForm, userRegisterForm,SchoolClassForm
-from employee.models import Book 
+from employee.models import Book,Borrow
 
 #importançoes temporararias para o json:
 import json
@@ -43,18 +43,22 @@ def borrow(request,book_pk):
     context={'book_pk':book_pk}
     return render(request,'core/book_borrow.html',context)
 
-def borrow_history(request):
-    json_path_temp = os.path.join(settings.BASE_DIR, 'core', 'borrow_history.json') 
-    with open (json_path_temp, 'r') as file:
-        borrow_history = json.load(file)
-    return render(
-        request,
-        'core/borrow_history.html',
-        {
-            'filter_title': 'Histórico de alugueis',
-            'borrow_history': borrow_history
-        }
-    )
+
+class borrow_history(ListView):
+    model=Borrow
+    template_name='core/borrow_history.html'
+    context_object_name='borrow_history'
+
+    def get_queryset(self):
+        prof=self.request.user.profile
+        queryset=Borrow.objects.filter(borrow_teacher=prof)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(**kwargs)
+        context['filter_title']='Histórico de alugueis'
+        return context
+    
 
 def borrow_details(request, borrow_pk):
     json_path_temp = os.path.join(settings.BASE_DIR, 'core', 'borrow_history.json') 
