@@ -1,5 +1,6 @@
-from django.shortcuts import render,HttpResponse
-from django.views.generic import ListView,DetailView
+from django.shortcuts import render,HttpResponse,redirect
+from django.contrib import messages
+from django.views.generic import ListView,DetailView,FormView
 from .forms import loginTeacherForm, userRegisterForm,SchoolClassForm
 from employee.models import Book,Borrow
 
@@ -75,13 +76,13 @@ def user_register(request):
     context = {'form': userRegisterForm()}
     return render(request, 'core/user_register.html', context)
 
-def school_class_creation(request):
-    form=SchoolClassForm(request.POST or None,request.FILES or None)
-    if request.method=='POST':
-        if form.is_valid():
-            form.save(profile=request.user.profile)
-    return render(request,'core/class_register_modal.html',{'form':form})
 
-def teste(request):
-    context = {'form':SchoolClassForm}
-    return render(request, 'core/class_register_modal.html', context)
+class school_class_creation(FormView):
+    form_class=SchoolClassForm
+    template_name='core/class_register_modal.html'
+    success_url=reversed('index')
+
+    def form_valid(self, form):
+        form.save(profile=self.request.user.profile)
+        messages.add_message(self.request,messages.SUCCESS,"Turma adicionada com sucesso")
+        return redirect('index')
