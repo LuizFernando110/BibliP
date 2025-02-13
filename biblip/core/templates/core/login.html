@@ -12,11 +12,10 @@
         <form method = "post">
             {% csrf_token %}
             <label>Matrícula</label>
-            {{ form.teacherEnrollment }}
+            {{ form.username }}
             <label>Senha</label>
             {{ form.password }}
             <div class="remeber-me">
-                {{ form.checkBox }}
                 <span>Lembrar de mim</span>
             </div>
             <button type="submit">

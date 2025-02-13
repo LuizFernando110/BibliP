@@ -3,10 +3,14 @@ from django.shortcuts import render,HttpResponse
 import json
 from django.conf import settings
 import os
-from django.views.generic import CreateView 
-from .forms import loginTeacherForm, SchoolClassForm, ProfileRegistrationForm
+from django.views.generic import CreateView, FormView
+from .forms import SchoolClassForm, ProfileRegistrationForm, LoginForm
 from django.contrib.auth.models import User
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import redirect, get_object_or_404
+from django.contrib import messages
+from employee.models import Profile
 #arquivos com _temp no final são temporários
 #leituras de jsons por agora são temporarias
 def index(request):
@@ -51,9 +55,6 @@ def borrow_details(request, borrow_pk):
     context={'borrow_history': borrow_history}
     return render(request, "employer_borrow_details.html", context)
 
-def login_teacher(request):
-    context={'form':loginTeacherForm()}
-    return render(request,'core/login_teacher.html',context)
 
 class ProfileRegistrationCreateView(CreateView):
     form_class = ProfileRegistrationForm
@@ -70,6 +71,33 @@ class ProfileRegistrationCreateView(CreateView):
             return super().form_invalid(form)
         
         return super().form_valid(form)
+
+class LoginView(FormView):
+    template_name = 'core/login.html'  
+    form_class = LoginForm
+
+    def form_valid(self, form):
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        user = authenticate(self.request, username=username, password=password)
+
+        if user is not None:
+            login(self.request, user)
+            return redirect(self.get_success_url(user))
+        else:
+            messages.error(self.request, "Usuário ou senha inválidos.")
+            return self.form_invalid(form)  
+
+    def get_success_url(self, user):
+        try:
+            profile = get_object_or_404(Profile, user=user)
+            if profile.profile_type == 1:
+                return reverse('borrow_management')
+            else:
+                return reverse_lazy('index')
+        except Profile.DoesNotExist:
+            logout(self.request)
+            return reverse('login')
 
 def school_class_creation(request):
     form=SchoolClassForm(request.POST or None,request.FILES or None)

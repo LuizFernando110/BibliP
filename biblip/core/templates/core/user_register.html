@@ -11,7 +11,9 @@
     
         <form method = "post">
             {% csrf_token %}
-            {{ form.profile_type }}
+            <div id="account_type">
+                {{ form.profile_type }}
+            </div>
             <label for="name">Nome</label>
             {{form.first_name}}
             <label for="email">Email</label>
@@ -23,10 +25,10 @@
             <label for="password confirm">Confirmar Senha</label>
             {{ form.confirm_password }}
             <button type="submit">
-                Entrar
+                Cadastrar
             </button>
             <div class="have-an-account">
-                <span>Já tem uma conta?</span><a href="{%url 'login_teacher'%}">Entrar</a>
+                <span>Já tem uma conta?</span><a href="{%url 'login'%}">Entrar</a>
             </div>
         </form>
     </div>

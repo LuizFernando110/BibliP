@@ -15,6 +15,14 @@ form {
     gap: 1rem;
 }
 
+form input{
+    background-color: transparent;
+    border-radius: 0.4rem;
+    border: 0.2rem solid #4b4b4b;
+    padding: 0.4rem 0.8rem;
+    font-family: "Merriweather Sans";
+}
+
 
 form label {
     font-size: 1.6rem;
@@ -224,27 +232,24 @@ form button {
     color: #4285F4;
 }
 
-#id_account_type{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+#account_type{
     border: 0.2rem solid #222222;
     border-radius: 0.8rem;
-    height: 2.6rem;
     padding: 0.4rem;
     padding-left: 4rem;
     padding-right: 4rem;
 }
 
-#id_account_type label{
+#id_profile_type {
+    display: flex;
+    justify-content: space-between;
+}
+
+#id_profile_type label{
     font-weight: 500;
     font-size: 1.6rem;
     text-align: start;
     cursor: pointer;
-}
-
-#id_account_type input{
-    /* display: none; */
 }
 
 input[for="id_account_type_0"]:checked > label{
