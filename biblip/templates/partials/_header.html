@@ -21,9 +21,12 @@
   <a href="{% url 'borrow_history' %}" class="header-btn">
     <img src="{% static '/assets/icons/book.svg' %}" alt="" />
   </a>
-  <a href="{% url "login" %}" class="sign-in-button">Entrar</a>
-  <form action="{% url 'logout' %}" method='post'> 
-    {% csrf_token %} 
-    <button type="submit">deslogar</button>
-  </form>
+  {% if request.user.is_authenticated == False %}
+    <a href="{% url "login" %}" class="sign-in-button">Entrar</a>
+  {% else %}
+    <form action="{% url 'logout' %}" method='post'> 
+      {% csrf_token %} 
+      <button type="submit">deslogar</button>
+    </form>
+  {% endif %}
 </header>
