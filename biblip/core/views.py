@@ -11,13 +11,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import LogoutView
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
-from employee.models import Profile
+from employee.models import Book, Profile
+
 #arquivos com _temp no final são temporários
 #leituras de jsons por agora são temporarias
 def index(request):
-    json_path_temp = os.path.join(settings.BASE_DIR, 'core', 'books.json') 
-    with open (json_path_temp, 'r') as file:
-        books = json.load(file)
+    books = Book.objects.all()
     return render(request,'core/index.html', {'books': books})
 
 def search(request,search):
@@ -132,7 +131,7 @@ def school_class_creation(request):
     if request.method=='POST':
         if form.is_valid():
             form.save(profile=request.user.profile)
-    return HttpResponse('criado')
+    return render(request,'core/class_register_modal.html',{'form':form})
 
 def teste(request):
     context = {'form':SchoolClassForm}
