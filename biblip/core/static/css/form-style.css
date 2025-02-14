@@ -55,6 +55,16 @@ form label.error-input{
     color: red;
 }
 
+.form-errors span{
+    background-color: red;
+    color: white;
+    font-size: 1.2rem;
+    padding: 0.4rem;
+    font-family: "Merriweather Sans";
+    border-radius: 0.4rem;
+    text-align: center;
+}
+
 .remeber-me{
     display: flex;
     align-items: center;
@@ -76,14 +86,14 @@ form button {
     font-family: "Poppins";
     font-size: 1.6rem;
     border-radius: 0.8rem;
+    cursor: pointer;
 }
 
 .remeber-me input{
     border: 0.2rem solid #4b4b4b;
     appearance: none;
-    width: 1.6rem;
-    height: 1.6rem;
-    border-radius: 0.4rem;
+    width: 1.8rem;
+    height: 1.8rem;
 }
 
 .remeber-me input:checked{
@@ -97,7 +107,6 @@ form button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     width: 60%;
 }
 

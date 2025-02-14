@@ -35,6 +35,7 @@ class ProfileRegistrationForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=14)
     password = forms.CharField(widget=forms.PasswordInput)
+    remember_me = forms.BooleanField(required=False , initial=False)
 
 class SchoolClassForm(forms.ModelForm):
 

@@ -8,6 +8,7 @@ from .forms import SchoolClassForm, ProfileRegistrationForm, LoginForm
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.views import LogoutView
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 from employee.models import Profile
@@ -76,13 +77,22 @@ class LoginView(FormView):
     template_name = 'core/login.html'  
     form_class = LoginForm
 
+
     def form_valid(self, form):
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
+        remeber_me = form.cleaned_data['remember_me']
+
+
         user = authenticate(self.request, username=username, password=password)
 
         if user is not None:
             login(self.request, user)
+            if remeber_me:
+                self.request.session.set_expiry(2592000)
+            else:
+                self.request.session.set_expiry(0)
+                
             return redirect(self.get_success_url(user))
         else:
             messages.error(self.request, "Usuário ou senha inválidos.")
@@ -94,10 +104,28 @@ class LoginView(FormView):
             if profile.profile_type == 1:
                 return reverse('borrow_management')
             else:
-                return reverse_lazy('index')
+                return reverse('index')
         except Profile.DoesNotExist:
             logout(self.request)
             return reverse('login')
+        
+    
+    def form_invalid(self, form):
+        if not form.is_valid():
+            messages.error(self.request, "Usuário ou senha incorreto")
+
+        return self.render_to_response(self.get_context_data(form=form))
+
+    
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect(self.get_success_url(request.user))
+        return super().dispatch(request, *args, **kwargs)
+    
+
+class LogoutView(LogoutView):
+    next_page = reverse_lazy('login')
+
 
 def school_class_creation(request):
     form=SchoolClassForm(request.POST or None,request.FILES or None)
