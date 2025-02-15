@@ -4,13 +4,32 @@ import json
 from django.conf import settings
 import os
 from .forms import loginTeacherForm, userRegisterForm
-from employee.models import Book, Borrow, Profile
+from employee.models import Book, Borrow, Profile, Genre
+import math
 
 #arquivos com _temp no final são temporários
 #leituras de jsons por agora são temporarias
+
+def split_columns(lista):
+    num_colls = math.ceil(math.sqrt(len(lista)+1))
+    return [lista [i::num_colls] for i in range(num_colls)] 
+
+
 def index(request):
+    genre_id = request.GET.get("genre")
+
     books = Book.objects.all()
-    return render(request,'core/index.html', {'books': books})
+    if genre_id:
+        books = books.filter(book_genre__id=genre_id)
+
+    filters = Genre.objects.all()
+    todos_filter = Genre(id=None, genre_name="Todos")  # 'Todos' como um filtro sem gênero associado
+    filters = [todos_filter] + list(filters)
+    filters = split_columns(filters)
+
+    context= {'books': books, 'filters': filters, 'selected_genre': genre_id, 'filter_type': 'genre', 'filter_url':'index'}
+
+    return render(request,'core/index.html', context)
 
 def search(request,search):
     context={'search':search}
@@ -29,13 +48,12 @@ def borrow(request,book_pk):
 
 def borrow_history(request):
     borrow_history = Borrow.objects.filter(borrow_teacher=request.user.profile)
-
     return render(
         request,
         'core/borrow_history.html',
         {
             'filter_title': 'Histórico de alugueis',
-            'borrow_history': borrow_history
+            'borrow_history': borrow_history,
         }
     )
 

@@ -5,21 +5,19 @@
     <span>filtrar por: </span>
     <button class="filter-button">categorias...</button>
     <div class="dropdown-menu">
+      {% for coll in filters %}
       <ul class="dropdown-column">
-        <li><span>Categoria</span></li>
-        <li><span>Categoria</span></li>
-        <li><span>Categoria</span></li>
+        {% for filter in coll %}
+          {% if filter.id %}
+            <li><a href="{% url filter_url %}?{{filter_type}}={{ filter.id }}">{{ filter.genre_name}}</a></li>
+          {% else %}
+            <li><a href="{% url filter_url %}">Todos</a></li> 
+          {% endif %}
+          {% empty %}
+          <li>Nenhum gênero encontrado.</li>
+        {% endfor %}
       </ul>
-      <ul class="dropdown-column">
-        <li><span>Categoria</span></li>
-        <li><span>Categoria</span></li>
-        <li><span>Categoria</span></li>
-      </ul>
-      <ul class="dropdown-column">
-        <li><span>Categoria</span></li>
-        <li><span>Categoria</span></li>
-        <li><span>Categoria</span></li>
-      </ul>
+      {% endfor %}
     </div>
   </div>
 </div>
@@ -27,14 +25,13 @@
 <script>
   const button = document.querySelector('.filter-button');
   const dropdown = document.querySelector('.dropdown-menu');
-
   button.addEventListener('click', () => {
     dropdown.classList.toggle('open');
     console.log('open')
   });
 
   document.addEventListener('click', (e) => {
-    if (!dropdown.contains(e.target) && !button.contains(event.target)) {
+    if (!dropdown.contains(e.target) && !button.contains(e.target)) {
       dropdown.classList.remove('open');
       console.log('remove open')
     }
