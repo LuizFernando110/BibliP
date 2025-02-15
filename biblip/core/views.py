@@ -27,7 +27,7 @@ def index(request):
     filters = [todos_filter] + list(filters)
     filters = split_columns(filters)
 
-    context= {'books': books, 'filters': filters, 'selected_genre': genre_id, 'filter_type': 'genre', 'filter_url':'index'}
+    context= {'books': books, 'filters': filters, 'selected_genre': genre_id, 'filter_type': 'genre', 'filter_url':'index', 'filter_name':"genre_name"}
 
     return render(request,'core/index.html', context)
 
