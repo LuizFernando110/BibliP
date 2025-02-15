@@ -1,14 +1,12 @@
 from django.shortcuts import render, HttpResponse
 from django.views.generic.edit import CreateView
-from django.views.generic import ListView,DetailView
+from django.views.generic import ListView, DetailView, View
 from django.db.models.functions import ExtractMonth
-#importançoes temporararias para o json:
-import json
-from django.conf import settings
-import os
-from .forms import bookRegisterForm
-from .models import Book,Borrow
+from django.http import JsonResponse
+from .forms import BookForm
+from .models import Book, Borrow, Genre, Author, BookAuthor, BookGenre
 from datetime import datetime, timedelta
+from django.urls import reverse_lazy
 
 class borrow_management(ListView):
     model=Borrow
@@ -146,17 +144,31 @@ class BookCreateAjaxView(View):
             book.save()
 
             authors_ids = request.POST.getlist('book_author')
-            genre_ids = request.POST.getlist('book_genre')
-
             for author_id in authors_ids:
-                BookAuthor.objects.create(book = book, author_id = author_id)
+                BookAuthor.objects.create(book=book, author_id=author_id)
 
+            # Criando novos autores
+            new_authors = request.POST.getlist('new_authors')
+            for author_name in new_authors:
+                new_author = Author.objects.create(author_name=author_name)
+                BookAuthor.objects.create(book=book, author=new_author)
+
+            # Adicionando gêneros existentes
+            genre_ids = request.POST.getlist('book_genre')
             for genre_id in genre_ids:
-                BookGenre.objects.create(book = book, genre_id = genre_id)
+                BookGenre.objects.create(book=book, genre_id=genre_id)
 
-            return JsonResponse({'message': 'Livro criado com sucesso', 
-                                 "book_id": book.id,
-                                 "success": True,
-                                 "redirect_url": reverse_lazy("books_management")}, status=201)
+            # Criando novos gêneros
+            new_genres = request.POST.getlist('new_genres')
+            for genre_name in new_genres:
+                new_genre = Genre.objects.create(genre_name=genre_name)
+                BookGenre.objects.create(book=book, genre=new_genre)
+
+            return JsonResponse({
+                'message': 'Livro criado com sucesso',
+                'book_id': book.id,
+                'success': True,
+                'redirect_url': reverse_lazy("books_management")
+            }, status=201)
         else:
             return JsonResponse({"erros": form.errors}, status=400)
