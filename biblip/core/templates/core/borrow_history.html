@@ -22,11 +22,11 @@
         {% for borrow in borrow_history %}
         <tr>
           <td>{{ borrow.borrow_book }}</td>
-          <td>{{ borrow.school_class }}</td>
-          <td>{{ borrow.borrow_receipt_date|date:"d/m/Y" }}</td>
-          <td>{{ borrow.borrow_delivery_date|date:"d/m/Y" }}</td>
+          <td>classe 1</td>
+          <td>{{ borrow.borrow_receipt_date|date:'d/m/Y' }}</td>
+          <td>{{ borrow.borrow_delivery_date|date:'d/m/Y' }}</td>
           <td class="actions-td">
-            <a href="{% url 'borrow_history_details' 5 %}">
+            <a href="{% url 'borrow_history_details' borrow.id %}">
               <img
                 src="{% static 'assets/icons/eye.svg' %}"
                 alt="botão ver empréstimo"

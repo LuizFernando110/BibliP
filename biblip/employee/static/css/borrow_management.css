@@ -83,3 +83,33 @@
   border-radius: 50%;
   background-color: #3C3C3C;
 }
+
+
+
+.appointments-section .pendente{
+  padding: .5rem 1rem ;
+  border-radius: .5rem;
+  color: rgb(255, 91, 91);
+  background-color: rgba(255, 108, 108, 0.3);
+}
+
+.appointments-section .aberto{
+  padding: .5rem 1rem ;
+  border-radius: .5rem;
+  color: rgb(91, 255, 91);
+  background-color: rgba(108, 255, 108, 0.3);
+}
+
+.appointments-section .analise{
+  padding: .5rem 1rem ;
+  border-radius: .5rem;
+  color: rgb(255, 230, 91);
+  background-color: rgba(255, 230, 108, 0.3);
+}
+
+.appointments-section .fechado{
+  padding: .5rem 1rem ;
+  border-radius: .5rem;
+  color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0.5);
+}

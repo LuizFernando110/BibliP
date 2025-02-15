@@ -23,11 +23,15 @@
         <tr>
           <td>{{ borrow.borrow_teacher }}</td>
           <td>{{ borrow.borrow_book }}</td>
-          <td>{{ borrow.school_class }}</td>
+          <td>school_class</td>
           <td>{{ borrow.borrow_receipt_date|date:"d/m/Y" }}</td>
           <td>{{ borrow.borrow_delivery_date|date:"d/m/Y" }}</td>
           <td class="actions-td">
-            <a href="{% if employer %}{% url 'employer_borrow_details' 1 %}{% else %}{% url 'borrow_history_details' 1 %}{% endif %}">
+            <a href="{% if employer %}
+              {% url 'employer_borrow_details' borrow.id %}
+            {% else %}
+              {% url 'borrow_history_details' borrow.id %}
+            {% endif %}">
               <img
                 src="{% static 'assets/icons/eye.svg' %}"
                 alt="botão ver empréstimo"
