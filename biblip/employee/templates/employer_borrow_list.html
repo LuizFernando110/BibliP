@@ -21,13 +21,17 @@
         </tr>
         {% for borrow in borrow_history %}
         <tr>
-          <td>{{ borrow.teacher }}</td>
-          <td>{{ borrow.book_name }}</td>
-          <td>{{ borrow.school_class }}</td>
-          <td>{{ borrow.receipt_date }}</td>
-          <td>{{ borrow.delivery_date }}</td>
+          <td>{{ borrow.borrow_teacher }}</td>
+          <td>{{ borrow.borrow_book }}</td>
+          <td>a</td>
+          <td>{{ borrow.borrow_receipt_date }}</td>
+          <td>{{ borrow.borrow_delivery_date }}</td>
           <td class="actions-td">
-            <a href="{% if employer %}{% url 'employer_borrow_details' 1 %}{% else %}{% url 'borrow_history_details' 1 %}{% endif %}">
+            <a href="{% if employer %}
+              {% url 'employer_borrow_details' borrow.id %}
+            {% else %}
+              {% url 'borrow_history_details' borrow.id %}
+            {% endif %}">
               <img
                 src="{% static 'assets/icons/eye.svg' %}"
                 alt="botão ver empréstimo"
