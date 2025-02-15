@@ -1,62 +1,96 @@
 from django.shortcuts import render, HttpResponse
 from django.views.generic.edit import CreateView
+from django.views.generic import ListView,DetailView
+from django.db.models.functions import ExtractMonth
 #importançoes temporararias para o json:
 import json
 from django.conf import settings
 import os
-from .forms import BookForm
-from .models import Book, Author, Genre, BookAuthor, BookGenre
-from django.http import JsonResponse
-from django.views import View
-from django.views.generic import ListView
-from django.urls import reverse_lazy
+from .forms import bookRegisterForm
+from .models import Book,Borrow
+from datetime import datetime, timedelta
 
-def borrow_management(request):
-    json_path_temp = os.path.join(settings.BASE_DIR, 'employee', 'appointment.json')
-    with open (json_path_temp, 'r') as file:
-        appointments = json.load(file)
-    #Não esta acontecendo aqui mais a ideia é que o appointments seja os da semana, mas pendencias é entre todos 
-    appointments_limit = 8
-    hidden_appointments_count = max(len(appointments) - appointments_limit, 0)
+class borrow_management(ListView):
+    model=Borrow
+    template_name="employer_index.html"
 
-    pending_appointments = [app for app in appointments if app.get('pendency')]
+    def get_context_data(self, **kwargs):
+        
+        Borrow.objects.annotate(month=ExtractMonth('borrow_delivery_date'))
+        today = datetime.today()
 
-    pending_limit = 4
-    hidden_pending_count = max(len(pending_appointments) - pending_limit, 0)
+        #calculando primeiro e último dia da semana
+        #extractWeek usa sehunda como primeiro dia da semana, por isso está sendo feito manualmente
+        day_of_week = (datetime.weekday(today)+1)%7 
+        first_day_of_the_week=datetime.date(today-timedelta(days=day_of_week))
+        last_day_of_the_week=datetime.date(today+timedelta(days=(6-day_of_week)))
 
-    context = {
-        'appointments': appointments[:appointments_limit], 
-        'pending_appointments': pending_appointments[:pending_limit],
-        'hidden_appointments': hidden_appointments_count,
-        'hidden_pending': hidden_pending_count,
-        'employer': True
-    }
-    return render(request, 'index.html', context)
+
+        week_appointments=Borrow.objects.filter(borrow_delivery_date__range=(first_day_of_the_week,last_day_of_the_week))
+        pending_appointments=Borrow.objects.filter(borrow_status=3)
+
+
+        appointments_limit = 4
+        hidden_week_appointments_count = max(len(week_appointments) - appointments_limit, 0)
+
+        pending_limit = 4
+        hidden_pending_count = max(len(pending_appointments) - pending_limit, 0)
+
+
+        month_appointments=Borrow.objects.filter(borrow_delivery_date__month=ExtractMonth('borrow_delivery_date'))
+        month_appointments=month_appointments.exclude(borrow_delivery_date__range=(first_day_of_the_week,last_day_of_the_week))
+        hidden_month_appointments_count=max(len(month_appointments) - appointments_limit, 0)
+
+        context = {
+            'week_appointments': week_appointments[:appointments_limit], 
+            'pending_appointments': pending_appointments[:pending_limit],
+            'month_appointments':month_appointments[:appointments_limit],
+            'hidden_week_appointments': hidden_week_appointments_count,
+            'hidden_month_appointments': hidden_month_appointments_count,
+            'hidden_pending': hidden_pending_count,
+            'employer': True
+        }
+        return context
 
 def books_management(request):
     books = Book.objects.all()
     context = {'employer': True, 'books': books}
     return render(request, 'books-management.html', context)
 
-def employer_borrow_list(request):
-    json_path_temp = os.path.join(settings.BASE_DIR, 'employee', 'appointment.json') 
-    with open (json_path_temp, 'r') as file:
-        borrow_history = json.load(file)
+class employer_borrow_list(ListView):
+    model=Borrow
+    template_name='employer_borrow_list.html'
 
-    context={'employer':True,
-             'filter_title': 'Histórico de alugueis',
-            'borrow_history': borrow_history}
-    return render(request,'employer_borrow_list.html',context)
+    def get_context_data(self, **kwargs):
+        
+        if self.request.method=='GET':
+            Borrow.objects.annotate(month=ExtractMonth('borrow_delivery_date'))
+            today = datetime.today()
+
+            #calculando primeiro e último dia da semana
+            #extractWeek usa sehunda como primeiro dia da semana, por isso está sendo feito manualmente
+            day_of_week = (datetime.weekday(today)+1)%7 
+            first_day_of_the_week=datetime.date(today-timedelta(days=day_of_week))
+            last_day_of_the_week=datetime.date(today+timedelta(days=(6-day_of_week)))
 
 
-def employer_borrow_details(request,borrow_pk):
-    json_path_temp = os.path.join(settings.BASE_DIR, 'core', 'borrow_history.json') 
-    with open (json_path_temp, 'r') as file:
-        borrow_history = json.load(file)
+            appointments=Borrow.objects.all()
+            if self.request.GET.get('appointments_type')=='month':
+                appointments=Borrow.objects.filter(borrow_delivery_date__month=ExtractMonth('borrow_delivery_date'))
+                appointments=appointments.exclude(borrow_delivery_date__range=(first_day_of_the_week,last_day_of_the_week))
+                
+            
+            if self.request.GET.get('appointments_type')=='week':
+                appointments=Borrow.objects.filter(borrow_delivery_date__range=(first_day_of_the_week,last_day_of_the_week))
 
-    context={'employer':True,
-            'borrow_history': borrow_history}
-    return render(request,'employer_borrow_details.html',context)
+        return {'borrow_history':appointments,'employer':True}
+
+
+class employer_borrow_details(DetailView):
+    model=Borrow
+    pk_url_kwarg='borrow_pk'  
+    template_name='employer_borrow_details.html'
+        
 
 
 def create_book(request):
