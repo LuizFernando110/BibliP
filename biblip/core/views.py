@@ -36,7 +36,7 @@ class index(ListView):
         if search:
             books = books.filter(book_title__icontains=search)
 
-        books=super().get_queryset()
+        
         return books  # Retorna apenas o queryset, sem adicionar outras variáveis
 
     def get_context_data(self, **kwargs):

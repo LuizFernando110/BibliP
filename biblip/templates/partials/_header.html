@@ -9,7 +9,12 @@
   </div>
 
   <form action="" method="get" class="search-input-container">
-      <input type="text" placeholder="Pesquisar por nome, código, autor ... "  name="search"/>
+      <input type="text" placeholder="Pesquisar por nome, código, autor ... "  name="search" value="{{ request.GET.search }}"/>
+      {% for key, value in request.GET.items %}
+        {% if key != "search" %}
+            <input type="hidden" name="{{ key }}" value="{{ value }}">
+        {% endif %}
+    {% endfor %}
       <button class="search-button">
         <img src="{% static 'assets/icons/search.svg' %}" alt="" />
       </button>
