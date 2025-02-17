@@ -6,8 +6,9 @@ import json
 from django.conf import settings
 import os
 from .forms import bookRegisterForm
-from .models import Book,Borrow
+from .models import Book,Borrow,Genre
 from datetime import datetime, timedelta
+from core.views import search, split_columns
 
 class borrow_management(ListView):
     model=Borrow
@@ -51,10 +52,21 @@ class borrow_management(ListView):
         }
         return context
 
-def books_management(request):
-    books = Book.objects.all()
-    context = {'employer': True, 'books': books}
-    return render(request, 'books-management.html', context)
+class books_management(ListView):
+    model=Book
+    context_object_name='books'
+    template_name='books-management.html'
+
+    def get_queryset(self):
+        search=self.request.GET.get('search')
+        books = Book.objects.all()
+
+        if search:
+            books = books.filter(book_title__icontains=search)
+
+        
+        return books  # Retorna apenas o queryset, sem adicionar outras variáveis
+
 
 class employer_borrow_list(ListView):
     model=Borrow

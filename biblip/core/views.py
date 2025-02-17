@@ -42,7 +42,6 @@ class index(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        genre_id = self.request.GET.get("genre")
         filters = Genre.objects.all()
 
         todos_filter = Genre(id=None, genre_name="Todos")  
@@ -51,7 +50,6 @@ class index(ListView):
 
         context.update({
             'filters': filters,
-            'selected_genre': genre_id,
             'filter_type': 'genre',
             'filter_url': 'index',
             'filter_name': "genre_name"

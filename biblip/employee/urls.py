@@ -3,7 +3,7 @@ from .views import borrow_management, books_management, delete_book,update_book,
 
 urlpatterns = [
     path('employer/borrow_management',borrow_management.as_view(),name='borrow_management'),
-    path('employer/books_management', books_management, name='books_management'),
+    path('employer/books_management', books_management.as_view(), name='books_management'),
     path('employer/borrow_management/borrow_list/<str:appointments_type>',employer_borrow_list.as_view(),name='employer_borrow_list'),
     path('employer/borrow_management/employer_borrow_details/<int:borrow_pk>',employer_borrow_details.as_view(),name='employer_borrow_details'),
     path('employer/create_book',create_book,name='create_book'),
