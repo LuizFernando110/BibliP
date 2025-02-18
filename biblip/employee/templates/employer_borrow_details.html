@@ -9,7 +9,7 @@
       
       <div class="title-div">
         <div class="back-arrow">
-          <a href="{% if employer %}{% url 'employer_borrow_list' %}{% else %}{% url 'borrow_history' %}{% endif %}"
+          <a href="{% if employer %}{% url 'employer_borrow_list' ' '%}{% else %}{% url 'borrow_history' %}{% endif %}"
             ><img src="{% static 'assets/icons/back-arrow.svg' %}" alt=""
           /></a>
         </div>
@@ -17,9 +17,9 @@
       </div>
       
       <div class="table-label">
-        <span>Mitos e Lendas do Brasil</span>
-        <span>03/11/2024-16/12/2024</span>
-        <span>Prof.John Doe</span>
+        <span>{{borrow.borrow_book}}</span>
+        <span>{{borrow.borrow_receipt_date|date:"d/m/Y"}}-{{borrow.borrow_delivery_date|date:"d/m/Y"}}</span>
+        <span>Prof.{{borrow.borrow_teacher}}</span>
       </div>
     </div>
     
@@ -35,13 +35,18 @@
           <th id="delivery-date">Data de entrega</th>
           <th id="actions">Status</th>
         </tr>
-        {% for borrow in borrow_history %}
+        {% for student_borrow in borrow.borrowstudent_set.all %}
         <tr>
-          <td>{{ borrow.book_name }}</td>
-          <td>{{ borrow.receipt_date }}</td>
-          <td>{{ borrow.delivery_date }}</td>
+          <td>{{ student_borrow.borrow_student }}</td>
+          <td>{{ student_borrow.borrow_student_receipt_date }}</td>
+          <td>{%if student_borrow.borrow_student_delivery_date%}
+            {{student_borrow.borrow_student_delivery_date }}
+          {%else%}
+            não devolvido
+          {%endif %}
+        </td>
           <td>
-            <span class="student-status delivered">status</span>
+            <span class="student-status status{{student_borrow.borrow_student_status}}">{{student_borrow.get_borrow_student_status_display}}</span>
           </td>
         </tr>
         {% endfor %}

@@ -1,25 +1,24 @@
 {%load static%}
 <header>
   <div class="ifrn-logo">
-    <a href="{% url "index" %}"><img src="{% static 'assets/IFRN-Logo-default.png' %}" alt="" /></a>
+    <a href="{% url 'index' %}"><img src="{% static 'assets/IFRN-Logo-default.png' %}" alt="" /></a>
   </div>
 
   <div class="pnld-text">
     <p><span>PNLD</span> Programa Nacional do Livro Didático</p>
   </div>
 
-  <div class="search-input-container">
-    <input type="text" placeholder="Pesquisar por nome, código, autor ... " />
-    <button class="search-button">
-      <img src="{% static 'assets/icons/search.svg' %}" alt="" />
-    </button>
-  </div>
-
+  <form action="" method="get" class="search-input-container">
+      <input type="text" placeholder="Pesquisar por nome, código, autor ... "  name="search"/>
+      <button class="search-button">
+        <img src="{% static 'assets/icons/search.svg' %}" alt="" />
+      </button>
+  </form>
   <a href="" class="header-btn">
     <img src="{% static '/assets/icons/bell.svg' %}" alt="" />
   </a>
   <a href="{% url 'borrow_history' %}" class="header-btn">
     <img src="{% static '/assets/icons/book.svg' %}" alt="" />
   </a>
-  <a href="{% url "login_teacher" %}" class="sign-in-button">Entrar</a>
+  <a href="{% url 'login_teacher' %}" class="sign-in-button">Entrar</a>
 </header>
