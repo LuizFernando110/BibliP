@@ -100,13 +100,41 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).ready(function () {
+
+    $("#author, #genre").on("keydown", function (event) {
+      if (event.key === "Enter") {
+          event.preventDefault();  // Impede a submissão do formulário
+      }
+    });
+
     let selectedAuthors = [];
     let selectedGenres = [];
 
-    function buscarItens(url, inputId, resultsId, selectedList, listContainer, itemClass, removeClass) {
-      $("#" + inputId).on("keyup", function () {
+    function buscarItens(url, inputId, resultsId, selectedList, listContainer, itemClass, removeClass, modelType) {
+      $("#" + inputId).on("keyup", function (event) { // Adicionado "event"
         let query = $(this).val();
         if (query.length < 1) {
+          $("#" + resultsId).empty();
+          return;
+        }
+
+        if (event.key === "Enter") { // Agora "event.key" funciona corretamente
+          event.preventDefault();
+          let selectedText = query.trim();
+          let selectedId = `new-${selectedText}-${modelType}`;
+
+          if (!selectedList.some(item => item.id === selectedId)){
+            selectedList.push({ id: selectedId, name: selectedText });
+
+            $("#" + listContainer).append(`
+              <li class="item">
+                ${selectedText} 
+                <button type="button" class="${removeClass}" data-value="${selectedId}">x</button>
+              </li>
+            `);
+          }
+
+          $("#" + inputId).val(""); // Limpa o campo de input
           $("#" + resultsId).empty();
           return;
         }
@@ -127,11 +155,11 @@
 
       // Adicionar item ao clicar na sugestão
       $("#" + resultsId).on("click", "." + itemClass, function () {
-        let selectedText = $(this).text();
-        let selectedId = $(this).data("id");
+        let selectedText = $(this).data("name") || $(this).text();
+        let selectedId = $(this).data("id") || `new-${selectedText}-${modelType}`;
 
         if (!selectedList.some(item => item.id === selectedId)) {
-          selectedList.push({id: selectedId, name: selectedText});
+          selectedList.push({ id: selectedId, name: selectedText });
 
           $("#" + listContainer).append(`
             <li class="item">
@@ -148,16 +176,22 @@
       // Remover item ao clicar no "x"
       $("#" + listContainer).on("click", "." + removeClass, function () {
         let value = $(this).data("value");
-        selectedList = selectedList.filter(item => item !== value);
+        
+        let index = selectedList.findIndex(item => item.id === value);
+        if (index !== -1) {
+          selectedList.splice(index, 1); // Agora a remoção funciona corretamente
+        }
+        
         $(this).parent().remove();
       });
     }
 
     // Buscar autores
-    buscarItens("{% url 'search_author' %}", "author", "author-suggestions", selectedAuthors, "selected-authors", "selectable-author", "remove-author");
+    buscarItens("{% url 'search_author' %}", "author", "author-suggestions", selectedAuthors, "selected-authors", "selectable-author", "remove-author", "author");
 
     // Buscar gêneros
-    buscarItens("{% url 'search_genre' %}", "genre", "genre-suggestions", selectedGenres, "selected-genres", "selectable-genre", "remove-genre");
+    buscarItens("{% url 'search_genre' %}", "genre", "genre-suggestions", selectedGenres, "selected-genres", "selectable-genre", "remove-genre", "genre");  
+
 
     // Evento de envio do formulário
     $("#book-form").on("submit", function (event) {
@@ -167,8 +201,21 @@
       let csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
 
       // Adicionar autores e gêneros selecionados ao FormData
-      selectedAuthors.forEach(author => formData.append("book_author", author.id));
-      selectedGenres.forEach(genre => formData.append("book_genre", genre.id));
+      selectedAuthors.forEach(author => {
+        if (author.id.toString().startsWith("new-")) {
+          formData.append("new_authors", author.name);
+        } else {
+          formData.append("book_author", author.id);
+        }
+      });
+      
+      selectedGenres.forEach(genre => {
+        if (genre.id.toString().startsWith("new-")) {
+          formData.append("new_genres", genre.name);
+        } else {
+          formData.append("book_genre", genre.id);
+        }
+      });
 
       fetch("{% url 'book_create_ajax' %}", {
           method: "POST",
