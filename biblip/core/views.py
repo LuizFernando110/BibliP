@@ -1,7 +1,7 @@
 from django.shortcuts import render,HttpResponse,redirect
 from django.contrib import messages
 from django.views.generic import ListView,DetailView,FormView
-from .forms import loginTeacherForm, userRegisterForm,SchoolClassForm
+from .forms import LoginForm, ProfileRegistrationForm,SchoolClassForm
 from employee.models import Book,Borrow
 
 #importançoes temporararias para o json:
