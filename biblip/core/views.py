@@ -48,7 +48,7 @@ def borrow(request,book_pk):
 
 class borrow_history(ListView):
     model=Borrow
-    template_name='core/borrow_history.html'
+    template_name='employer_borrow_list.html'
     context_object_name='borrow_history'
 
     def get_queryset(self):
