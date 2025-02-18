@@ -1,13 +1,12 @@
 from django import forms
+from django.forms import inlineformset_factory
+from .models import Book
 
-class bookRegisterForm(forms.Form):
-    book_cover = forms.ImageField(widget=forms.ClearableFileInput(attrs={'accept': 'image/*'}))
-    book_title = forms.CharField(max_length = 100)
-    writer = forms.CharField(max_length = 100)
-    publisher = forms.CharField(max_length = 100)
-    genrer = forms.CharField(max_length = 100)
-    edition = forms.IntegerField()
-    number_of_pages = forms.IntegerField()
-    pnld_code = forms.CharField(max_length = 100)
-    storage_quantity = forms.IntegerField()
-    description = forms.CharField(widget=forms.Textarea())
+class BookForm(forms.ModelForm):
+
+    class Meta:
+        model = Book
+        fields = ('book_title','book_picture','book_publisher','book_edition_number', 'book_pnld_code', 'book_description', 'book_number_pages', 'number_in_stock', 'book_status')
+        widgets = {
+            'book_picture': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
+        }
