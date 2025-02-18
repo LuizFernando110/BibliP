@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import borrow_management, books_management, delete_book,update_book,create_book, employer_borrow_list,employer_borrow_details, SearchAuthorView, SearchGenreView ,BookFormCreateView, BookCreateAjaxView
+from .views import borrow_management, books_management, delete_book,update_book,create_book, employer_borrow_list,employer_borrow_details, SearchAuthorView, SearchGenreView ,BookFormCreateView, BookCreateAjaxView, BookEditView, UpdateBookAssociatedDatas, GetBookAssociatedDatas
 
 urlpatterns = [
     path('employer/borrow_management',borrow_management.as_view(),name='borrow_management'),
@@ -13,4 +13,7 @@ urlpatterns = [
     path('search_genre/', SearchGenreView.as_view(), name='search_genre'),
     path('search_author/', SearchAuthorView.as_view(), name='search_author'),
     path('book_create_ajax/', BookCreateAjaxView.as_view(), name='book_create_ajax'),
+    path('employer/book_edit/<int:pk>', BookEditView.as_view(), name='book_edit'),
+    path('book/<int:book_id>/update-associated-data/', UpdateBookAssociatedDatas.as_view(), name='update_book_associated_data'),
+    path('book/<int:book_id>/associated-data/', GetBookAssociatedDatas.as_view(), name='book_associated_data'),
 ]

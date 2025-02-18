@@ -36,7 +36,8 @@
               <input type="text" id="author" placeholder="Digite um autor(a)...">
               <ul id="author-suggestions"></ul> <!-- Lista apenas para sugestões -->
             </div>
-            <ul id="selected-authors"></ul> <!-- Lista separada para autores adicionados -->
+            <ul id="selected-authors">
+            </ul> <!-- Lista separada para autores adicionados -->
           </div>
         </div>
   
@@ -102,6 +103,9 @@
   var searchGenreUrl = "{% url 'search_genre' %}";
   var bookCreateUrl = "{% url 'book_create_ajax' %}";
   var csrfToken = "{{ csrf_token }}";
+
+
+
 </script>
 <script src="{% static 'js/book_ajax.js' %}"></script>
 {%endblock%}
