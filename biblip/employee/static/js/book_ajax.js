@@ -85,6 +85,52 @@ $(document).ready(function () {
         
         $(this).parent().remove();
       });
+
+      let formAction = $("#form-action").val();
+      let bookId = $("#book-id").val();  // Pegando o ID do livro se estiver disponível
+  
+      if (formAction === "update" && bookId) {
+        // Faz um GET para buscar os autores e gêneros associados ao livro
+        $.ajax({
+            url: `/book/${bookId}/associated-datas`,
+            method: "GET",
+            dataType: "json",
+            success: function (data) {
+                // Evita adicionar autores e gêneros duplicados
+                data.authors.forEach(author => {
+                    // Verifica se o autor já foi adicionado
+                    if (!selectedAuthors.some(a => a.id === author.id)) {
+                        selectedAuthors.push({ id: author.id, name: author.name });
+    
+                        $("#selected-authors").append(`
+                            <li class="item">
+                                ${author.name}
+                                <button type="button" class="remove-author" data-value="${author.id}">x</button>
+                            </li>
+                        `);
+                    }
+                });
+    
+                data.genres.forEach(genre => {
+                    // Verifica se o gênero já foi adicionado
+                    if (!selectedGenres.some(g => g.id === genre.id)) {
+                        selectedGenres.push({ id: genre.id, name: genre.name });
+    
+                        $("#selected-genres").append(`
+                            <li class="item">
+                                ${genre.name}
+                                <button type="button" class="remove-genre" data-value="${genre.id}">x</button>
+                            </li>
+                        `);
+                    }
+                });
+            },
+            error: function () {
+                console.error("Erro ao buscar os dados do livro.");
+            }
+        });
+    }
+
     }
 
     // Buscar autores

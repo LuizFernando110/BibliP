@@ -14,6 +14,6 @@ urlpatterns = [
     path('search_author/', SearchAuthorView.as_view(), name='search_author'),
     path('book_create_ajax/', BookCreateAjaxView.as_view(), name='book_create_ajax'),
     path('employer/book_edit/<int:pk>', BookEditView.as_view(), name='book_edit'),
-    path('book/<int:book_id>/update-associated-data/', UpdateBookAssociatedDatas.as_view(), name='update_book_associated_data'),
-    path('book/<int:book_id>/associated-data/', GetBookAssociatedDatas.as_view(), name='book_associated_data'),
+    path('book/<int:book_id>/update-associated-datas/', UpdateBookAssociatedDatas.as_view(), name='update_book_associated_data'),
+    path('book/<int:book_id>/associated-datas/', GetBookAssociatedDatas.as_view(), name='book_associated_data'),
 ]

@@ -7,6 +7,7 @@ from .forms import BookForm
 from .models import Book, Borrow, Genre, Author, BookAuthor, BookGenre
 from datetime import datetime, timedelta
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
 
 class borrow_management(ListView):
     model=Borrow
@@ -184,6 +185,7 @@ class BookEditView(UpdateView):
         book = self.object
 
         context['employer'] = True
+        context['book'] = self.object
 
         return context
     
@@ -196,28 +198,33 @@ class BookEditView(UpdateView):
 
 class GetBookAssociatedDatas(View):
 
-    def get(self, request, book_id):
-        book = Book.objects.get(id=book_id)
+    def get(self, request, book_id , *args, **kwargs):
+        try: 
+            book = get_object_or_404(Book, id=book_id)
 
-        genres = BookGenre.objects.filter(book)
-        genre_data = [{
-            'id': genre.id,
-            'name': genre.genre.genre_name
-        } for genre in genres
-        ]
+            genres = BookGenre.objects.filter(book = book)
+            genre_data = [{
+                'id': genre.id,
+                'name': genre.genre.genre_name
+            } for genre in genres
+            ]
 
-        authors = BookAuthor.objects.filter(book)
-        author_data = [{
-            'id': author.id,
-            'name': author.author.genre_name
-        } for author in authors
-        ]
+            authors = BookAuthor.objects.filter(book = book)
+            author_data = [{
+                'id': author.id,
+                'name': author.author.author_name
+            } for author in authors
+            ]
 
 
-        return JsonResponse({
-            "genres": genre_data,
-            "authors": author_data
-        })
+            return JsonResponse({
+                "genres": genre_data,
+                "authors": author_data
+            })
+        
+        except Exception as e:
+            print(f"Erro ao buscar dados do livro: {str(e)}")
+            return JsonResponse({"error": "Erro interno do servidor"}, status=500)
     
 
 from django.http import JsonResponse
