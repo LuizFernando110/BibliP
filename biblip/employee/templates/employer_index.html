@@ -35,7 +35,7 @@
     </section>
 
     {% if hidden_week_appointments > 0%}
-    <a href="{% url 'employer_borrow_list' 'week'%}" class="employee-button see-more-btn">
+    <a href="{% url 'employer_borrow_list'%}?appointments_type=week" class="employee-button see-more-btn">
       Ver mais 
       <span>+{{hidden_week_appointments}}</span>
     </a>
@@ -63,7 +63,7 @@
       {% endfor %}
 
       {% if hidden_month_appointments > 0%}
-      <a href="{% url 'employer_borrow_list' 'month'%}" class="employee-button see-more-btn">
+      <a href="{% url 'employer_borrow_list'%}?appointments_type=month" class="employee-button see-more-btn">
         Ver mais 
         <span>+{{hidden_month_appointments}}</span>
       </a>
