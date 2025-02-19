@@ -216,9 +216,6 @@ class GetBookAssociatedDatas(View):
             } for author in authors
             ]
 
-            print ({"genres": genre_data,
-                "authors": author_data})
-
             return JsonResponse({
                 "genres": genre_data,
                 "authors": author_data
@@ -234,28 +231,34 @@ class UpdateBookAssociatedDatas(View):
 
     def post(self, request, book_id, *args, **kwargs):
         try:
-            print("🔍 Recebendo dados do formulário:", request.POST)  # Debug
 
             book = Book.objects.get(id=book_id)
-            print(book.id)  
             form = BookForm(request.POST, request.FILES, instance=book)  
 
             if form.is_valid():
-                print("✅ Formulário válido!")  # Debug
                 book = form.save(commit=False)  
                 book.save()  
 
                 # Atualiza os autores
                 authors_ids = request.POST.getlist('book_author')
-                print(f"📚 Autores IDs recebidos: {authors_ids}")  # Debug
                 for author_id in authors_ids:
                     BookAuthor.objects.get_or_create(book=book, author_id=author_id)
 
+
+                new_authors = request.POST.getlist('new_authors')
+                for author_name in new_authors:
+                    new_author = Author.objects.create(author_name=author_name)
+                    BookAuthor.objects.create(book=book, author=new_author)
+
                 # Atualiza os gêneros
                 genre_ids = request.POST.getlist('book_genre')
-                print(f"🎭 Gêneros IDs recebidos: {genre_ids}")  # Debug
                 for genre_id in genre_ids:
                     BookGenre.objects.get_or_create(book=book, genre_id=genre_id)
+
+                new_genres = request.POST.getlist('new_genres')
+                for genre_name in new_genres:
+                    new_genre = Genre.objects.create(genre_name=genre_name)
+                    BookGenre.objects.create(book=book, genre=new_genre)
 
                 return JsonResponse({
                     'message': 'Livro atualizado com sucesso!',

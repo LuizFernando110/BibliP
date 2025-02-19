@@ -46,7 +46,7 @@ main input, textarea, select {
     width: 26.4rem;
     border-radius: 0.8rem;
     cursor: pointer;
-    background-image: url(../../../static/assets/icons/Export.svg);
+    background-image: url(/static/assets/icons/Export.svg);
     background-size: 80% 80%;
     background-position: center;
     background-repeat: no-repeat;

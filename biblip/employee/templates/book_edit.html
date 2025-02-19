@@ -15,7 +15,7 @@
   </div>
   <form method="post", enctype="multipart/form-data" id="book-form">
     <input type="hidden" id="book-id" value="{{ book.id }}">
-    <input type="hidden" id="form-action" value="update"> <!-- Ou "update" dependendo do caso -->
+    <input type="hidden" id="form-action" value="update">
     {% csrf_token %}
     
     <div class="core-infos">
@@ -106,5 +106,6 @@
   var bookCreateUrl = "{% url 'book_create_ajax' %}";
   var csrfToken = "{{ csrf_token }}";
 </script>
+
 <script src="{% static 'js/book_ajax.js' %}"></script>
 {%endblock%}
