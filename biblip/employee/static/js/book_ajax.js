@@ -1,5 +1,3 @@
-
-
 $(document).ready(function () {
 
     $("#author, #genre").on("keydown", function (event) {
@@ -99,7 +97,7 @@ $(document).ready(function () {
                 // Evita adicionar autores e gêneros duplicados
                 data.authors.forEach(author => {
                     // Verifica se o autor já foi adicionado
-                    if (!selectedAuthors.some(a => a.id === author.id)) {
+                    if (!selectedAuthors.find(a => a.id === author.id)) {
                         selectedAuthors.push({ id: author.id, name: author.name });
     
                         $("#selected-authors").append(`
@@ -113,7 +111,7 @@ $(document).ready(function () {
     
                 data.genres.forEach(genre => {
                     // Verifica se o gênero já foi adicionado
-                    if (!selectedGenres.some(g => g.id === genre.id)) {
+                    if (!selectedGenres.find(g => g.id === genre.id)) {
                         selectedGenres.push({ id: genre.id, name: genre.name });
     
                         $("#selected-genres").append(`
@@ -147,6 +145,10 @@ $(document).ready(function () {
       let formData = new FormData(this);
       let csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
 
+      let bookId = $("#book-id").val();
+      let formAction = $("#form-action").val();
+      let isUpdate = formAction === "update"
+
       // Adicionar autores e gêneros selecionados ao FormData
       selectedAuthors.forEach(author => {
         if (author.id.toString().startsWith("new-")) {
@@ -164,7 +166,18 @@ $(document).ready(function () {
         }
       });
 
-      fetch(bookCreateUrl, {
+      let updateBookUrl = `/book/${bookId}/update-associated-datas/`;
+
+      let bookCreateUrl = '/book_create_ajax/'; 
+
+      let requestUrl = isUpdate ? updateBookUrl : bookCreateUrl;
+
+      if (isUpdate){
+        formData.append("book_id", bookId);
+      }
+
+
+      fetch(requestUrl, {
           method: "POST",
           body: formData,
           headers: { "X-CSRFToken": csrfToken }

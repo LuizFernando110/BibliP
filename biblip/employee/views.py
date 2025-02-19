@@ -204,18 +204,20 @@ class GetBookAssociatedDatas(View):
 
             genres = BookGenre.objects.filter(book = book)
             genre_data = [{
-                'id': genre.id,
+                'id': genre.genre.id,
                 'name': genre.genre.genre_name
             } for genre in genres
             ]
 
             authors = BookAuthor.objects.filter(book = book)
             author_data = [{
-                'id': author.id,
+                'id': author.author.id,
                 'name': author.author.author_name
             } for author in authors
             ]
 
+            print ({"genres": genre_data,
+                "authors": author_data})
 
             return JsonResponse({
                 "genres": genre_data,
@@ -225,49 +227,48 @@ class GetBookAssociatedDatas(View):
         except Exception as e:
             print(f"Erro ao buscar dados do livro: {str(e)}")
             return JsonResponse({"error": "Erro interno do servidor"}, status=500)
-    
 
-from django.http import JsonResponse
-from .models import Book, BookAuthor, BookGenre, Author, Genre
+
 
 class UpdateBookAssociatedDatas(View):
 
-    def update(self, request, book_id):
-        if request.method == "POST" and request.is_ajax():
-            try:
-                # Obtém o livro pela ID
-                book = Book.objects.get(id=book_id)
+    def post(self, request, book_id, *args, **kwargs):
+        try:
+            print("🔍 Recebendo dados do formulário:", request.POST)  # Debug
 
-                # Atualiza os autores associados ao livro
+            book = Book.objects.get(id=book_id)
+            print(book.id)  
+            form = BookForm(request.POST, request.FILES, instance=book)  
+
+            if form.is_valid():
+                print("✅ Formulário válido!")  # Debug
+                book = form.save(commit=False)  
+                book.save()  
+
+                # Atualiza os autores
                 authors_ids = request.POST.getlist('book_author')
-                BookAuthor.objects.filter(book=book).delete()
+                print(f"📚 Autores IDs recebidos: {authors_ids}")  # Debug
                 for author_id in authors_ids:
-                    BookAuthor.objects.create(book=book, author_id=author_id)
+                    BookAuthor.objects.get_or_create(book=book, author_id=author_id)
 
-                # Cria novos autores caso sejam enviados
-                new_authors = request.POST.getlist('new_authors')
-                for author_name in new_authors:
-                    new_author = Author.objects.create(author_name=author_name)
-                    BookAuthor.objects.create(book=book, author=new_author)
+                # Atualiza os gêneros
+                genre_ids = request.POST.getlist('book_genre')
+                print(f"🎭 Gêneros IDs recebidos: {genre_ids}")  # Debug
+                for genre_id in genre_ids:
+                    BookGenre.objects.get_or_create(book=book, genre_id=genre_id)
 
-                # Atualiza os gêneros associados ao livro
-                genres_ids = request.POST.getlist('book_genre')
-                BookGenre.objects.filter(book=book).delete()
-                for genre_id in genres_ids:
-                    BookGenre.objects.create(book=book, genre_id=genre_id)
+                return JsonResponse({
+                    'message': 'Livro atualizado com sucesso!',
+                    'book_id': book.id,
+                    'success': True,
+                    'redirect_url': reverse_lazy("books_management")
+                }, status=200)
 
-                # Cria novos gêneros caso sejam enviados
-                new_genres = request.POST.getlist('new_genre')
-                for genre_name in new_genres:
-                    new_genre = Genre.objects.create(genre_name=genre_name)
-                    BookGenre.objects.create(book=book, genre=new_genre)
-                
-                return JsonResponse({'message': 'Associações de autores e gêneros atualizadas com sucesso!', 'success': True}, status=200)
+            else:
+                return JsonResponse({"erros": form.errors}, status=400)
 
-            except Book.DoesNotExist:
-                return JsonResponse({'message': 'Livro não encontrado.', 'success': False}, status=404)
+        except Book.DoesNotExist:
+            return JsonResponse({"message": "Livro não encontrado.", "success": False}, status=404)
 
-            except Exception as e:
-                return JsonResponse({'message': f'Ocorreu um erro: {str(e)}', 'success': False}, status=400)
-
-        return JsonResponse({'message': 'Erro na requisição', 'success': False}, status=400)
+        except Exception as e:
+            return JsonResponse({"message": f"Erro: {str(e)}", "success": False}, status=400)
