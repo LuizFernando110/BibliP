@@ -205,3 +205,21 @@ select option{
     color: white;
     font-family: "Merriweather Sans";
 }
+
+.file-input a{
+    display: none;
+}
+
+br{
+    display: none;
+}
+
+#actions_button{
+    display: flex;
+    gap: 2rem;
+    align-self: flex-end;   
+}
+
+#delete_button{
+    background-color: red;
+}

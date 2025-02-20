@@ -1,13 +1,13 @@
 from django.shortcuts import render, HttpResponse
 from django.views.generic.edit import CreateView
-from django.views.generic import ListView, DetailView, View, UpdateView
+from django.views.generic import ListView, DetailView, View, UpdateView, DeleteView
 from django.db.models.functions import ExtractMonth
 from django.http import JsonResponse
 from .forms import BookForm
 from .models import Book, Borrow, Genre, Author, BookAuthor, BookGenre
 from datetime import datetime, timedelta
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 
 class borrow_management(ListView):
     model=Borrow
@@ -226,38 +226,39 @@ class GetBookAssociatedDatas(View):
             return JsonResponse({"error": "Erro interno do servidor"}, status=500)
 
 
-
 class UpdateBookAssociatedDatas(View):
 
     def post(self, request, book_id, *args, **kwargs):
         try:
-
             book = Book.objects.get(id=book_id)
-            form = BookForm(request.POST, request.FILES, instance=book)  
+            form = BookForm(request.POST, request.FILES, instance=book)
 
             if form.is_valid():
-                book = form.save(commit=False)  
-                book.save()  
+                book = form.save(commit=False)
+                book.save()
 
                 # Atualiza os autores
                 authors_ids = request.POST.getlist('book_author')
+                BookAuthor.objects.filter(book=book).exclude(author_id__in=authors_ids).delete()
                 for author_id in authors_ids:
                     BookAuthor.objects.get_or_create(book=book, author_id=author_id)
 
-
                 new_authors = request.POST.getlist('new_authors')
-                for author_name in new_authors:
-                    new_author = Author.objects.create(author_name=author_name)
+                new_authors_objs = [Author(author_name=author_name) for author_name in new_authors]
+                Author.objects.bulk_create(new_authors_objs, ignore_conflicts=True)
+                for new_author in new_authors_objs:
                     BookAuthor.objects.create(book=book, author=new_author)
 
                 # Atualiza os gêneros
                 genre_ids = request.POST.getlist('book_genre')
+                BookGenre.objects.filter(book=book).exclude(genre_id__in=genre_ids).delete()
                 for genre_id in genre_ids:
                     BookGenre.objects.get_or_create(book=book, genre_id=genre_id)
 
                 new_genres = request.POST.getlist('new_genres')
-                for genre_name in new_genres:
-                    new_genre = Genre.objects.create(genre_name=genre_name)
+                new_genres_objs = [Genre(genre_name=genre_name) for genre_name in new_genres]
+                Genre.objects.bulk_create(new_genres_objs, ignore_conflicts=True)
+                for new_genre in new_genres_objs:
                     BookGenre.objects.create(book=book, genre=new_genre)
 
                 return JsonResponse({
@@ -268,10 +269,19 @@ class UpdateBookAssociatedDatas(View):
                 }, status=200)
 
             else:
-                return JsonResponse({"erros": form.errors}, status=400)
+                return JsonResponse({"errors": form.errors}, status=400)
 
         except Book.DoesNotExist:
             return JsonResponse({"message": "Livro não encontrado.", "success": False}, status=404)
 
         except Exception as e:
             return JsonResponse({"message": f"Erro: {str(e)}", "success": False}, status=400)
+
+
+class BookDeleteView(View):
+
+    def delete(self, request, *args, **kwargs):
+        book_id = kwargs.get('pk')  
+        book = get_object_or_404(Book, id=book_id)  # Aqui, pode ser necessário converter para int
+        book.delete()
+        return JsonResponse({"message": "Livro excluído com sucesso!"}, status=200)
