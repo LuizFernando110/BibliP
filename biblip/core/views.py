@@ -1,25 +1,15 @@
 from django.shortcuts import render,HttpResponse,redirect
 from django.contrib import messages
-from django.views.generic import ListView,DetailView,FormView
+from django.views.generic import ListView,DetailView,FormView,CreateView, FormView
 from .forms import LoginForm, ProfileRegistrationForm,SchoolClassForm
-from employee.models import Book,Borrow
+from employee.models import Book,Borrow,Profile
 
-#importançoes temporararias para o json:
-import json
-from django.conf import settings
-import os
-from django.views.generic import CreateView, FormView
-from .forms import SchoolClassForm, ProfileRegistrationForm, LoginForm
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import LogoutView
 from django.shortcuts import redirect, get_object_or_404
-from django.contrib import messages
-from employee.models import Book, Profile
 
-#arquivos com _temp no final são temporários
-#leituras de jsons por agora são temporarias
 
 class index(ListView):
     model=Book
