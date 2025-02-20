@@ -22,7 +22,7 @@
         {% for borrow in borrow_history %}
         <tr>
           <td>{{ borrow.borrow_book }}</td>
-          <td>classe 1</td>
+          <td>{{borrow.borrow_schoolclass}}</td>
           <td>{{ borrow.borrow_receipt_date|date:'d/m/Y' }}</td>
           <td>{{ borrow.borrow_delivery_date|date:'d/m/Y' }}</td>
           <td class="actions-td">

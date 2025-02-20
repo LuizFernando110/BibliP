@@ -15,6 +15,14 @@ form {
     gap: 1rem;
 }
 
+form input{
+    background-color: transparent;
+    border-radius: 0.4rem;
+    border: 0.2rem solid #4b4b4b;
+    padding: 0.4rem 0.8rem;
+    font-family: "Merriweather Sans";
+}
+
 
 form label {
     font-size: 1.6rem;
@@ -47,6 +55,16 @@ form label.error-input{
     color: red;
 }
 
+.form-errors span{
+    background-color: red;
+    color: white;
+    font-size: 1.2rem;
+    padding: 0.4rem;
+    font-family: "Merriweather Sans";
+    border-radius: 0.4rem;
+    text-align: center;
+}
+
 .remeber-me{
     display: flex;
     align-items: center;
@@ -68,14 +86,14 @@ form button {
     font-family: "Poppins";
     font-size: 1.6rem;
     border-radius: 0.8rem;
+    cursor: pointer;
 }
 
 .remeber-me input{
     border: 0.2rem solid #4b4b4b;
     appearance: none;
-    width: 1.6rem;
-    height: 1.6rem;
-    border-radius: 0.4rem;
+    width: 1.8rem;
+    height: 1.8rem;
 }
 
 .remeber-me input:checked{
@@ -89,7 +107,6 @@ form button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     width: 60%;
 }
 
@@ -224,27 +241,24 @@ form button {
     color: #4285F4;
 }
 
-#id_account_type{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+#account_type{
     border: 0.2rem solid #222222;
     border-radius: 0.8rem;
-    height: 2.6rem;
     padding: 0.4rem;
     padding-left: 4rem;
     padding-right: 4rem;
 }
 
-#id_account_type label{
+#id_profile_type {
+    display: flex;
+    justify-content: space-between;
+}
+
+#id_profile_type label{
     font-weight: 500;
     font-size: 1.6rem;
     text-align: start;
     cursor: pointer;
-}
-
-#id_account_type input{
-    /* display: none; */
 }
 
 input[for="id_account_type_0"]:checked > label{

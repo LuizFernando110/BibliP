@@ -1,14 +1,13 @@
-from django.shortcuts import render,HttpResponse
-from django.views.generic import ListView,DetailView
+from django.shortcuts import render, HttpResponse
+from django.views.generic.edit import CreateView
+from django.views.generic import ListView, DetailView, View
 from django.db.models.functions import ExtractMonth
-#importançoes temporararias para o json:
-import json
-from django.conf import settings
-import os
-from .forms import bookRegisterForm
-from .models import Book,Borrow,Genre
+
+from django.http import JsonResponse
+from .forms import BookForm
+from .models import Book, Borrow, Genre, Author, BookAuthor, BookGenre
 from datetime import datetime, timedelta
-from core.views import search, split_columns
+from django.urls import reverse_lazy
 
 class borrow_management(ListView):
     model=Borrow
@@ -113,6 +112,75 @@ def update_book(request):
 def delete_book(request):
     return HttpResponse('<h1>Livro Deletado</h1>')
 
-def book_register(request):
-    context = {'employer':True, 'form': bookRegisterForm()}
-    return render(request, 'book_register.html', context)
+class BookFormCreateView(CreateView):
+    form_class = BookForm
+    model = Book
+    template_name = "book_register.html"
+    context_object_name = 'books'
+    success_url = reverse_lazy('books_management')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['employer'] = True
+        return context
+    
+
+class SearchGenreView(ListView):
+    model = Genre
+
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get("q", "")
+        results = self.model.objects.filter(genre_name__icontains=query)[:5]
+        data = {'id': [obj.id for obj in results], 
+                'results': [obj.genre_name for obj in results]}
+        return JsonResponse(data)
+
+   
+class SearchAuthorView(ListView):
+    model = Author
+
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get("q", "")
+        results = self.model.objects.filter(author_name__icontains=query)[:5]
+        data = {'id': [obj.id for obj in results], 
+                'results': [obj.author_name for obj in results]}
+        return JsonResponse(data)
+
+
+class BookCreateAjaxView(View):
+
+    def post(self, request, *args, **kwargs):
+        form = BookForm(request.POST, request.FILES)
+        if form.is_valid():
+            book = form.save(commit=False)
+            book.save()
+
+            authors_ids = request.POST.getlist('book_author')
+            for author_id in authors_ids:
+                BookAuthor.objects.create(book=book, author_id=author_id)
+
+            # Criando novos autores
+            new_authors = request.POST.getlist('new_authors')
+            for author_name in new_authors:
+                new_author = Author.objects.create(author_name=author_name)
+                BookAuthor.objects.create(book=book, author=new_author)
+
+            # Adicionando gêneros existentes
+            genre_ids = request.POST.getlist('book_genre')
+            for genre_id in genre_ids:
+                BookGenre.objects.create(book=book, genre_id=genre_id)
+
+            # Criando novos gêneros
+            new_genres = request.POST.getlist('new_genres')
+            for genre_name in new_genres:
+                new_genre = Genre.objects.create(genre_name=genre_name)
+                BookGenre.objects.create(book=book, genre=new_genre)
+
+            return JsonResponse({
+                'message': 'Livro criado com sucesso',
+                'book_id': book.id,
+                'success': True,
+                'redirect_url': reverse_lazy("books_management")
+            }, status=201)
+        else:
+            return JsonResponse({"erros": form.errors}, status=400)

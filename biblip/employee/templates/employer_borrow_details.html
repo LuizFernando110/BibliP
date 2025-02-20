@@ -9,7 +9,7 @@
       
       <div class="title-div">
         <div class="back-arrow">
-          <a href="{% if employer %}{% url 'employer_borrow_list' ' '%}{% else %}{% url 'borrow_history' %}{% endif %}"
+          <a href="{% if employer %}{% url 'employer_borrow_list'%}{% else %}{% url 'borrow_history' %}{% endif %}"
             ><img src="{% static 'assets/icons/back-arrow.svg' %}" alt=""
           /></a>
         </div>
@@ -24,7 +24,7 @@
     </div>
     
   
-    <h2>Turma 3° ano Apicultura</h2>
+    <h2>{{borrow.borrow_schoolclass}}</h2>
 
 
     <div class="table-container">
