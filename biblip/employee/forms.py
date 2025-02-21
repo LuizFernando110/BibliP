@@ -48,31 +48,33 @@ class BorrowForm(forms.ModelForm):
         if delivery_date<receipt_date:
             raise ValidationError('data de devolução não pode ser anterior a data de empréstimo')
 
-        if self.instance.borrow_teacher != 2:
+        if self.instance.borrow_teacher.profile_type != 2:
             raise ValidationError('usuario não pode pedir emprestimos')
         
         #validando se livro está disponivel
         if self.instance.borrow_book.book_status != 1:
             raise ValidationError('livro indiponivel')
         
+        if self.cleaned_data.get('borrow_book_number') > self.instance.borrow_book.number_available:
+            raise ValidationError('livros insuficientes')
         
         return cleaned_data
     
-        
+ 
         
     
     def save(self, commit=True):
         students=self.instance.borrow_schoolclass.school_class_students.all()
-        instance=super(BorrowForm,self).save(commit=False)
-        book=instance.borrow_book
+        instance=self.instance
 
         
         if commit:
-            instance.save()
-            #atualizando o estado do livro para disponível
-            book.book_status=2
-            book.save()
-            for student in students:
-                BorrowStudent.objects.create(borrow_holder=self.instance,borrow_student=student,borrow_student_status=1)
+            if instance.pk is None:
+                instance.save()
+                for student in students:
+                    BorrowStudent.objects.create(borrow_holder=self.instance,borrow_student=student,borrow_student_status=1)
             return instance
+            
+
+        return instance
             

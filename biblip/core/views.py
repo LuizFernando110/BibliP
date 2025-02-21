@@ -1,4 +1,5 @@
 from django.shortcuts import render,HttpResponse,redirect
+
 from django.contrib import messages
 from django.views.generic import ListView,DetailView,FormView,CreateView, FormView
 from .forms import LoginForm, ProfileRegistrationForm,SchoolClassForm
@@ -88,6 +89,9 @@ class borrow_details(DetailView):
     model=Borrow
     context_object_name='borrow'
     pk_url_kwarg='borrow_pk'
+
+
+
 
 
 class ProfileRegistrationCreateView(CreateView):

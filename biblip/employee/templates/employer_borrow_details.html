@@ -38,13 +38,20 @@
         {% for student_borrow in borrow.borrowstudent_set.all %}
         <tr>
           <td>{{ student_borrow.borrow_student }}</td>
-          <td>{{ student_borrow.borrow_student_receipt_date }}</td>
+
+          <td>{%if student_borrow.borrow_student_receipt_date%}
+            {{ student_borrow.borrow_student_receipt_date|date:'d/m/Y' }}
+          {%else%}
+            ainda não entrege
+          {%endif%}</td>
+
           <td>{%if student_borrow.borrow_student_delivery_date%}
-            {{student_borrow.borrow_student_delivery_date }}
+            {{student_borrow.borrow_student_delivery_date|date:'d/m/Y' }}
           {%else%}
             não devolvido
           {%endif %}
         </td>
+
           <td>
             <span class="student-status status{{student_borrow.borrow_student_status}}">{{student_borrow.get_borrow_student_status_display}}</span>
           </td>

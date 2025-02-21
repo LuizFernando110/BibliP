@@ -1,6 +1,9 @@
-{% extends "base.html" %} {% load static %} {%block 'head'%}
+{% extends "base.html" %} {% load static %} 
+{%block 'head'%}
 <link rel="stylesheet" href="{%static 'css/table.css'%}" />
-{%endblock%} {% block 'main' %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+{%endblock%}
+ {% block 'main' %}
 <main class="borrow-history">
   <div class="back-arrow">
     <a href="{% url 'index' %}"
@@ -23,7 +26,7 @@
           <td>{{ borrow.borrow_book }}</td>
           <td>{{borrow.borrow_schoolclass}}</td>
           <td>{{ borrow.borrow_receipt_date|date:'d/m/Y' }}</td>
-          <td>{{ borrow.borrow_delivery_date|date:'d/m/Y' }}</td>
+          <td id="delivery_date{{borrow.id}}">{{ borrow.borrow_delivery_date|date:'d/m/Y' }}</td>
           <td class="actions-td">
             <a href="{% url 'borrow_history_details' borrow.id %}">
               <img
@@ -37,12 +40,24 @@
                 alt="botão editar empréstimo"
               />
             </a>
-            <a href="">
+
+            {%if borrow.borrow_status == 1 or borrow.borrow_status == 2%}
+            <div href=""  class="cancel-button" borrow_id="{{borrow.id}}" id="cancel{{borrow.id}}">
               <img
                 src="{% static 'assets/icons/cancel.svg' %}"
                 alt="botão cancelar empréstimo"
               />
-            </a>
+            </div>
+            <dialog class="modal-cancel-borrow" id="modal-cancel{{borrow.id}}">
+              <div><p>Cancelar empréstimo de {{borrow.borrow_book}} da turma {{borrow.borrow_schoolclass}}?</p>
+              <p>todos os estudantes que não devolveram o livro vão ser marcados como "atrasado" </p></div>
+              <div class='modal-buttons-div'>
+                <button class="close-dialog" id="close{{borrow.id}}">voltar</button>
+                <a href="{%url 'cancel_borrow' borrow.id%}" id="cancel-button{{borrow.id}}" class="cancel-borrow button-danger">cancelar</a>
+              </div>
+            </dialog>
+            {%endif%}
+
           </td>
         </tr>
         {% endfor %}
@@ -50,4 +65,53 @@
     </div>
   </div>
 </main>
+
+
+<script >
+    $('.cancel-button').click(function(){
+      var borrow_id=$(this).attr("borrow_id");
+      var delivery_node=document.getElementById("delivery_date"+borrow_id)
+      var modal=document.getElementById('modal-cancel'+borrow_id);
+      modal.showModal();
+
+      var close_modal=document.getElementById('close'+borrow_id);
+
+      close_modal.addEventListener('click',function(){
+        modal.close();
+      },{once:true});
+
+      var cancel_button=document.getElementById('cancel-button'+borrow_id);
+      cancel_button.addEventListener('click',function(event){
+        event.preventDefault();
+        modal.close(); 
+        
+        var url= $(this).attr('href');
+        $.ajax({
+          url:url,
+          type: "POST",
+          data: {
+              csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
+          },
+          success:function(response){
+            if (response.success) {
+              
+              
+              
+              delivery_node.innerHTML=response.borrow.data_entrega
+
+  
+            } 
+          },
+          error:function(e){
+            console.error('erro',e.responseText)
+          }
+
+          
+        });
+      });
+    });
+
+
+
+</script>
 {% endblock %}
