@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.views.generic import ListView,DetailView,FormView,CreateView, FormView
 from .forms import LoginForm, ProfileRegistrationForm,SchoolClassForm
 from employee.forms import BorrowForm
-from employee.models import Book,Borrow,Profile
+from employee.models import Book,Borrow,Profile,BorrowStudent
 
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy, reverse
@@ -90,7 +90,15 @@ class borrow_details(DetailView):
     context_object_name='borrow'
     pk_url_kwarg='borrow_pk'
 
-
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data()
+        search=self.request.GET.get('search')
+        student_borrows=BorrowStudent.objects.filter(borrow_holder=context.get('borrow'))
+        
+        if search:
+            student_borrows=student_borrows.filter(borrow_student__student_name__icontains=search)
+        context['student_borrows']=student_borrows
+        return context
 
 
 

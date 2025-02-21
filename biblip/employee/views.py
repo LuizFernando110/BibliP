@@ -4,7 +4,7 @@ from django.views.generic import ListView, DetailView, View
 from django.db.models.functions import ExtractMonth
 from django.http import JsonResponse
 from .forms import BookForm
-from .models import Book, Borrow, Genre, Author, BookAuthor, BookGenre
+from .models import Book, Borrow, Genre, Author, BookAuthor, BookGenre,BorrowStudent
 from datetime import datetime, timedelta
 from django.urls import reverse_lazy
 
@@ -100,6 +100,16 @@ class employer_borrow_details(DetailView):
     model=Borrow
     pk_url_kwarg='borrow_pk'  
     template_name='employer_borrow_details.html'
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data()
+        search=self.request.GET.get('search')
+        student_borrows=BorrowStudent.objects.filter(borrow_holder=context.get('borrow'))
+        
+        if search:
+            student_borrows=student_borrows.filter(borrow_student__student_name__icontains=search)
+        context['student_borrows']=student_borrows
+        return context
         
 
 

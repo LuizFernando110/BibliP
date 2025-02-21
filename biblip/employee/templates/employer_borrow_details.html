@@ -36,7 +36,7 @@
           <th id="delivery-date">Data de entrega</th>
           <th id="actions">Status</th>
         </tr>
-        {% for student_borrow in borrow.borrowstudent_set.all %}
+        {% for student_borrow in student_borrows %}
         <tr>
           <td>{{ student_borrow.borrow_student }}</td>
 
