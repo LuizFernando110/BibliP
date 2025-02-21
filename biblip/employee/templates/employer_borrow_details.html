@@ -20,6 +20,7 @@
         <span>{{borrow.borrow_book}}</span>
         <span>{{borrow.borrow_receipt_date|date:"d/m/Y"}}-{{borrow.borrow_delivery_date|date:"d/m/Y"}}</span>
         <span>Prof.{{borrow.borrow_teacher}}</span>
+        <span>Status: {{borrow.get_borrow_status_display}}</span>
       </div>
     </div>
     

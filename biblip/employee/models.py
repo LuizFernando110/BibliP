@@ -110,7 +110,7 @@ class BorrowStudent(models.Model):
                            (3,'Devolvido'),
                            (4,'Atrasado'),
                            (5,'Devolvido com atraso'),
-                           (6,'fechado, não pego')
+                           (6,'não recebeu')
                            )
 
 
