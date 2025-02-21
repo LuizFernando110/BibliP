@@ -3,6 +3,7 @@ from django.forms import inlineformset_factory
 from .models import Book,Borrow,BorrowStudent
 from formset.widgets import DateInput as formset_DateInput
 from django.core.exceptions import ValidationError
+from datetime import date
 
 class BookForm(forms.ModelForm):
 
@@ -37,16 +38,28 @@ class BorrowForm(forms.ModelForm):
         
     def clean(self):
         cleaned_data=super().clean()
+        #validando se usuario é professor
+
+        delivery_date=self.cleaned_data.get('borrow_delivery_date')
+        receipt_date=self.cleaned_data.get('borrow_receipt_date')
+        if receipt_date<date.today():
+            raise ValidationError('data de emprestimo não pode ser anterior a hoje')
+        
+        if delivery_date<receipt_date:
+            raise ValidationError('data de devolução não pode ser anterior a data de empréstimo')
+
         if self.instance.borrow_teacher != 2:
             raise ValidationError('usuario não pode pedir emprestimos')
         
+        #validando se livro está disponivel
         if self.instance.borrow_book.book_status != 1:
             raise ValidationError('livro indiponivel')
         
         
         return cleaned_data
     
-
+        
+        
     
     def save(self, commit=True):
         students=self.instance.borrow_schoolclass.school_class_students.all()
