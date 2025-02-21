@@ -34,23 +34,32 @@ class BorrowForm(forms.ModelForm):
         #como este form cria borrows passamos como valor de status o número 1(analise)
         self.instance.borrow_status=1
 
-    def clean_borrow_teacher(self):
-        if self.instance.borrow_teacher.profile_type is not 2:
-            raise ValidationError('usuario incorreto')
-        if self.instance.borrow_teacher != self.request.user.profile:
-            raise ValidationError('usuario incorreto')
         
-    def clean_borrow_book(self):
-        if self.instance.borrow_book.book_status == 2:
-            raise ValidationError('livro indisponivel')
+    def clean(self):
+        cleaned_data=super().clean()
+        if self.instance.borrow_teacher != 2:
+            raise ValidationError('usuario não pode pedir emprestimos')
+        
+        if self.instance.borrow_book.book_status != 1:
+            raise ValidationError('livro indiponivel')
+        
+        
+        return cleaned_data
+    
+
+    
     def save(self, commit=True):
         students=self.instance.borrow_schoolclass.school_class_students.all()
+        instance=super(BorrowForm,self).save(commit=False)
+        book=instance.borrow_book
 
+        
         if commit:
-            self.instance.save()
-            book=self.instance.borrow_book
+            instance.save()
             #atualizando o estado do livro para disponível
             book.book_status=2
             book.save()
             for student in students:
-                borrowstudent=BorrowStudent.objects.create(borrow_holder=self.instance,borrow_student=student,borrow_student_status=1)
+                BorrowStudent.objects.create(borrow_holder=self.instance,borrow_student=student,borrow_student_status=1)
+            return instance
+            

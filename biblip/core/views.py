@@ -59,6 +59,7 @@ class borrow(CreateView):
         context=super().get_context_data()
         context['book']=Book.objects.get(id=self.kwargs.get('book_pk'))
         return context
+    
     def form_valid(self, form):
         form.save()
         
