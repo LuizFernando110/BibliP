@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core.apps.CoreConfig',
     'employee.apps.EmployeeConfig',
+
+    'formset'
 ]
 
 MIDDLEWARE = [

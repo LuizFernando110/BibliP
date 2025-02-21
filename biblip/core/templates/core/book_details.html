@@ -43,7 +43,7 @@
             <p>{{book.book_description}}</p>
         </div>
         {%if book.book_status == 1 %}
-        <a href="{% url 'borrow' 3 %}">
+        <a href="{% url 'borrow' book.id %}">
             <div id="borrow-button">
                 <p>Alugar</p>
             </div>

@@ -2,6 +2,7 @@ from django.shortcuts import render,HttpResponse,redirect
 from django.contrib import messages
 from django.views.generic import ListView,DetailView,FormView,CreateView, FormView
 from .forms import LoginForm, ProfileRegistrationForm,SchoolClassForm
+from employee.forms import BorrowForm
 from employee.models import Book,Borrow,Profile
 
 from django.contrib.auth.models import User
@@ -38,9 +39,30 @@ class details(DetailView):
     pk_url_kwarg='book_pk'
     context_object_name='book'
 
-def borrow(request,book_pk):
-    context={'book_pk':book_pk}
-    return render(request,'core/book_borrow.html',context)
+
+class borrow(CreateView):
+    form_class = BorrowForm
+    model = Borrow
+    template_name = "core/book_borrow.html"
+    success_url = reverse_lazy('index')
+
+    def get_form_kwargs(self):
+        kwargs=super().get_form_kwargs()
+
+        book=Book.objects.get(id=self.kwargs.get('book_pk'))
+        kwargs['profile']=self.request.user.profile
+        kwargs['book']=book
+        return kwargs
+
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data()
+        context['book']=Book.objects.get(id=self.kwargs.get('book_pk'))
+        return context
+    def form_valid(self, form):
+        form.save()
+        
+        return super().form_valid(form)
 
 
 class borrow_history(ListView):
