@@ -1,5 +1,5 @@
 from django.shortcuts import render,HttpResponse,redirect
-
+from django.db.models import Q
 from django.contrib import messages
 from django.views.generic import ListView,DetailView,FormView,CreateView, FormView
 from .forms import LoginForm, ProfileRegistrationForm,SchoolClassForm
@@ -25,13 +25,6 @@ class index(ListView):
             return queryset
         queryset=super().get_queryset()
         return queryset
-
-def search(request,search):
-    context={'search':search}
-
-    #podemos reutilizar o Index.html nesta rota, mas prtimeiro precisamos da conexão com o banco de dados
-    return render(request,"core/search_temp.html",context)
-
 
 
 class details(DetailView):
@@ -75,6 +68,12 @@ class borrow_history(ListView):
     def get_queryset(self):
         prof=self.request.user.profile
         queryset=Borrow.objects.filter(borrow_teacher=prof)
+        search=self.request.GET.get('search')
+        if search:
+            queryset=queryset.filter(Q(borrow_teacher__profile_name__icontains=search)|
+                                     Q(borrow_book__book_title__icontains=search)|
+                                     Q(borrow_schoolclass__school_class_name__icontains=search))
+
         return queryset
 
     def get_context_data(self, **kwargs):
