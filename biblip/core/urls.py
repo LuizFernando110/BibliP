@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import index,details,borrow,borrow_history, borrow_details, ProfileRegistrationCreateView, school_class_creation, LoginView, LogoutView
-from .ajax_endpoints import cancel_borrow
+from employee.ajax_endpoints import cancel_borrow
 urlpatterns = [
     path('',index.as_view(),name='index'),
     path('collection/details/<int:book_pk>',details.as_view(),name='details'),
