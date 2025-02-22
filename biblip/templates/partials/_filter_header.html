@@ -1,8 +1,49 @@
 {%load static%}
+{% load custom_filters %}
+
 <div class="catalog-header">
   <h2>{%if filter_title%}{{filter_title}}{%else%}Catálogo{%endif%}</h2>
   <div class="filter-container">
     <span>filtrar por: </span>
-    <div>categorias...</div>
+    <button class="filter-button">categorias...</button>
+    <div class="dropdown-menu">
+      {% for coll in filters %}
+      <ul class="dropdown-column">
+        {% for filter in coll %}
+        {% if filter.id %}
+        <li>
+          <a href="{% url filter_url %}?{% if request.GET.search %}search={{ request.GET.search }}&{% endif %}{{ filter_type }}={{ filter.id }}">
+            {{ filter|get_attr:filter_name }}
+          </a>
+        </li>
+      {% else %}
+        <li>
+          <a href="{% url filter_url %}?{% if request.GET.search %}search={{ request.GET.search }}{% endif %}">
+            Todos
+          </a>
+        </li>
+      {% endif %}
+          {% empty %}
+          <li>Nenhum gênero encontrado.</li>
+        {% endfor %}
+      </ul>
+      {% endfor %}
+    </div>
   </div>
 </div>
+
+<script>
+  const button = document.querySelector('.filter-button');
+  const dropdown = document.querySelector('.dropdown-menu');
+  button.addEventListener('click', () => {
+    dropdown.classList.toggle('open');
+    console.log('open')
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!dropdown.contains(e.target) && !button.contains(e.target)) {
+      dropdown.classList.remove('open');
+      console.log('remove open')
+    }
+  });
+</script>

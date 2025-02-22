@@ -8,8 +8,9 @@
     /></a>
   </div>
   <div class="borrow-history-container">
-    {%include 'partials/_filter_header.html'%}
+    {% include 'partials/_filter_header.html' %}
     <div class="table-container">
+      {% if borrow_history %}
       <table class="history-table">
         <tr class="history-table-header">
           <th id="book-name">Nome do livro</th>
@@ -47,6 +48,9 @@
         </tr>
         {% endfor %}
       </table>
+      {% else %}
+        <span>Nenhum empréstimo foi feito</span>
+      {% endif %}
     </div>
   </div>
 </main>

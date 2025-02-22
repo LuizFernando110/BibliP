@@ -24,8 +24,11 @@
           <td>{{ borrow.borrow_teacher }}</td>
           <td>{{ borrow.borrow_book }}</td>
           <td>{{borrow.borrow_schoolclass}}</td>
-          <td>{{ borrow.borrow_receipt_date }}</td>
-          <td>{{ borrow.borrow_delivery_date }}</td>
+          <td>{{ borrow.borrow_receipt_date|date:"d/m/Y" }}</td>
+          <td>{{ borrow.borrow_delivery_date|date:"d/m/Y" }}</td>
+
+          
+
           <td class="actions-td">
             <a href="{% if employer %}
               {% url 'employer_borrow_details' borrow.id %}
