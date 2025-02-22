@@ -1,7 +1,7 @@
 $(document).ready(function () {
   $("#author, #genre").on("keydown", function (event) {
       if (event.key === "Enter") {
-          event.preventDefault(); // Impede a submissão do formulário
+          event.preventDefault();
       }
   });
 
@@ -180,6 +180,14 @@ $(document).ready(function () {
   var fileInput = document.querySelector('.file-input input');
   var fileDiv = document.querySelector('.file-input');
 
+  fileInput.addEventListener('change', function () {
+    if (fileInput.files.length > 0) {
+        var fileURL = URL.createObjectURL(fileInput.files[0]);
+        fileDiv.style.backgroundImage = `url('${fileURL}')`;
+        fileDiv.style.backgroundSize = `cover`;
+    }
+  });
+
   var bookImageLink = document.querySelector('.file-input a');
   var bookImageUrl = bookImageLink.getAttribute('href');
 
@@ -187,12 +195,4 @@ $(document).ready(function () {
     fileDiv.style.backgroundImage = `url('${bookImageUrl}')`;
     fileDiv.style.backgroundSize = `cover`;
   }
-  
-  fileInput.addEventListener('change', function () {
-      if (fileInput.files.length > 0) {
-          var fileURL = URL.createObjectURL(fileInput.files[0]);
-          fileDiv.style.backgroundImage = `url('${fileURL}')`;
-          fileDiv.style.backgroundSize = `cover`;
-      }
-  });
 });
