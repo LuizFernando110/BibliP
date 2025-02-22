@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse
 from django.views.generic.edit import CreateView
 from django.views.generic import ListView, DetailView, View
 from django.db.models.functions import ExtractMonth
+
 from django.http import JsonResponse
 from .forms import BookForm
 from .models import Book, Borrow, Genre, Author, BookAuthor, BookGenre
@@ -50,21 +51,20 @@ class borrow_management(ListView):
         }
         return context
 
-
 class books_management(ListView):
-    template_name='books-management.html'
     model=Book
     context_object_name='books'
-
+    template_name='books-management.html'
 
     def get_queryset(self):
-        queryset= Book.objects.all()
-
         search=self.request.GET.get('search')
-        print(search)
+        books = Book.objects.all()
+
         if search:
-            queryset.filter(book_title__icontains=search)
-        return queryset
+            books = books.filter(book_title__icontains=search)
+
+        
+        return books  # Retorna apenas o queryset, sem adicionar outras variáveis
 
 
 class employer_borrow_list(ListView):
