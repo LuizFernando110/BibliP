@@ -1,28 +1,28 @@
 {% extends "base.html" %} 
 {% load static %}
-{%block 'head'%}<link
-  rel="stylesheet"
-  href="{% static 'css/book-register.css' %}"
-/>
+{%block 'head'%}
+  <link rel="stylesheet" href="{% static 'css/book-register.css' %}">
+  <link rel="stylesheet" href="{% static 'css/modals.css' %}">
 {%endblock%} 
 
 {%block 'main'%}
 <main>
-  <link rel="stylesheet" href="{% static 'css/modals.css' %}">
-  <dialog id="delete-modal">
-    <p>Você tem certeza que quer excluir o livro: {{ book.book_title }}?</p>
-    <div class="buttons-area">
-      <button id="neutral-button" type="button">Cancelar</button>
-      <button id="attention-button" type="button">Excluir</button>
-    </div>
-  </dialog>
+  {% block modal %}
+    <dialog id="delete-modal">
+      <p>Você tem certeza que quer excluir o livro: {{ book.book_title }}?</p>
+      <div class="buttons-area">
+        <button id="neutral-button" type="button">Cancelar</button>
+        <button id="attention-button" type="button" onclick=deleteBook('{{ book.id }}') >Excluir</button>
+      </div>
+    </dialog>
+  {% endblock modal %}
 
   <div class="book-actions">
     <a id="back-button" href="{% url "books_management" %}">
       <img src="{% static "assets/icons/back-arrow-white.svg" %}" alt="Voltar">
     </a>
   </div>
-  <form method="post", enctype="multipart/form-data" id="book-form">
+  <form method="post" enctype="multipart/form-data" id="book-form">
     <input type="hidden" id="book-id" value="{{ book.id }}">
     <input type="hidden" id="form-action" value="update">
     {% csrf_token %}
@@ -112,55 +112,57 @@
 </main>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+{% block scripts %}
+  <script>
+    var searchAuthorUrl = "{% url 'search_author' %}";
+    var searchGenreUrl = "{% url 'search_genre' %}";
+    var bookCreateUrl = "{% url 'book_create_ajax' %}";
+    var csrfToken = "{{ csrf_token }}";
+  </script>
 
-<script>
-  var searchAuthorUrl = "{% url 'search_author' %}";
-  var searchGenreUrl = "{% url 'search_genre' %}";
-  var bookCreateUrl = "{% url 'book_create_ajax' %}";
-  var csrfToken = "{{ csrf_token }";
-</script>
 
-
-<script>
-  function deleteBook(bookId) {
-    fetch(`/book/delete/${bookId}/`, {
-      method: "DELETE",
-      headers: {
-        "X-CSRFToken": "{{ csrf_token }}",
-        "Content-Type": "application/json",
-      },
-    })
-    .then(response => {
-      if (response.ok) {
-        window.location.href = "{% url 'books_management' %}";
-      } else {
+  <script>
+    function deleteBook(bookId) {
+      fetch(`/book/delete/${bookId}/`, {
+        method: "DELETE",
+        headers: {
+          "X-CSRFToken": "{{ csrf_token }}",
+          "Content-Type": "application/json",
+        },
+      })
+      .then(response => {
+        if (response.ok) {
+          window.location.href = "{% url 'books_management' %}";
+        } else {
+          alert("Erro ao excluir o livro.");
+        }
+      })
+      .catch(error => {
+        console.error("Erro na requisição:", error);
         alert("Erro ao excluir o livro.");
-      }
-    })
-    .catch(error => {
-      console.error("Erro na requisição:", error);
-      alert("Erro ao excluir o livro.");
-    });
-  }
-</script>
+      });
+    }
+  </script>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const modal = document.getElementById("delete-modal");
-    const deleteButton = document.getElementById("delete_button");
-    const cancelButton = document.getElementById("neutral-button");
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const modal = document.getElementById("delete-modal");
+      const deleteButton = document.getElementById("delete_button");
+      const cancelButton = document.getElementById("neutral-button");
 
-    // Abre o modal ao clicar no botão "Deletar"
-    deleteButton.addEventListener("click", function () {
-        modal.showModal();
-    });
+      // Abre o modal ao clicar no botão "Deletar"
+      deleteButton.addEventListener("click", function () {
+          modal.showModal();
+      });
 
-    // Fecha o modal ao clicar no botão "Cancelar"
-    cancelButton.addEventListener("click", function () {
-        modal.close();
-    });
-});
-</script>
+      // Fecha o modal ao clicar no botão "Cancelar"
+      cancelButton.addEventListener("click", function () {
+          modal.close();
+      });
+  });
+  </script>
 
-<script src="{% static 'js/book_ajax.js' %}"></script>
+  <script src="{% static 'js/book_ajax.js' %}"></script>
+{% endblock scripts %}
+
 {%endblock%}
