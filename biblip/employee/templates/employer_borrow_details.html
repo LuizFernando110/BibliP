@@ -68,7 +68,7 @@
           {%if request.user.profile.profile_type == 1 %}
           <td>
           {%if student_borrow.borrow_student_status == 1 %}
-            <div  borrow_student_id="{{student_borrow.id}}" class="modal-button" id="button{{student_borrow.id}}">
+            <div  borrow_id="{{student_borrow.id}}" class="modal-button" id="button{{student_borrow.id}}">
               <img
                 src="{% static 'assets/icons/cancel.svg' %}"
                 alt="botão confirmar emprestimo de livro a aluno"
@@ -87,7 +87,7 @@
             </dialog>
 
             {%elif student_borrow.borrow_student_status == 2 or  student_borrow.borrow_student_status == 4 %}
-              <div  borrow_student_id="{{student_borrow.id}}" class="modal-button" id="button{{student_borrow.id}}">
+              <div  borrow_id="{{student_borrow.id}}" class="modal-button" id="button{{student_borrow.id}}">
                 <img
                   src="{% static 'assets/icons/cancel.svg' %}"
                   alt="botão confirmar emprestimo de livro a aluno"
@@ -106,7 +106,7 @@
               </dialog>
 
             {%else%}
-              <div  borrow_student_id="{{student_borrow.id}}" class="modal-button" id="button{{student_borrow.id}}">
+              <div  borrow_id="{{student_borrow.id}}" class="modal-button" id="button{{student_borrow.id}}">
                 <img
                   src="{% static 'assets/icons/cancel.svg' %}"
                   alt="botão confirmar emprestimo de livro a aluno"
@@ -135,40 +135,5 @@
   </div>
 </main>
 
-<script >
-  $('.modal-button').click(function(){
-    var borrow_id=$(this).attr("borrow_student_id");
-    
-    var modal=document.getElementById('modal-'+borrow_id);
-    modal.showModal();
-
-
-    var close_modal=document.getElementById('close'+borrow_id);
-    close_modal.addEventListener('click',function(){
-      modal.close();
-    },{once:true});
-
-    var next_button=document.getElementById('next-button'+borrow_id);
-    next_button.addEventListener('click',function(event){
-      event.preventDefault();
-      modal.close(); 
-      
-      var url= $(this).attr('href');
-      $.ajax({
-        url:url,
-        type: "GET",
-        success:function(response){
-          if (response.success) {
-
-            location.reload();
-          } 
-        },
-        error:function(e){
-          console.error('erro',e.responseText)
-        }
-        
-      });
-    });
-  });
-</script>
+<script src="{%static 'js/confirmation_modal.js' %}"></script>
 {% endblock %}

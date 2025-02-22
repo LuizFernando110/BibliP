@@ -42,13 +42,13 @@
             </a>
 
             {%if borrow.borrow_status == 1 or borrow.borrow_status == 2%}
-            <div   class="cancel-button" borrow_id="{{borrow.id}}" id="cancel{{borrow.id}}">
+            <div   class="modal-button" borrow_id="{{borrow.id}}" id="cancel{{borrow.id}}">
               <img
                 src="{% static 'assets/icons/cancel.svg' %}"
                 alt="botão cancelar empréstimo"
               />
             </div>
-            <dialog class="modal-cancel-borrow" id="modal-cancel{{borrow.id}}">
+            <dialog class="modal-cancel-borrow" id="modal-{{borrow.id}}">
               <div>
                 {%if borrow.borrow_status == 2%}
                 <p>encerrar empréstimo de {{borrow.borrow_book}} da turma {{borrow.borrow_schoolclass}}?</p>
@@ -60,7 +60,7 @@
             </div>
               <div class='modal-buttons-div'>
                 <button class="close-dialog" id="close{{borrow.id}}">voltar</button>
-                <a href="{%url 'cancel_borrow' borrow.id%}" id="cancel-button{{borrow.id}}" class="cancel-borrow button-danger">cancelar</a>
+                <a href="{%url 'cancel_borrow' borrow.id%}" id="next-button{{borrow.id}}" class="cancel-borrow button-danger">cancelar</a>
               </div>
             </dialog>
             {%endif%}
@@ -74,49 +74,5 @@
 </main>
 
 
-<script >
-    $('.cancel-button').click(function(){
-      var borrow_id=$(this).attr("borrow_id");
-      var delivery_node=document.getElementById("delivery_date"+borrow_id)
-      var modal=document.getElementById('modal-cancel'+borrow_id);
-      modal.showModal();
-
-      var close_modal=document.getElementById('close'+borrow_id);
-
-      close_modal.addEventListener('click',function(){
-        modal.close();
-      },{once:true});
-
-      var cancel_button=document.getElementById('cancel-button'+borrow_id);
-      cancel_button.addEventListener('click',function(event){
-        event.preventDefault();
-        modal.close(); 
-        
-        var url= $(this).attr('href');
-        $.ajax({
-          url:url,
-          type: "POST",
-          data: {
-              csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
-          },
-          success:function(response){
-            if (response.success) {
-              
-              
-              
-              delivery_node.innerHTML=response.borrow.data_entrega
-              location.reload()
-
-  
-            } 
-          },
-          error:function(e){
-            console.error('erro',e.responseText)
-          }
-
-          
-        });
-      });
-    });
-</script>
+<script src="{%static 'js/confirmation_modal.js' %}"></script>
 {% endblock %}
