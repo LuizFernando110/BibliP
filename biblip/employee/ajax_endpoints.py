@@ -28,6 +28,7 @@ def cancel_borrow(request,borrow_pk):
     else:
         return JsonResponse({
             'success':False,
+            
         })
     
 def accept_borrow(request,borrow_pk):
@@ -40,6 +41,7 @@ def accept_borrow(request,borrow_pk):
         return JsonResponse({
             
             'success':True,
+            'message':'aceito com sucesso'
         })
     else:
         return JsonResponse({

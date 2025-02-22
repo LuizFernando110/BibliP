@@ -42,7 +42,7 @@
             </a>
 
             {%if borrow.borrow_status == 1 or borrow.borrow_status == 2%}
-            <div href=""  class="cancel-button" borrow_id="{{borrow.id}}" id="cancel{{borrow.id}}">
+            <div   class="cancel-button" borrow_id="{{borrow.id}}" id="cancel{{borrow.id}}">
               <img
                 src="{% static 'assets/icons/cancel.svg' %}"
                 alt="botão cancelar empréstimo"
@@ -118,8 +118,5 @@
         });
       });
     });
-
-
-
 </script>
 {% endblock %}
