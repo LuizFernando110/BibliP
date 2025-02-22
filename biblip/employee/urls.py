@@ -15,6 +15,6 @@ urlpatterns = [
     path('book_create_ajax/', BookCreateAjaxView.as_view(), name='book_create_ajax'),
     path('employer/borrow/<int:borrow_pk>/accept_borrow',accept_borrow,name='employer_accept_borrow'),
     path('employer/borrow/<int:borrow_pk>/cancel_borrow',cancel_borrow,name='employer_cancel_borrow'),
-    path('employer/borrow/<int:borrow_pk>/receipt_borrowstudent',student_borrow_receipt,name='receipt_borrowstudent'),
-    path('employer/borrow/<int:borrow_pk>/deliver_borrowstudent',student_borrow_deliver,name='deliver_borrowstudent'),
+    path('employer/borrow/<int:borrow_student_pk>/receipt_borrowstudent',student_borrow_receipt,name='receipt_borrowstudent'),
+    path('employer/borrow/<int:borrow_student_pk>/deliver_borrowstudent',student_borrow_deliver,name='deliver_borrowstudent'),
 ]
