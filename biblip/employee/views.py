@@ -50,10 +50,22 @@ class borrow_management(ListView):
         }
         return context
 
-def books_management(request):
-    books = Book.objects.all()
-    context = {'employer': True, 'books': books}
-    return render(request, 'books-management.html', context)
+
+class books_management(ListView):
+    template_name='books-management.html'
+    model=Book
+    context_object_name='books'
+
+
+    def get_queryset(self):
+        queryset= Book.objects.all()
+
+        search=self.request.GET.get('search')
+        print(search)
+        if search:
+            queryset.filter(book_title__icontains=search)
+        return queryset
+
 
 class employer_borrow_list(ListView):
     model=Borrow

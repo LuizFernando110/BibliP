@@ -1,37 +1,42 @@
 from django import forms
 from .models import SchoolClass,Student
+from employee.models import Profile
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-
 
 import csv
 import io
-class loginTeacherForm(forms.Form):
-    teacherEnrollment = forms.CharField(max_length = 14,
-    widget = forms.TextInput(attrs={'class': 'form-style', 'placeholder': 'Digite sua matrícula'}))
 
-    password = forms.CharField(
-    widget=forms.PasswordInput(attrs={'class': 'form-style', 'placeholder': 'Digite sua senha'}))
+class ProfileRegistrationForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
+    profile_registration = forms.CharField(max_length = 14)
+    profile_type = forms.ChoiceField(choices=Profile.USER_TYPE, widget=forms.RadioSelect)
 
-    checkBox = forms.BooleanField(required = False)
+    class Meta:
+        model = User
+        fields = ['first_name', 'email', 'password']
 
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.username = self.cleaned_data['profile_registration']
+        user.set_password(self.cleaned_data['password'])
+        
+        if commit:
+            user.save()
+            Profile.objects.create(
+                user=user,
+                profile_name = self.cleaned_data['first_name'],
+                profile_type = self.cleaned_data['profile_type'], 
+                profile_registration = self.cleaned_data['profile_registration']
+            )
+            
+        return user
 
-class userRegisterForm(forms.Form):
-    account_type = forms.ChoiceField(choices = [('Servidor', 'Servidor'), ('Professor', 'Professor')], widget=forms.RadioSelect)
-
-    name = forms.CharField(max_length = 100,
-    widget = forms.TextInput(attrs={'class': 'form-style', 'placeholder': 'Digite seu nome'}))
-
-    email = forms.EmailField(max_length = 100,
-    widget = forms.EmailInput(attrs={'class': 'form-style', 'placeholder': 'Digite seu email'}))
-    
-    teacherEnrollment = forms.CharField(max_length = 14,
-    widget = forms.TextInput(attrs={'class': 'form-style', 'placeholder': 'Digite sua matrícula'}))
-
-    password = forms.CharField(
-    widget=forms.PasswordInput(attrs={'class': 'form-style', 'placeholder': 'Digite sua senha'}))
-
-    confirm_password = forms.CharField(
-    widget=forms.PasswordInput(attrs={'class': 'form-style', 'placeholder': 'Confirme sua senha'}))
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=14)
+    password = forms.CharField(widget=forms.PasswordInput)
+    remember_me = forms.BooleanField(required=False , initial=False)
 
 class SchoolClassForm(forms.ModelForm):
     school_class_students_wid=forms.FileField()
