@@ -49,8 +49,15 @@
               />
             </div>
             <dialog class="modal-cancel-borrow" id="modal-cancel{{borrow.id}}">
-              <div><p>Cancelar empréstimo de {{borrow.borrow_book}} da turma {{borrow.borrow_schoolclass}}?</p>
-              <p>todos os estudantes que não devolveram o livro vão ser marcados como "atrasado" </p></div>
+              <div>
+                {%if borrow.borrow_status == 2%}
+                <p>encerrar empréstimo de {{borrow.borrow_book}} da turma {{borrow.borrow_schoolclass}}?</p>
+                <p>todos os estudantes que não devolveram o livro vão ser marcados como "atrasado" </p>
+                {%elif borrow.borrow_status == 1%}
+                <p>Cancelar pedido de empréstimo de {{borrow.borrow_book}} da turma {{borrow.borrow_schoolclass}}?</p>
+                
+                {%endif%}
+            </div>
               <div class='modal-buttons-div'>
                 <button class="close-dialog" id="close{{borrow.id}}">voltar</button>
                 <a href="{%url 'cancel_borrow' borrow.id%}" id="cancel-button{{borrow.id}}" class="cancel-borrow button-danger">cancelar</a>
@@ -98,6 +105,7 @@
               
               
               delivery_node.innerHTML=response.borrow.data_entrega
+              location.reload()
 
   
             } 
