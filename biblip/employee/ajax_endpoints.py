@@ -2,8 +2,12 @@ from django.http import JsonResponse
 from employee.models import Borrow, BorrowStudent
 from employee.borrow_evaluations import borrow_close_evaluation
 from datetime import date
+from .decorators import is_employer
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 
+@method_decorator(login_required(login_url='login'),name='dispatch')
 def cancel_borrow(request,borrow_pk):
     borrow=Borrow.objects.get(id=borrow_pk)
     if (request.user.profile==borrow.borrow_teacher or request.user.profile.profile_type==1) and borrow.borrow_status not in [3,4]:
@@ -31,6 +35,7 @@ def cancel_borrow(request,borrow_pk):
             
         })
     
+@method_decorator(is_employer,name='dispatch')
 def accept_borrow(request,borrow_pk):
     borrow=Borrow.objects.get(id=borrow_pk)
     if borrow.borrow_status ==1:
@@ -48,6 +53,7 @@ def accept_borrow(request,borrow_pk):
             'success':False,
         })
 
+@method_decorator(is_employer,name='dispatch')
 def student_borrow_receipt(request,borrow_student_pk):
     borrow_student=BorrowStudent.objects.get(id=borrow_student_pk)
     borrow_student.borrow_student_receipt_date=date.today()
@@ -65,6 +71,7 @@ def student_borrow_receipt(request,borrow_student_pk):
             'success':False,
         })
     
+@method_decorator(is_employer,name='dispatch')
 def student_borrow_deliver(request,borrow_student_pk):
     borrow_student=BorrowStudent.objects.get(id=borrow_student_pk)
     book=borrow_student.borrow_holder.borrow_book

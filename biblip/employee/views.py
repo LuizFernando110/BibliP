@@ -8,10 +8,13 @@ from .forms import BookForm
 from .models import Book, Borrow, Genre, Author, BookAuthor, BookGenre,BorrowStudent
 from datetime import datetime, timedelta
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from .decorators import is_employer
 from django.shortcuts import get_object_or_404, redirect
-
 from .borrow_evaluations import evaluate_all_by_date
 
+@method_decorator(is_employer,name='dispatch')
 class borrow_management(ListView):
     model=Borrow
     template_name="employer_index.html"
@@ -56,6 +59,7 @@ class borrow_management(ListView):
         }
         return context
 
+@method_decorator(is_employer,name='dispatch')
 class books_management(ListView):
     model=Book
     context_object_name='books'
@@ -72,6 +76,7 @@ class books_management(ListView):
         return books  # Retorna apenas o queryset, sem adicionar outras variáveis
 
 
+@method_decorator(is_employer,name='dispatch')
 class employer_borrow_list(ListView):
     model=Borrow
     template_name='employer_borrow_list.html'
@@ -104,10 +109,12 @@ class employer_borrow_list(ListView):
         return {'borrow_history':appointments, 'filter_title':'Histórico de aluguéis'}
 
 
+@method_decorator(is_employer,name='dispatch')
 class employer_borrow_details(DetailView):
     model=Borrow
     pk_url_kwarg='borrow_pk'  
     template_name='employer_borrow_details.html'
+
 
     def get_context_data(self, **kwargs):
         context=super().get_context_data()
@@ -118,8 +125,9 @@ class employer_borrow_details(DetailView):
             student_borrows=student_borrows.filter(borrow_student__student_name__icontains=search)
         context['student_borrows']=student_borrows
         return context
-        
 
+
+@method_decorator(is_employer,name='dispatch')
 class BookFormCreateView(CreateView):
     form_class = BookForm
     model = Book
