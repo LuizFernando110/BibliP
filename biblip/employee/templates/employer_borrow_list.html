@@ -1,19 +1,22 @@
 {% extends "base.html" %} {% load static %} {%block 'head'%}
 <link rel="stylesheet" href="{%static 'css/table.css'%}" />
-{%endblock%} {% block 'main' %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+{%endblock%} 
+
+{% block 'main' %}
 <main class="borrow-history ">
   <div class="back-arrow">
-    <a href="{% if employer %}{% url 'borrow_management' %}{% else %}{% url 'index' %}{% endif %}"
+    <a href="{%if request.user.profile.profile_type == 1%}{% url 'borrow_management' %}{% else %}{% url 'index' %}{% endif %}"
       ><img src="{% static 'assets/icons/back-arrow.svg' %}" alt=""
     /></a>
   </div>
   <div class="borrow-history-container">
     {%include 'partials/_filter_header.html'%}
     <div class="table-container">
-      <table class="history-table employ-table">
+      {% if borrow_history %}
+      <table class="history-table">
         <tr class="history-table-header">
-          <th id="teacher">Professor</th>
-          <th id="book-name">Livro</th>
+          <th id="book-name">Nome do livro</th>
           <th id="school-class">Sala</th>
           <th id="receipt-date">Data de recebimento</th>
           <th id="delivery-date">Data de entrega</th>
@@ -21,39 +24,44 @@
         </tr>
         {% for borrow in borrow_history %}
         <tr>
-          <td>{{ borrow.borrow_teacher }}</td>
           <td>{{ borrow.borrow_book }}</td>
-          <td>a</td>
-          <td>{{ borrow.borrow_receipt_date }}</td>
-          <td>{{ borrow.borrow_delivery_date }}</td>
+          <td>{{ borrow.borrow_schoolclass }}</td>
+          <td>{{ borrow.borrow_receipt_date|date:"d/m/Y" }}</td>
+          <td>{{ borrow.borrow_delivery_date|date:"d/m/Y" }}</td>
           <td class="actions-td">
-            <a href="{% if employer %}
-              {% url 'employer_borrow_details' borrow.id %}
-            {% else %}
-              {% url 'borrow_history_details' borrow.id %}
-            {% endif %}">
+            <a href="{% url 'borrow_history_details' borrow.id %}">
               <img
                 src="{% static 'assets/icons/eye.svg' %}"
                 alt="botão ver empréstimo"
               />
             </a>
-            <a href="">
-              <img
-                src="{% static 'assets/icons/edit_fill.svg' %}"
-                alt="botão editar empréstimo"
-              />
-            </a>
-            <a href="">
-              <img
-                src="{% static 'assets/icons/cancel.svg' %}"
-                alt="botão cancelar empréstimo"
-              />
-            </a>
+
+            {%if borrow.borrow_status == 1 %}
+
+              {%url "employer_accept_borrow" borrow.id as url%}
+              {% static 'assets/icons/edit_fill.svg' as accept_icon%}
+              {% include "partials/_confirmation_modal.html" with modal_type="accept" icon=accept_icon icon_text="botão editar empréstimo" next_url=url confirmation="True" next_text="aceitar" button_value="aceitar" borrow=borrow text_1="Ao clicar em 'aceitar' o empréstimo será aberto" text_2="tem certeza disso?" %}
+            {%endif%}
+
+            {%if borrow.borrow_status == 1 or borrow.borrow_status == 2 %}
+              {%url "employer_cancel_borrow" borrow.id as url%}
+              {% static 'assets/icons/cancel.svg' as cancel_icon%}
+              {% include "partials/_confirmation_modal.html" with modal_type="cancel" icon=cancel_icon icon_text="botão cancelar empréstimo" next_url=url confirmation="True" next_text="cancelar"  borrow=borrow text_1="deseja cancelar o emprestimo?" text_2="todos os estudantes que não devolveram o livro vão ser marcados como 'atrasado'" %}
+
+            {%endif%}
           </td>
         </tr>
         {% endfor %}
       </table>
+      {% else %}
+        <span>Nenhum empréstimo foi feito</span>
+      {% endif %}
     </div>
   </div>
 </main>
-{% endblock %}
+
+
+<script src="{%static 'js/confirmation_modal.js'%}"></script>
+
+
+{%endblock%}

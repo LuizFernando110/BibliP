@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     {%block 'head'%}{%endblock%}
   </head>
-  <body class="{%if employer%} employee-base-style {%endif%}">
-    {%if employer%}
+  <body class="{%if request.user.profile.profile_type == 1 %} employee-base-style {%endif%}">
+    {%if request.user.profile.profile_type == 1 %}
       {%include 'partials/_employer_header.html'%}
     {%else%}
       {%include 'partials/_header.html'%}

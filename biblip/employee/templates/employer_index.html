@@ -15,7 +15,7 @@
       {% for appointment in week_appointments %}
       <a href="{% url 'employer_borrow_details' appointment.id %}">
         <div class="appointment-content">
-          <span class="school-class">a</span>
+          <span class="school-class">{{appointment.borrow_schoolclass}}</span>
           <div class="dates-line">
             <span>{{appointment.borrow_receipt_date|date:"d/m/Y"}}</span> -
             <span>{{appointment.borrow_delivery_date|date:"d/m/Y"}}</span>
@@ -35,7 +35,7 @@
     </section>
 
     {% if hidden_week_appointments > 0%}
-    <a href="{% url 'employer_borrow_list' 'week'%}" class="employee-button see-more-btn">
+    <a href="{% url 'employer_borrow_list'%}?appointments_type=week" class="employee-button see-more-btn">
       Ver mais 
       <span>+{{hidden_week_appointments}}</span>
     </a>
@@ -46,7 +46,7 @@
       {% for appointment in month_appointments %}
       <a href="{% url 'employer_borrow_details' appointment.id %}">
         <div class="appointment-content">
-          <span class="school-class">a</span>
+          <span class="school-class">{{appointment.borrow_schoolclass}}</span>
           <div class="dates-line">
             <span>{{appointment.borrow_receipt_date|date:"d/m/Y"}}</span> -
             <span>{{appointment.borrow_delivery_date|date:"d/m/Y"}}</span>
@@ -63,7 +63,7 @@
       {% endfor %}
 
       {% if hidden_month_appointments > 0%}
-      <a href="{% url 'employer_borrow_list' 'month'%}" class="employee-button see-more-btn">
+      <a href="{% url 'employer_borrow_list'%}?appointments_type=month" class="employee-button see-more-btn">
         Ver mais 
         <span>+{{hidden_month_appointments}}</span>
       </a>
@@ -78,7 +78,7 @@
       {% for appointment in pending_appointments %}
       <a href="#">
         <div class="appointment-content">
-          <span class="school-class">a</span>
+          <span class="school-class">{{appointment.borrow_schoolclass}}</span>
           <div class="dates-line">
             <span>{{appointment.borrow_receipt_date|date:"d/m/Y"}}</span> -
             <span>{{appointment.borrow_delivery_date|date:"d/m/Y"}}</span>

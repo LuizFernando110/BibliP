@@ -1,6 +1,9 @@
-{% extends "base.html" %} {% load static %} {%block 'head'%}
+{% extends "base.html" %} {% load static %} 
+{%block 'head'%}
 <link rel="stylesheet" href="{%static 'css/table.css'%}" />
-{%endblock%} {% block 'main' %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+{%endblock%}
+ {% block 'main' %}
 <main class="borrow-history">
   <div class="back-arrow">
     <a href="{% url 'index' %}"
@@ -8,8 +11,9 @@
     /></a>
   </div>
   <div class="borrow-history-container">
-    {%include 'partials/_filter_header.html'%}
+    {% include 'partials/_filter_header.html' %}
     <div class="table-container">
+      {% if borrow_history %}
       <table class="history-table">
         <tr class="history-table-header">
           <th id="book-name">Nome do livro</th>
@@ -21,9 +25,9 @@
         {% for borrow in borrow_history %}
         <tr>
           <td>{{ borrow.borrow_book }}</td>
-          <td>classe 1</td>
+          <td>{{borrow.borrow_schoolclass}}</td>
           <td>{{ borrow.borrow_receipt_date|date:'d/m/Y' }}</td>
-          <td>{{ borrow.borrow_delivery_date|date:'d/m/Y' }}</td>
+          <td id="delivery_date{{borrow.id}}">{{ borrow.borrow_delivery_date|date:'d/m/Y' }}</td>
           <td class="actions-td">
             <a href="{% url 'borrow_history_details' borrow.id %}">
               <img
@@ -31,23 +35,24 @@
                 alt="botão ver empréstimo"
               />
             </a>
-            <a href="">
-              <img
-                src="{% static 'assets/icons/edit_fill.svg' %}"
-                alt="botão editar empréstimo"
-              />
-            </a>
-            <a href="">
-              <img
-                src="{% static 'assets/icons/cancel.svg' %}"
-                alt="botão cancelar empréstimo"
-              />
-            </a>
+
+            {%if borrow.borrow_status == 1 or borrow.borrow_status == 2%}
+              {%url "cancel_borrow" borrow.id as url%}
+              {% static 'assets/icons/cancel.svg' as accept_icon%}
+              {% include "partials/_confirmation_modal.html" with modal_type="cancel" icon=accept_icon icon_text="botão editar empréstimo" next_url=url confirmation="True" next_text="cancelar emprestimo"  borrow=borrow text_1="encerrar empréstimo?" text_2="todos os estudantes que não devolveram o livro vão ser marcados como 'atrasado'" %}
+            {%endif%}
+
           </td>
         </tr>
         {% endfor %}
       </table>
+      {% else %}
+        <span>Nenhum empréstimo foi feito</span>
+      {% endif %}
     </div>
   </div>
 </main>
+
+
+<script src="{%static 'js/confirmation_modal.js' %}"></script>
 {% endblock %}
