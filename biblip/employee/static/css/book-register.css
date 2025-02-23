@@ -46,7 +46,7 @@ main input, textarea, select {
     width: 26.4rem;
     border-radius: 0.8rem;
     cursor: pointer;
-    background-image: url(../../../static/assets/icons/Export.svg);
+    background-image: url(/static/assets/icons/Export.svg);
     background-size: 80% 80%;
     background-position: center;
     background-repeat: no-repeat;
@@ -60,7 +60,7 @@ main input, textarea, select {
     cursor: pointer;
 }
 
-#id_book_picture{
+#id_book_picture {
     visibility: hidden;
     width: 100%;
     height: 100%;
@@ -204,4 +204,22 @@ select option{
     background-color: #4B4B4B;
     color: white;
     font-family: "Merriweather Sans";
+}
+
+.file-input a{
+    display: none;
+}
+
+br{
+    display: none;
+}
+
+#actions_button{
+    display: flex;
+    gap: 2rem;
+    align-self: flex-end;   
+}
+
+#delete_button{
+    background-color: red;
 }
