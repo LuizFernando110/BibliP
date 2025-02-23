@@ -93,7 +93,7 @@ class employer_borrow_list(ListView):
             if self.request.GET.get('appointments_type')=='week':
                 appointments=Borrow.objects.filter(borrow_delivery_date__range=(first_day_of_the_week,last_day_of_the_week))
 
-        return {'borrow_history':appointments,'employer':True}
+        return {'borrow_history':appointments, 'filter_title':'Histórico de aluguéis'}
 
 
 class employer_borrow_details(DetailView):

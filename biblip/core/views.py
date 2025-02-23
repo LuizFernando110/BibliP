@@ -2,7 +2,8 @@ from django.shortcuts import render,HttpResponse,redirect
 from django.contrib import messages
 from django.views.generic import ListView,DetailView,FormView,CreateView, FormView
 from .forms import LoginForm, ProfileRegistrationForm,SchoolClassForm
-from employee.models import Book,Borrow,Profile
+from employee.models import Book,Borrow,Profile, Genre
+
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth import authenticate, login, logout
@@ -74,7 +75,7 @@ def borrow(request,book_pk):
 
 class borrow_history(ListView):
     model=Borrow
-    template_name='core/borrow_history.html'
+    template_name='employer_borrow_list.html'
     context_object_name='borrow_history'
 
     def get_queryset(self):
