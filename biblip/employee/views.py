@@ -52,7 +52,6 @@ class borrow_management(ListView):
             'hidden_week_appointments': hidden_week_appointments_count,
             'hidden_month_appointments': hidden_month_appointments_count,
             'hidden_pending': hidden_pending_count,
-            'employer': True
         }
         return context
 
@@ -129,7 +128,6 @@ class BookFormCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['employer'] = True
         return context
     
 
