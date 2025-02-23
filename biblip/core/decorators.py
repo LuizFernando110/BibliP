@@ -12,3 +12,4 @@ def is_teacher(function, redirect_name='login'):
       return HttpResponseRedirect(reverse(redirect_name))
     else:
       return function(request, *args, **kw)
+  return wrapper
