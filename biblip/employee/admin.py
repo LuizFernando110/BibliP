@@ -17,7 +17,7 @@ class BookGenreInline(admin.TabularInline):
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     inlines = [BookAuthorInline, BookGenreInline]
-    readonly_fields = ('number_available',)
+    # readonly_fields = ('number_available',)
     exclude = ('book_author', 'book_genre')
     list_display = ('id','book_title','book_publisher','book_edition_number','book_pnld_code','number_available','book_status',)
     search_fields = ('book_pnld_code', 'book_title',)

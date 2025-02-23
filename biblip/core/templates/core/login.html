@@ -8,22 +8,29 @@
         <h1>Programa nacional do livro didático</h1>
         </div>
         
-    
+        {% if messages %}
+            <div class="form-errors">
+                {% for message in messages %}
+                    <span>{{ message }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+
         <form method = "post">
             {% csrf_token %}
             <label>Matrícula</label>
-            {{ form.teacherEnrollment }}
+            {{ form.username }}
             <label>Senha</label>
             {{ form.password }}
             <div class="remeber-me">
-                {{ form.checkBox }}
+                {{ form.remember_me }}
                 <span>Lembrar de mim</span>
             </div>
             <button type="submit">
                 Entrar
             </button>
             <div class="have-an-account">
-                <span>Ainda não tem uma conta</span><a href="{% url "user_register" %}">Criar conta</a>
+                <span>Ainda não tem uma conta? </span><a href="{% url "user_register" %}">Criar conta</a>
             </div>
         </form>
     </div>
