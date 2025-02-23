@@ -72,6 +72,8 @@ def student_borrow_deliver(request,borrow_student_pk):
         borrow_student.borrow_student_status=3
         borrow_student.save()
 
+        if book.number_available >= book.number_in_stock:
+            return JsonResponse({'success':False,})
         book.number_available+=1
         book.save()
         return JsonResponse({
@@ -82,6 +84,9 @@ def student_borrow_deliver(request,borrow_student_pk):
     elif borrow_student.borrow_student_status==4:
         borrow_student.borrow_student_status=5
         borrow_student.save()
+
+        if book.number_available >= book.number_in_stock:
+            return JsonResponse({'success':False,})
         book.number_available+=1
         book.save()
         return JsonResponse({
