@@ -1,6 +1,7 @@
 {% extends "base.html" %} {% load static %} {%block 'head'%}
-<link rel="stylesheet" href="{%static 'css/table.css'%}" />
+<link rel="stylesheet" href="{% static 'css/table.css'%}" />
 <link rel="stylesheet" href="{% static 'css/class_students.css' %}">
+<link rel="stylesheet" href="{% static 'css/modals.css' %}">
 {%endblock%} {% block 'main' %}
 <main class="borrow-history ">
   <div class="back-arrow">
@@ -22,7 +23,47 @@
         {% endfor %}
       </div>
     </div>
-    {% include 'core/class_register_modal.html' %}
   </div>
+
+  <dialog id="addClassModal">
+    <p>Adicionar Turma</p>
+    <form method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+        <div class="form_content">
+            <div class="form_camps">
+                <label for="{{ form.school_class_name.id_for_label }}">Nome da turma</label>
+                {{ form.school_class_name }}
+            </div>
+            
+            <label class="file-input" for="{{ form.school_class_students_wid.id_for_label }}"></label>        
+            {{ form.school_class_students_wid }}
+            
+        </div>
+        <br>
+        <div class="buttons-area">
+            <button id="neutral-button" type="button">Cancelar</button>
+            <button type="submit">Enviar</button>
+        </div>
+    </form>
+  </dialog>
+
 </main>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("addClassModal");
+    const openModalButton = document.getElementById("open-modal-button");
+    const closeModalButton = document.getElementById("neutral-button");
+
+    openModalButton.addEventListener("click", function () {
+      console.log('Entrou')
+      modal.showModal();  
+    });
+  
+    
+    closeModalButton.addEventListener("click", function () {
+      modal.close();  
+    });
+    
+  });
+</script>
 {% endblock %}

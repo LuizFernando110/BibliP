@@ -24,25 +24,3 @@
         </form>
     </dialog>
 {% endblock modal %}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const modal = document.getElementById("addClassModal");
-        const openModalButton = document.getElementById("open-modal-button");
-        const closeModalButton = document.getElementById("neutral-button");
-    
-        if (openModalButton && modal) {
-            openModalButton.addEventListener("click", function () {
-                modal.showModal();
-            });
-        } else {
-            console.error("Botão ou modal não encontrado!");
-        }
-    
-        if (closeModalButton && modal) {
-            closeModalButton.addEventListener("click", function () {
-                modal.close();
-            });
-        }
-    });
-</script>

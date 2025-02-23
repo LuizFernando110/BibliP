@@ -171,9 +171,14 @@ class LogoutView(LogoutView):
 
 class school_class_creation(FormView):
     form_class=SchoolClassForm
-    template_name='core/class_register_modal.html'
+    template_name='core/school_classes_list.html'
     success_url=reversed('index')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['school_classes'] = SchoolClass.objects.all()
+        return context
+    
     def form_valid(self, form):
         form.save(profile=self.request.user.profile)
         messages.add_message(self.request,messages.SUCCESS,"Turma adicionada com sucesso")
@@ -184,8 +189,3 @@ class SchoolClassDetailView(DetailView):
     model = SchoolClass
     template_name = 'core/class_students.html'
     context_object_name = 'school_class'
-
-class SchoolClassListView(ListView):
-    model = SchoolClass
-    template_name = 'core/school_classes_list.html'
-    context_object_name = 'school_classes'
