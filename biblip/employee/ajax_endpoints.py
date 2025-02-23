@@ -6,7 +6,7 @@ from datetime import date
 
 def cancel_borrow(request,borrow_pk):
     borrow=Borrow.objects.get(id=borrow_pk)
-    if request.user.profile==borrow.borrow_teacher and borrow.borrow_status not in [3,4]:
+    if (request.user.profile==borrow.borrow_teacher or request.user.profile.profile_type==1) and borrow.borrow_status not in [3,4]:
         
 
         borrow = borrow_close_evaluation(borrow)
