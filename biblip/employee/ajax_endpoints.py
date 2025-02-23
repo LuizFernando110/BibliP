@@ -50,7 +50,7 @@ def accept_borrow(request,borrow_pk):
 
 def student_borrow_receipt(request,borrow_student_pk):
     borrow_student=BorrowStudent.objects.get(id=borrow_student_pk)
-
+    borrow_student.borrow_student_receipt_date=date.today()
 
     if borrow_student.borrow_student_status==1:
         borrow_student.borrow_student_status=2
@@ -68,6 +68,7 @@ def student_borrow_receipt(request,borrow_student_pk):
 def student_borrow_deliver(request,borrow_student_pk):
     borrow_student=BorrowStudent.objects.get(id=borrow_student_pk)
     book=borrow_student.borrow_holder.borrow_book
+    borrow_student.borrow_student_delivery_date=date.today()
     if borrow_student.borrow_student_status==2:
         borrow_student.borrow_student_status=3
         borrow_student.save()
