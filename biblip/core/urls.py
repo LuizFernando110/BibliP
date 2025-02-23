@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index,search,details,borrow,borrow_history, borrow_details, ProfileRegistrationCreateView, school_class_creation, LoginView, LogoutView
+from .views import index,search,details,borrow,borrow_history, borrow_details, ProfileRegistrationCreateView, school_class_creation, LoginView, LogoutView, SchoolClassDetailView
 
 urlpatterns = [
     path('',index.as_view(),name='index'),
@@ -12,4 +12,6 @@ urlpatterns = [
     path('logout', LogoutView.as_view(), name='logout'),
     path('register',ProfileRegistrationCreateView.as_view(),name='user_register'),
     path('profile/school_class/create',school_class_creation.as_view(),name='school_class_creation'),
+    # path('class', SchoolClassListView.asview(), 'school_class_list'),
+    path('class/<int:pk>', SchoolClassDetailView.as_view(), name='school_class_management'),
 ]

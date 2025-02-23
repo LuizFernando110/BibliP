@@ -9,6 +9,7 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import LogoutView
 from django.shortcuts import redirect, get_object_or_404
+from core.models import SchoolClass
 
 
 import math
@@ -177,3 +178,10 @@ class school_class_creation(FormView):
         form.save(profile=self.request.user.profile)
         messages.add_message(self.request,messages.SUCCESS,"Turma adicionada com sucesso")
         return redirect('index')
+
+
+class SchoolClassDetailView(DetailView):
+    model = SchoolClass
+    template_name = 'core/class_students.html'
+    context_object_name = 'school_class'
+

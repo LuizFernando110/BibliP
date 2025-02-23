@@ -30,8 +30,7 @@
   font-weight: 700;
   color: var(--cinza-palido);
   border-radius: .8rem .8rem 0 0;
-  overflow: hidden;
-  
+  overflow: hidden;  
 }
 .history-table .history-table-header{
   color: white;
