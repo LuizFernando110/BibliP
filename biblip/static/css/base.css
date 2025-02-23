@@ -383,7 +383,9 @@ dialog[open].modal-cancel-borrow{
 .d-none{
   display: none;
 }
-
+.d-flex{
+  display: flex;
+}
 .modal-buttons-div{
   display: flex;
   align-items: center;

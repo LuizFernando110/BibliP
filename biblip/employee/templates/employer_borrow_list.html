@@ -37,43 +37,17 @@
             </a>
 
             {%if borrow.borrow_status == 1 %}
-            <div borrow_id="{{borrow.id}}" class="modal-button">
-              <img
-                src="{% static 'assets/icons/edit_fill.svg' %}"
-                alt="botão editar empréstimo"
-              />
-            </div>
 
-            <dialog class="modal-cancel-borrow" id="modal-{{borrow.id}}">
-              <div>
-                <p>Ao clicar em "aceitar" o empréstimo {{borrow.borrow_book}} da turma {{borrow.borrow_schoolclass}} será aberto</p>
-                <p>tem certeza disso?</p>
-                
-            </div>
-              <div class='modal-buttons-div'>
-                <button class="close-dialog" id="close{{borrow.id}}">voltar</button>
-                <a href="{%url 'employer_accept_borrow' borrow.id%}" id="next-button{{borrow.id}}" class="cancel-borrow button-danger">aceitar</a>
-              </div>
-            </dialog>
+              {%url "employer_accept_borrow" borrow.id as url%}
+              {% static 'assets/icons/edit_fill.svg' as accept_icon%}
+              {% include "partials/_confirmation_modal.html" with modal_type="accept" icon=accept_icon icon_text="botão editar empréstimo" next_url=url confirmation="True" next_text="aceitar" button_value="aceitar" borrow=borrow text_1="Ao clicar em 'aceitar' o empréstimo será aberto" text_2="tem certeza disso?" %}
             {%endif%}
 
             {%if borrow.borrow_status == 1 or borrow.borrow_status == 2 %}
-            <div  borrow_id="{{borrow.id}}" class="modal-button" id="cancel{{borrow.id}}">
-              <img
-                src="{% static 'assets/icons/cancel.svg' %}"
-                alt="botão cancelar empréstimo"
-              />
-            </div>
+              {%url "employer_cancel_borrow" borrow.id as url%}
+              {% static 'assets/icons/cancel.svg' as cancel_icon%}
+              {% include "partials/_confirmation_modal.html" with modal_type="cancel" icon=cancel_icon icon_text="botão cancelar empréstimo" next_url=url confirmation="True" next_text="cancelar"  borrow=borrow text_1="deseja cancelar o emprestimo?" text_2="todos os estudantes que não devolveram o livro vão ser marcados como 'atrasado'" %}
 
-            <dialog class="modal-cancel-borrow" id="modal-{{borrow.id}}">
-              <div>
-                <p>encerrar empréstimo de {{borrow.borrow_book}} da turma {{borrow.borrow_schoolclass}}?</p>
-                <p>todos os estudantes que não devolveram o livro vão ser marcados como "atrasado" </p>
-  
-              <div class='modal-buttons-div'>
-                <button class="close-dialog" id="close{{borrow.id}}">voltar</button>
-                <a href="{%url 'employer_cancel_borrow' borrow.id%}" id="next-button{{borrow.id}}" class="cancel-borrow button-danger">cancelar</a>
-            </dialog>
             {%endif%}
           </td>
         </tr>

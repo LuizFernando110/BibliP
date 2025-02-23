@@ -35,35 +35,11 @@
                 alt="botão ver empréstimo"
               />
             </a>
-            <a href="">
-              <img
-                src="{% static 'assets/icons/edit_fill.svg' %}"
-                alt="botão editar empréstimo"
-              />
-            </a>
 
             {%if borrow.borrow_status == 1 or borrow.borrow_status == 2%}
-            <div   class="modal-button" borrow_id="{{borrow.id}}" id="cancel{{borrow.id}}">
-              <img
-                src="{% static 'assets/icons/cancel.svg' %}"
-                alt="botão cancelar empréstimo"
-              />
-            </div>
-            <dialog class="modal-cancel-borrow" id="modal-{{borrow.id}}">
-              <div>
-                {%if borrow.borrow_status == 2%}
-                <p>encerrar empréstimo de {{borrow.borrow_book}} da turma {{borrow.borrow_schoolclass}}?</p>
-                <p>todos os estudantes que não devolveram o livro vão ser marcados como "atrasado" </p>
-                {%elif borrow.borrow_status == 1%}
-                <p>Cancelar pedido de empréstimo de {{borrow.borrow_book}} da turma {{borrow.borrow_schoolclass}}?</p>
-                
-                {%endif%}
-            </div>
-              <div class='modal-buttons-div'>
-                <button class="close-dialog" id="close{{borrow.id}}">voltar</button>
-                <a href="{%url 'cancel_borrow' borrow.id%}" id="next-button{{borrow.id}}" class="cancel-borrow button-danger">cancelar</a>
-              </div>
-            </dialog>
+              {%url "cancel_borrow" borrow.id as url%}
+              {% static 'assets/icons/cancel.svg' as accept_icon%}
+              {% include "partials/_confirmation_modal.html" with modal_type="cancel" icon=accept_icon icon_text="botão editar empréstimo" next_url=url confirmation="True" next_text="cancelar emprestimo"  borrow=borrow text_1="encerrar empréstimo?" text_2="todos os estudantes que não devolveram o livro vão ser marcados como 'atrasado'" %}
             {%endif%}
 
           </td>

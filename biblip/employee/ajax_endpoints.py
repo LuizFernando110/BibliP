@@ -52,7 +52,7 @@ def student_borrow_receipt(request,borrow_student_pk):
     borrow_student=BorrowStudent.objects.get(id=borrow_student_pk)
     borrow_student.borrow_student_receipt_date=date.today()
 
-    if borrow_student.borrow_student_status==1:
+    if borrow_student.borrow_student_status==1 and borrow_student.borrow_holder.borrow_status not  in [1,4]:
         borrow_student.borrow_student_status=2
         borrow_student.save()
 

@@ -5,6 +5,7 @@
 {%endblock%} 
 {% block 'main' %}
 <main class="borrow-history employ-borrow-detail">
+
   
   <div class="borrow-history-container">
 
@@ -24,6 +25,25 @@
         <span>{{borrow.borrow_receipt_date|date:"d/m/Y"}}-{{borrow.borrow_delivery_date|date:"d/m/Y"}}</span>
         <span>Prof.{{borrow.borrow_teacher}}</span>
         <span>Status: {{borrow.get_borrow_status_display}}</span>
+        <div class="d-flex" >
+          {%if borrow.borrow_status == 1 %}
+            {%url 'employer_accept_borrow' borrow.id as url %}
+            {% static 'assets/icons/edit_fill.svg' as accept_icon%}
+            {% include "partials/_confirmation_modal.html" with modal_type="accept" icon=accept_icon icon_text="botão aceitar empréstimo" next_url=url confirmation="True" next_text="confirmar" button_value="aceitar emprestimo" text_1="aceitar empréstimo" borrow=borrow %}
+          {%endif%}
+          {%if borrow.borrow_status == 1 or borrow.borrow_status == 2 %}
+              {%if borrow.borrow_status == 1 %}
+                {%url "employer_cancel_borrow" borrow.id as url%}
+                {% static 'assets/icons/cancel.svg' as cancel_icon%}
+                {% include "partials/_confirmation_modal.html" with modal_type="cancel" icon=cancel_icon icon_text="botão cancelar empréstimo" next_url=url confirmation="True" next_text="cancelar" button_value="rejeitar emprestimo" borrow=borrow text_1="deseja rejeitar o emprestimo?" text_2="todos os estudantes que não devolveram o livro vão ser marcados como 'atrasado'" %}
+
+              {%else%}
+                  {%url "employer_cancel_borrow" borrow.id as url%}
+                  {% static 'assets/icons/cancel.svg' as cancel_icon%}
+                  {% include "partials/_confirmation_modal.html" with modal_type="cancel" icon=cancel_icon icon_text="botão cancelar empréstimo" next_url=url confirmation="True" next_text="cancelar" button_value="cancelar emprestimo" borrow=borrow text_1="deseja encerrar o emprestimo?" text_2="todos os estudantes que não devolveram o livro vão ser marcados como 'atrasado'"%}
+              {%endif%}
+          {%endif%}
+      </div>
       </div>
     </div>
     
@@ -68,61 +88,14 @@
           {%if request.user.profile.profile_type == 1 %}
           <td>
           {%if student_borrow.borrow_student_status == 1 %}
-            <div  borrow_id="{{student_borrow.id}}" class="modal-button" id="button{{student_borrow.id}}">
-              <img
-                src="{% static 'assets/icons/cancel.svg' %}"
-                alt="botão confirmar emprestimo de livro a aluno"
-              />
-            </div>
+            {%url "receipt_borrowstudent" student_borrow.id as url%}
+            {% static 'assets/icons/backpack.svg' as accept_icon%}
+            {% include "partials/_confirmation_modal.html" with modal_type="accept" icon=accept_icon icon_text="botão aceitar emprestimo" next_url=url confirmation="True" next_text="emprestar"  borrow=student_borrow text_1="ao apertar em 'emprestar' você entregara um livro" text_2="tem certeza?"%}
 
-            <dialog class="modal-cancel-borrow modal-borrow" id="modal-{{student_borrow.id}}">
-              <div>
-                <p>ao apertar em "emprestar" você entregara um livro para {{student_borrow.borrow_student}}</p>
-                <p>tem certeza?</p>
-
-              <div class='modal-buttons-div'>
-                <button class="close-dialog" id="close{{student_borrow.id}}">voltar</button>
-                <a href="{%url 'receipt_borrowstudent' student_borrow.id%}" id="next-button{{student_borrow.id}}" class="button-danger">emprestar</a>
-              </div>
-            </dialog>
-
-            {%elif student_borrow.borrow_student_status == 2 or  student_borrow.borrow_student_status == 4 %}
-              <div  borrow_id="{{student_borrow.id}}" class="modal-button" id="button{{student_borrow.id}}">
-                <img
-                  src="{% static 'assets/icons/cancel.svg' %}"
-                  alt="botão confirmar emprestimo de livro a aluno"
-                />
-              </div>
-
-              <dialog class="modal-cancel-borrow modal-borrow" id="modal-{{student_borrow.id}}">
-                <div>
-                  <p>apertar em "devolver" ira marcar o emprestimo de {{student_borrow.borrow_student}} como devolvido</p>
-                  <p>tem certeza?</p>
-
-                <div class='modal-buttons-div'>
-                  <button class="close-dialog" id="close{{student_borrow.id}}">voltar</button>
-                  <a href="{%url 'deliver_borrowstudent' student_borrow.id%}" id="next-button{{student_borrow.id}}" class="button-danger">devolver</a>
-                </div>
-              </dialog>
-
-            {%else%}
-              <div  borrow_id="{{student_borrow.id}}" class="modal-button" id="button{{student_borrow.id}}">
-                <img
-                  src="{% static 'assets/icons/cancel.svg' %}"
-                  alt="botão confirmar emprestimo de livro a aluno"
-                />
-              </div>
-
-              <dialog class="modal-cancel-borrow modal-borrow" id="modal-{{student_borrow.id}}">
-                <div>
-                  <p>Livro:{{student_borrow.borrow_holder.borrow_book}} </p>
-                  <p>Estudante:{{student_borrow.borrow_student}}</p>
-
-                <div class='modal-buttons-div'>
-                  <button class="close-dialog" id="close{{student_borrow.id}}">voltar</button>
-                </div>
-                <a href="" id="next-button{{student_borrow.id}}"></a>
-              </dialog>
+          {%elif student_borrow.borrow_student_status == 2 or  student_borrow.borrow_student_status == 4 %}
+            {%url "deliver_borrowstudent" student_borrow.id as url%}
+            {% static 'assets/icons/check.svg' as accept_icon%}
+            {% include "partials/_confirmation_modal.html" with modal_type="deliver" icon=accept_icon icon_text="botão devolução" next_url=url confirmation="True" next_text="devolver"  borrow=student_borrow text_1="apertar em 'devolver' ira marcar este emprestimo como devolvido" text_2="tem certeza?"%}
           {%endif%}
           
           </td>
@@ -133,6 +106,11 @@
       </table>
     </div>
   </div>
+
+
+
+
+  
 </main>
 
 <script src="{%static 'js/confirmation_modal.js' %}"></script>
