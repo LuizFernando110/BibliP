@@ -21,7 +21,7 @@ class BorrowForm(forms.ModelForm):
     class Meta:
         model=Borrow
         fields='__all__'
-        exclude=('borrow_teacher','borrow_book','borrow_status')
+        exclude=('borrow_teacher','borrow_book','borrow_status','borrow_book_number')
 
     def __init__(self, *args,**kwargs):
         #recebendo perfil de kwargs
@@ -55,8 +55,12 @@ class BorrowForm(forms.ModelForm):
         if self.instance.borrow_book.book_status != 1:
             raise ValidationError('livro indiponivel')
         
-        if self.cleaned_data.get('borrow_book_number') > self.instance.borrow_book.number_available:
+        
+        book_number=self.cleaned_data.get('borrow_schoolclass').school_class_students.count()
+        if  book_number > self.instance.borrow_book.number_available:
             raise ValidationError('livros insuficientes')
+        
+        self.cleaned_data['borrow_book_number']=book_number
         
         return cleaned_data
     
@@ -67,6 +71,7 @@ class BorrowForm(forms.ModelForm):
         students=self.instance.borrow_schoolclass.school_class_students.all()
         instance=self.instance
 
+        self.instance.borrow_book_number=self.cleaned_data.get('borrow_book_number')
         
         if commit:
             if instance.pk is None:
