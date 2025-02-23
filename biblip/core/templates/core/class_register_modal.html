@@ -2,26 +2,47 @@
 {% load static %}
 
 {% block modal %}
-    <dialog>
+    <dialog id="addClassModal">
         <p>Adicionar Turma</p>
-        <form action="" method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data">
             {%csrf_token%}
             <div class="form_content">
                 <div class="form_camps">
-                    <label for="scholl_class_name">Nome da turma</label>
-                    {{form.school_class_name}}
+                    <label for="{{ form.school_class_name.id_for_label }}">Nome da turma</label>
+                    {{ form.school_class_name }}
                 </div>
                 
                 <label class="file-input" for="{{ form.school_class_students_wid.id_for_label }}"></label>        
-                {{form.school_class_students_wid}}
+                {{ form.school_class_students_wid }}
                 
             </div>
             <br>
             <div class="buttons-area">
-                <button id="neutral-button">Cancelar</button>
-                <button id="confirm-button">Enviar</button>
+                <button id="neutral-button" type="button">Cancelar</button>
+                <button type="submit">Enviar</button>
             </div>
         </form>
-        
     </dialog>
 {% endblock modal %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("addClassModal");
+        const openModalButton = document.getElementById("open-modal-button");
+        const closeModalButton = document.getElementById("neutral-button");
+    
+        if (openModalButton && modal) {
+            openModalButton.addEventListener("click", function () {
+                modal.showModal();
+            });
+        } else {
+            console.error("Botão ou modal não encontrado!");
+        }
+    
+        if (closeModalButton && modal) {
+            closeModalButton.addEventListener("click", function () {
+                modal.close();
+            });
+        }
+    });
+</script>

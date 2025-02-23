@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% load static %} {%block 'head'%}
+<link rel="stylesheet" href="{%static 'css/table.css'%}" />
+<link rel="stylesheet" href="{% static 'css/class_students.css' %}">
+{%endblock%} {% block 'main' %}
+<main class="borrow-history ">
+  <div class="back-arrow">
+    <a href="{%if request.user.profile.profile_type == 1%}{% url 'borrow_management' %}{% else %}{% url 'index' %}{% endif %}"
+      ><img src="{% static 'assets/icons/back-arrow.svg' %}" alt=""
+    /></a>
+  </div>
+  <div>
+    <h1>Salas</h1>
+    <div class="actions-area">
+      <button id="open-modal-button">
+        Adicionar sala<img src="{% static "assets/icons/add_icon.svg" %}">
+      </button>
+    </div>
+    <div class="teacher_class_list">
+      <div class="class-name-container">
+        {% for s_class in school_classes %}
+          <a href="{% url 'school_class_management' s_class.id %}">{{s_class.school_class_name}}</a>
+        {% endfor %}
+      </div>
+    </div>
+    {% include 'core/class_register_modal.html' %}
+  </div>
+</main>
+{% endblock %}

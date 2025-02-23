@@ -4,9 +4,8 @@
 {%endblock%} {% block 'main' %}
 <main class="borrow-history ">
   <div class="back-arrow">
-    <a href="{%if request.user.profile.profile_type == 1%}{% url 'borrow_management' %}{% else %}{% url 'index' %}{% endif %}"
-      ><img src="{% static 'assets/icons/back-arrow.svg' %}" alt=""
-    /></a>
+    <a href="{% url 'school_class_list' %}"
+      ><img src="{% static 'assets/icons/back-arrow.svg' %}" alt="Voltar"/></a>
   </div>
   <div class="class-data">
     <h1>{{ school_class.school_class_name }}</h1>
@@ -14,12 +13,12 @@
       <table class="history-table">
         <tr class="history-table-header">
             <th>Alunos</th>
-            <th>Matrícula</th>
+            <th id="registration">Matrícula</th>
         </tr>
         {% for student in school_class.school_class_students.all %}
         <tr>
             <td>{{ student.student_name }}</td>
-            <td>{{ student.student_registration }}</td>
+            <td id="registration">{{ student.student_registration }}</td>
         </tr>
         {% endfor %}
     </table>

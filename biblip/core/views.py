@@ -185,3 +185,7 @@ class SchoolClassDetailView(DetailView):
     template_name = 'core/class_students.html'
     context_object_name = 'school_class'
 
+class SchoolClassListView(ListView):
+    model = SchoolClass
+    template_name = 'core/school_classes_list.html'
+    context_object_name = 'school_classes'

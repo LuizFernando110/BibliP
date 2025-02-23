@@ -2,7 +2,62 @@
     display: flex;
     flex-direction: column;
     justify-content: start;
+    margin: 0 auto;
+    width: 70%;
+    gap: 1.2rem;
+}
+
+.actions-area{
+    display: flex;
+    width: 80%;
+    justify-content: end;
+}
+
+.teacher_class_list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
     width: 80%;
     margin: 0 auto;
-    gap: 1.2rem;
+}
+
+
+.class-name-container{
+    border: 0.2rem solid var(--cinza-palido);
+    padding: 0.4rem;
+    border-radius: 0.4rem;
+    color: var(--cinza-palido);
+    width: 15rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5rem;
+    cursor: pointer;
+}
+
+#registration{
+    text-align: end;
+}
+
+.class-name-container:hover{
+    background-color: rgba(47, 158, 65, 0.2);;
+    transition: .5s;
+}
+
+.class-name-container a{
+    width: 100%;
+    height: 100;
+}
+
+button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: .8rem;
+  border-radius: .8rem;
+  color: white;
+  gap: .8rem;
+  cursor: pointer;
+  background-color: var(--main-color);
 }
