@@ -1,5 +1,4 @@
 from django import forms
-from django.forms.widgets import ClearableFileInput
 from django.forms import inlineformset_factory
 from .models import Book,Borrow,BorrowStudent
 from formset.widgets import DateInput as formset_DateInput
@@ -12,8 +11,9 @@ class BookForm(forms.ModelForm):
         model = Book
         fields = ('book_title','book_picture','book_publisher','book_edition_number', 'book_pnld_code', 'book_description', 'book_number_pages', 'number_in_stock', 'book_status')
         widgets = {
-            'book_picture': ClearableFileInput(attrs={'accept': 'image/*'}),
+            'book_picture': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
         }
+
 class BorrowForm(forms.ModelForm):
 
     borrow_receipt_date=forms.DateField(widget=formset_DateInput)
@@ -82,3 +82,4 @@ class BorrowForm(forms.ModelForm):
             
 
         return instance
+            
