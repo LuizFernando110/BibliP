@@ -2,13 +2,14 @@ from django.shortcuts import render,HttpResponse,redirect
 from django.contrib import messages
 from django.views.generic import ListView,DetailView,FormView,CreateView, FormView
 from .forms import LoginForm, ProfileRegistrationForm,SchoolClassForm
-from employee.models import Book,Borrow,Profile
+from employee.models import Book,Borrow,Profile,Genre
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import LogoutView
 from django.shortcuts import redirect, get_object_or_404
-
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 import math
 
@@ -71,7 +72,7 @@ def borrow(request,book_pk):
     context={'book_pk':book_pk}
     return render(request,'core/book_borrow.html',context)
 
-
+@method_decorator(login_required(login_url='login'), name='dispatch')
 class borrow_history(ListView):
     model=Borrow
     template_name='core/borrow_history.html'
@@ -88,7 +89,7 @@ class borrow_history(ListView):
         return context
     
 
-
+@method_decorator(login_required(login_url='login'), name='dispatch')
 class borrow_details(DetailView):
     template_name="employer_borrow_details.html"
     model=Borrow
@@ -166,7 +167,7 @@ class LogoutView(LogoutView):
     next_page = reverse_lazy('login')
 
 
-
+@method_decorator(login_required(login_url='login'), name='dispatch')
 class school_class_creation(FormView):
     form_class=SchoolClassForm
     template_name='core/class_register_modal.html'
