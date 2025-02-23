@@ -1,18 +1,23 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import HttpResponse
 from django.views.generic.edit import CreateView
 from django.views.generic import ListView, DetailView, View
 from django.db.models.functions import ExtractMonth
 
 from django.http import JsonResponse
 from .forms import BookForm
-from .models import Book, Borrow, Genre, Author, BookAuthor, BookGenre
+from .models import Book, Borrow, Genre, Author, BookAuthor, BookGenre,BorrowStudent
 from datetime import datetime, timedelta
 from django.urls import reverse_lazy
+
+from .borrow_evaluations import evaluate_all_by_date
 
 class borrow_management(ListView):
     model=Borrow
     template_name="employer_index.html"
 
+    def dispatch(self, request, *args, **kwargs):
+        evaluate_all_by_date()
+        return super().dispatch(request, *args, **kwargs)
     def get_context_data(self, **kwargs):
         
         Borrow.objects.annotate(month=ExtractMonth('borrow_delivery_date'))
@@ -47,7 +52,6 @@ class borrow_management(ListView):
             'hidden_week_appointments': hidden_week_appointments_count,
             'hidden_month_appointments': hidden_month_appointments_count,
             'hidden_pending': hidden_pending_count,
-            'employer': True
         }
         return context
 
@@ -71,6 +75,9 @@ class employer_borrow_list(ListView):
     model=Borrow
     template_name='employer_borrow_list.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        evaluate_all_by_date()
+        return super().dispatch(request, *args, **kwargs)
     def get_context_data(self, **kwargs):
         
         if self.request.method=='GET':
@@ -100,17 +107,17 @@ class employer_borrow_details(DetailView):
     model=Borrow
     pk_url_kwarg='borrow_pk'  
     template_name='employer_borrow_details.html'
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data()
+        search=self.request.GET.get('search')
+        student_borrows=BorrowStudent.objects.filter(borrow_holder=context.get('borrow'))
         
-
-
-def create_book(request):
-    return HttpResponse('<h1>Livro Criado!!</h1>')
-
-def update_book(request):
-    return HttpResponse('<h1>Livro Editado</h1>')
-
-def delete_book(request):
-    return HttpResponse('<h1>Livro Deletado</h1>')
+        if search:
+            student_borrows=student_borrows.filter(borrow_student__student_name__icontains=search)
+        context['student_borrows']=student_borrows
+        return context
+        
 
 class BookFormCreateView(CreateView):
     form_class = BookForm
@@ -121,7 +128,6 @@ class BookFormCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['employer'] = True
         return context
     
 

@@ -1,8 +1,11 @@
 from django.shortcuts import render,HttpResponse,redirect
+from django.db.models import Q
 from django.contrib import messages
 from django.views.generic import ListView,DetailView,FormView,CreateView, FormView
 from .forms import LoginForm, ProfileRegistrationForm,SchoolClassForm
-from employee.models import Book,Borrow,Profile, Genre
+from employee.forms import BorrowForm
+from employee.models import Book,Borrow,Profile,BorrowStudent, Genre
+
 
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy, reverse
@@ -55,12 +58,6 @@ class index(ListView):
 
         return context
     
-def search(request,search):
-    context={'search':search}
-
-    #podemos reutilizar o Index.html nesta rota, mas prtimeiro precisamos da conexão com o banco de dados
-    return render(request,"core/search_temp.html",context)
-
 
 class details(DetailView):
     model=Book
@@ -68,19 +65,47 @@ class details(DetailView):
     pk_url_kwarg='book_pk'
     context_object_name='book'
 
-def borrow(request,book_pk):
-    context={'book_pk':book_pk}
-    return render(request,'core/book_borrow.html',context)
+
+class borrow(CreateView):
+    form_class = BorrowForm
+    model = Borrow
+    template_name = "core/book_borrow.html"
+    success_url = reverse_lazy('index')
+
+    def get_form_kwargs(self):
+        kwargs=super().get_form_kwargs()
+
+        book=Book.objects.get(id=self.kwargs.get('book_pk'))
+        kwargs['profile']=self.request.user.profile
+        kwargs['book']=book
+        return kwargs
+
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data()
+        context['book']=Book.objects.get(id=self.kwargs.get('book_pk'))
+        return context
+    
+    def form_valid(self, form):
+        form.save()
+        
+        return super().form_valid(form)
 
 
 class borrow_history(ListView):
     model=Borrow
-    template_name='employer_borrow_list.html'
+    template_name='core/borrow_history.html'
     context_object_name='borrow_history'
 
     def get_queryset(self):
         prof=self.request.user.profile
         queryset=Borrow.objects.filter(borrow_teacher=prof)
+        search=self.request.GET.get('search')
+        if search:
+            queryset=queryset.filter(Q(borrow_teacher__profile_name__icontains=search)|
+                                     Q(borrow_book__book_title__icontains=search)|
+                                     Q(borrow_schoolclass__school_class_name__icontains=search))
+
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -95,6 +120,17 @@ class borrow_details(DetailView):
     model=Borrow
     context_object_name='borrow'
     pk_url_kwarg='borrow_pk'
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data()
+        search=self.request.GET.get('search')
+        student_borrows=BorrowStudent.objects.filter(borrow_holder=context.get('borrow'))
+        
+        if search:
+            student_borrows=student_borrows.filter(borrow_student__student_name__icontains=search)
+        context['student_borrows']=student_borrows
+        return context
+
 
 
 class ProfileRegistrationCreateView(CreateView):

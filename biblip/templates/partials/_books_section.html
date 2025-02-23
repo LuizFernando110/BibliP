@@ -3,7 +3,7 @@
   {% for book in books %}
   <div class="book">
     <a
-      href="{%if employer%} {% url 'book_register' %} {% else %} {% url 'details' book.id %} {%endif%}"
+      href="{%if request.user.profile.profile_type == 1 %} {% url 'book_register' %} {% else %} {% url 'details' book.id %} {%endif%}"
     >
       <div class="book-img-section">
         <img src={{ book.book_picture.url }} alt="capa do livro" />
