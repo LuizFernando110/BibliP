@@ -8,7 +8,7 @@ def is_teacher(function, redirect_name='login'):
     
     profile = request.user.profile
 
-    if not (profile.profile_type == 1):
+    if not (profile.profile_type == 2):
       return HttpResponseRedirect(reverse(redirect_name))
     else:
       return function(request, *args, **kw)
