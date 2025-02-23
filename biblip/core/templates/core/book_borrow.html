@@ -6,18 +6,18 @@
     <form action="" method="post">
       {%csrf_token%}
       <div class="img-form">
-        <img src="{%static 'assets/torto_arado.jpg'%}" alt="" />
+        <img src="{{book.book_picture.url}}" alt="" />
       </div>
       <div class="form-content">
-        <h2>Torto Arado</h2>
+        
+        <h2>{{book.book_title}}</h2>
+        {%for error in form.non_field_errors%}
+          <li style="color: red;">{{error}}</li>
+        {%endfor%}
         <div class="form-widget">
           <label for="Sala">Sala</label>
           <div class="input-relative">
-            <select name="sala" id="sala">
-              <option value="1">sala 1</option>
-              <option value="2">sala 2</option>
-              <option value="2">sala 3</option>
-            </select>
+            {{form.borrow_schoolclass}}
             <img
               src="{% static 'assets/icons/backpack.svg' %}"
               class="form-widget-icon"
@@ -29,12 +29,7 @@
         <div class="inline-widget">
           <div class="form-widget input-relative fx-33">
             <label for="data-recebimento"> Data Recebimento</label>
-            <input
-              type="date"
-              name="data-recebimento"
-              id="data-recebimento"
-              class="date-input"
-            />
+            {{form.borrow_receipt_date}}
             <img src="" alt="" />
           </div>
 
@@ -44,32 +39,11 @@
 
           <div class="form-widget input-relative fx-33">
             <label for="data-entrega"> Data Entrega</label>
-            <input
-              type="date"
-              name="data-entrega"
-              id="data-entrega"
-              class="date-input"
-            />
+            {{form.borrow_delivery_date}}
           </div>
         </div>
 
-        <div class="inline-widget">
-          <div class="form-widget fx-50">
-            <label for="quantidade de livros">Quantidade de Livros</label>
-            <div class="input-relative">
-              <input
-                type="text"
-                name="quantidade"
-                placeholder="quantidade"
-                id="quantidade"
-              />
-              <img
-                src="{% static 'assets/icons/book.svg' %}"
-                class="form-widget-icon"
-                alt=""
-              />
-            </div>
-          </div>
+      
 
           <div class="form-widget fx-50">
             <button class="button">Pedir Empréstimo</button>

@@ -1,22 +1,27 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import HttpResponse
 from django.views.generic.edit import CreateView
-from django.views.generic import ListView, DetailView, View
+from django.views.generic import ListView, DetailView, View, UpdateView, DeleteView
 from django.db.models.functions import ExtractMonth
 
 from django.http import JsonResponse
 from .forms import BookForm
-from .models import Book, Borrow, Genre, Author, BookAuthor, BookGenre
+from .models import Book, Borrow, Genre, Author, BookAuthor, BookGenre,BorrowStudent
 from datetime import datetime, timedelta
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from .decorators import is_employer
+from django.shortcuts import get_object_or_404, redirect
+from .borrow_evaluations import evaluate_all_by_date
 
 @method_decorator(is_employer,name='dispatch')
 class borrow_management(ListView):
     model=Borrow
     template_name="employer_index.html"
 
+    def dispatch(self, request, *args, **kwargs):
+        evaluate_all_by_date()
+        return super().dispatch(request, *args, **kwargs)
     def get_context_data(self, **kwargs):
         
         Borrow.objects.annotate(month=ExtractMonth('borrow_delivery_date'))
@@ -51,7 +56,6 @@ class borrow_management(ListView):
             'hidden_week_appointments': hidden_week_appointments_count,
             'hidden_month_appointments': hidden_month_appointments_count,
             'hidden_pending': hidden_pending_count,
-            'employer': True
         }
         return context
 
@@ -77,6 +81,9 @@ class employer_borrow_list(ListView):
     model=Borrow
     template_name='employer_borrow_list.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        evaluate_all_by_date()
+        return super().dispatch(request, *args, **kwargs)
     def get_context_data(self, **kwargs):
         
         if self.request.method=='GET':
@@ -99,7 +106,7 @@ class employer_borrow_list(ListView):
             if self.request.GET.get('appointments_type')=='week':
                 appointments=Borrow.objects.filter(borrow_delivery_date__range=(first_day_of_the_week,last_day_of_the_week))
 
-        return {'borrow_history':appointments,'employer':True}
+        return {'borrow_history':appointments, 'filter_title':'Histórico de aluguéis'}
 
 
 @method_decorator(is_employer,name='dispatch')
@@ -107,19 +114,18 @@ class employer_borrow_details(DetailView):
     model=Borrow
     pk_url_kwarg='borrow_pk'  
     template_name='employer_borrow_details.html'
+
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data()
+        search=self.request.GET.get('search')
+        student_borrows=BorrowStudent.objects.filter(borrow_holder=context.get('borrow'))
         
+        if search:
+            student_borrows=student_borrows.filter(borrow_student__student_name__icontains=search)
+        context['student_borrows']=student_borrows
+        return context
 
-@is_employer
-def create_book(request):
-    return HttpResponse('<h1>Livro Criado!!</h1>')
-
-@is_employer
-def update_book(request):
-    return HttpResponse('<h1>Livro Editado</h1>')
-
-@is_employer
-def delete_book(request):
-    return HttpResponse('<h1>Livro Deletado</h1>')
 
 @method_decorator(is_employer,name='dispatch')
 class BookFormCreateView(CreateView):
@@ -131,7 +137,6 @@ class BookFormCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['employer'] = True
         return context
     
 
@@ -194,3 +199,115 @@ class BookCreateAjaxView(View):
             }, status=201)
         else:
             return JsonResponse({"erros": form.errors}, status=400)
+
+class BookEditView(UpdateView):
+    model = Book
+    form_class = BookForm
+    template_name = "book_edit.html"
+    success_url = reverse_lazy("books_management")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        book = self.object
+
+        context['employer'] = True
+        context['book'] = self.object
+
+        return context
+    
+    def form_valid(self, form):
+        book = form.save(commit=False)
+        book.save()
+
+        return super().form_valid(form)
+    
+
+class GetBookAssociatedDatas(View):
+
+    def get(self, request, book_id , *args, **kwargs):
+        try: 
+            book = get_object_or_404(Book, id=book_id)
+
+            genres = BookGenre.objects.filter(book = book)
+            genre_data = [{
+                'id': genre.genre.id,
+                'name': genre.genre.genre_name
+            } for genre in genres
+            ]
+
+            authors = BookAuthor.objects.filter(book = book)
+            author_data = [{
+                'id': author.author.id,
+                'name': author.author.author_name
+            } for author in authors
+            ]
+
+            return JsonResponse({
+                "genres": genre_data,
+                "authors": author_data
+            })
+        
+        except Exception as e:
+            print(f"Erro ao buscar dados do livro: {str(e)}")
+            return JsonResponse({"error": "Erro interno do servidor"}, status=500)
+
+
+class UpdateBookAssociatedDatas(View):
+
+    def post(self, request, book_id, *args, **kwargs):
+        try:
+            book = Book.objects.get(id=book_id)
+            form = BookForm(request.POST, request.FILES, instance=book)
+
+            if form.is_valid():
+                book = form.save(commit=False)
+                book.save()
+
+                # Atualiza os autores
+                authors_ids = request.POST.getlist('book_author')
+                BookAuthor.objects.filter(book=book).exclude(author_id__in=authors_ids).delete()
+                for author_id in authors_ids:
+                    BookAuthor.objects.get_or_create(book=book, author_id=author_id)
+
+                new_authors = request.POST.getlist('new_authors')
+                new_authors_objs = [Author(author_name=author_name) for author_name in new_authors]
+                Author.objects.bulk_create(new_authors_objs, ignore_conflicts=True)
+                for new_author in new_authors_objs:
+                    BookAuthor.objects.create(book=book, author=new_author)
+
+                # Atualiza os gêneros
+                genre_ids = request.POST.getlist('book_genre')
+                BookGenre.objects.filter(book=book).exclude(genre_id__in=genre_ids).delete()
+                for genre_id in genre_ids:
+                    BookGenre.objects.get_or_create(book=book, genre_id=genre_id)
+
+                new_genres = request.POST.getlist('new_genres')
+                new_genres_objs = [Genre(genre_name=genre_name) for genre_name in new_genres]
+                Genre.objects.bulk_create(new_genres_objs, ignore_conflicts=True)
+                for new_genre in new_genres_objs:
+                    BookGenre.objects.create(book=book, genre=new_genre)
+
+                return JsonResponse({
+                    'message': 'Livro atualizado com sucesso!',
+                    'book_id': book.id,
+                    'success': True,
+                    'redirect_url': reverse_lazy("books_management")
+                }, status=200)
+
+            else:
+                return JsonResponse({"errors": form.errors}, status=400)
+
+        except Book.DoesNotExist:
+            return JsonResponse({"message": "Livro não encontrado.", "success": False}, status=404)
+
+        except Exception as e:
+            return JsonResponse({"message": f"Erro: {str(e)}", "success": False}, status=400)
+
+
+class BookDeleteView(View):
+
+    def delete(self, request, *args, **kwargs):
+        book_id = kwargs.get('pk')  
+        book = get_object_or_404(Book, id=book_id)  # Aqui, pode ser necessário converter para int
+        book.delete()
+        return JsonResponse({"message": "Livro excluído com sucesso!"}, status=200)

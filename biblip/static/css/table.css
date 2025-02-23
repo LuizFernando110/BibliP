@@ -166,15 +166,21 @@
 }
 
 .student-status.status1{
-  background-color: rgba(25, 96, 248, 0.70);
+  background-color: rgba(25, 96, 248, 1);
 }
 .student-status.status2{
-  background-color: rgba(0, 131, 0, 0.70);
+  background-color: rgba(0, 131, 0, 1);
 }
 
 .student-status.status3{
-  background-color: rgba(211, 162, 0, 0.877);
+  background-color: rgba(211, 162, 0, 1);
 }
 .student-status.status4{
-  background-color: rgba(255, 0, 0, 0.55);
+  background-color: rgba(255, 0, 0, 1);
+}
+.student-status.status5{
+  background-color: rgba(0, 0, 0, 1);
+}
+.student-status.status6{
+  background-color: rgba(109, 109, 109, 1);
 }
