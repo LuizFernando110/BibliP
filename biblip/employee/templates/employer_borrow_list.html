@@ -1,6 +1,9 @@
 {% extends "base.html" %} {% load static %} {%block 'head'%}
 <link rel="stylesheet" href="{%static 'css/table.css'%}" />
-{%endblock%} {% block 'main' %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+{%endblock%} 
+
+{% block 'main' %}
 <main class="borrow-history ">
   <div class="back-arrow">
     <a href="{%if request.user.profile.profile_type == 1%}{% url 'borrow_management' %}{% else %}{% url 'index' %}{% endif %}"
@@ -32,18 +35,20 @@
                 alt="botão ver empréstimo"
               />
             </a>
-            <a href="">
-              <img
-                src="{% static 'assets/icons/edit_fill.svg' %}"
-                alt="botão editar empréstimo"
-              />
-            </a>
-            <a href="">
-              <img
-                src="{% static 'assets/icons/cancel.svg' %}"
-                alt="botão cancelar empréstimo"
-              />
-            </a>
+
+            {%if borrow.borrow_status == 1 %}
+
+              {%url "employer_accept_borrow" borrow.id as url%}
+              {% static 'assets/icons/edit_fill.svg' as accept_icon%}
+              {% include "partials/_confirmation_modal.html" with modal_type="accept" icon=accept_icon icon_text="botão editar empréstimo" next_url=url confirmation="True" next_text="aceitar" button_value="aceitar" borrow=borrow text_1="Ao clicar em 'aceitar' o empréstimo será aberto" text_2="tem certeza disso?" %}
+            {%endif%}
+
+            {%if borrow.borrow_status == 1 or borrow.borrow_status == 2 %}
+              {%url "employer_cancel_borrow" borrow.id as url%}
+              {% static 'assets/icons/cancel.svg' as cancel_icon%}
+              {% include "partials/_confirmation_modal.html" with modal_type="cancel" icon=cancel_icon icon_text="botão cancelar empréstimo" next_url=url confirmation="True" next_text="cancelar"  borrow=borrow text_1="deseja cancelar o emprestimo?" text_2="todos os estudantes que não devolveram o livro vão ser marcados como 'atrasado'" %}
+
+            {%endif%}
           </td>
         </tr>
         {% endfor %}
@@ -54,4 +59,9 @@
     </div>
   </div>
 </main>
-{% endblock %}
+
+
+<script src="{%static 'js/confirmation_modal.js'%}"></script>
+
+
+{%endblock%}

@@ -64,6 +64,7 @@ class Book(models.Model):
 
         self.number_available = min(self.number_available, self.number_in_stock)
         super().save(*args,**kwargs)
+        return self
 
 
 class Borrow(models.Model):
@@ -84,13 +85,8 @@ class Borrow(models.Model):
     def __str__(self):
         return f'{self.borrow_teacher}:{self.borrow_book}'
 
-    def clean(self):
-        if self.borrow_book.number_available < self.borrow_book_number:
-            raise ValidationError("Não há livros suficientes disponíveis para empréstimo.")
-        
     
     def save(self,*args,**kwargs):
-        self.clean()
 
         if self.pk is None:
             self.borrow_book.number_available -= self.borrow_book_number
@@ -99,6 +95,7 @@ class Borrow(models.Model):
             difference = self.borrow_book_number - original.borrow_book_number
             self.borrow_book.number_available += difference
 
+        self.borrow_book.book_status=2
         self.borrow_book.save()
         super().save(*args,**kwargs)
     
@@ -112,13 +109,14 @@ class BorrowStudent(models.Model):
                            (2,'Emprestado'),
                            (3,'Devolvido'),
                            (4,'Atrasado'),
-                           (5,'Devolvido com atraso')
+                           (5,'Devolvido com atraso'),
+                           (6,'não recebeu')
                            )
 
 
     borrow_holder=models.ForeignKey(Borrow,on_delete=models.CASCADE)
     borrow_student=models.ForeignKey('core.Student',on_delete=models.CASCADE)
-    borrow_student_receipt_date=models.DateField()
+    borrow_student_receipt_date=models.DateField(blank=True, null=True)
     borrow_student_delivery_date=models.DateField(blank=True,null=True)
     borrow_student_status=models.IntegerField(choices=BORROW_STUDENT_STATUS)
 

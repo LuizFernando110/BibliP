@@ -1,0 +1,168 @@
+{% extends "base.html" %} 
+{% load static %}
+{%block 'head'%}
+  <link rel="stylesheet" href="{% static 'css/book-register.css' %}">
+  <link rel="stylesheet" href="{% static 'css/modals.css' %}">
+{%endblock%} 
+
+{%block 'main'%}
+<main>
+  {% block modal %}
+    <dialog id="delete-modal">
+      <p>Você tem certeza que quer excluir o livro: {{ book.book_title }}?</p>
+      <div class="buttons-area">
+        <button id="neutral-button" type="button">Cancelar</button>
+        <button id="attention-button" type="button" onclick=deleteBook('{{ book.id }}') >Excluir</button>
+      </div>
+    </dialog>
+  {% endblock modal %}
+
+  <div class="book-actions">
+    <a id="back-button" href="{% url "books_management" %}">
+      <img src="{% static "assets/icons/back-arrow-white.svg" %}" alt="Voltar">
+    </a>
+  </div>
+  <form method="post" enctype="multipart/form-data" id="book-form">
+    <input type="hidden" id="book-id" value="{{ book.id }}">
+    <input type="hidden" id="form-action" value="update">
+    {% csrf_token %}
+    
+    <div class="core-infos">
+      <div class="file-input">
+        <label for="{{ form.book_picture.id_for_label }}">
+          {{ form.book_picture }}
+        </label>
+      </div>
+      <div class="writabel-inputs">
+
+        <div>
+          <label>Título:</label>
+          {{ form.book_title }}
+        </div>
+  
+        <div>
+          <label for="writer">Autor:</label>
+          <div class="author-div-input">
+            <div class="author-list">
+              <input type="text" id="author" placeholder="Digite um autor(a)...">
+              <ul id="author-suggestions"></ul> <!-- Lista apenas para sugestões -->
+            </div>
+            <ul id="selected-authors">
+            </ul> <!-- Lista separada para autores adicionados -->
+          </div>
+        </div>
+  
+        <div>
+          <label for="publisher">Editora:</label>
+          {{ form.book_publisher }}
+        </div>
+  
+        <div>
+          <label for="genre">Gênero:</label>
+          <div class="genre-div-input">
+            <div class="genre-list">
+              <input type="text" id="genre" placeholder="Digite um gênero...">
+              <ul id="genre-suggestions"></ul>
+            </div>
+            <ul id="selected-genres"></ul>
+          </div>
+        </div>
+
+        <div class="metadatas-field">
+          <div>
+            <label for="edition">Edição:</label>
+            {{ form.book_edition_number }}
+          </div>
+
+          <div>
+            <label for="number_of_pages">Nº de Páginas:</label>
+            {{ form.book_number_pages }}
+          </div>
+
+          <div>
+            <label for="pnld_code">Cód.Livro:</label>
+            {{ form.book_pnld_code }}
+          </div>
+
+          <div>
+            <label for="storage_quantity">Q.Estoque:</label>
+            {{ form.number_in_stock }}
+          </div>
+
+          <div>
+            <label for="book-status">Disponibilidade:</label>
+              {{ form.book_status }}
+          </div>
+
+        </div>
+      </div> 
+    </div>
+      
+
+    <div id="description">
+      <label for="description">Descrição:</label>
+      {{ form.book_description }}
+    </div>
+
+    <div id="actions_button">
+      <button id="delete_button" type="button">Deletar</button>
+      <button type="submit">Salvar</button>
+    </div>
+  </form>  
+</main>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+{% block scripts %}
+  <script>
+    var searchAuthorUrl = "{% url 'search_author' %}";
+    var searchGenreUrl = "{% url 'search_genre' %}";
+    var bookCreateUrl = "{% url 'book_create_ajax' %}";
+    var csrfToken = "{{ csrf_token }}";
+  </script>
+
+
+  <script>
+    function deleteBook(bookId) {
+      fetch(`/book/delete/${bookId}/`, {
+        method: "DELETE",
+        headers: {
+          "X-CSRFToken": "{{ csrf_token }}",
+          "Content-Type": "application/json",
+        },
+      })
+      .then(response => {
+        if (response.ok) {
+          window.location.href = "{% url 'books_management' %}";
+        } else {
+          alert("Erro ao excluir o livro.");
+        }
+      })
+      .catch(error => {
+        console.error("Erro na requisição:", error);
+        alert("Erro ao excluir o livro.");
+      });
+    }
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const modal = document.getElementById("delete-modal");
+      const deleteButton = document.getElementById("delete_button");
+      const cancelButton = document.getElementById("neutral-button");
+
+      // Abre o modal ao clicar no botão "Deletar"
+      deleteButton.addEventListener("click", function () {
+          modal.showModal();
+      });
+
+      // Fecha o modal ao clicar no botão "Cancelar"
+      cancelButton.addEventListener("click", function () {
+          modal.close();
+      });
+  });
+  </script>
+
+  <script src="{% static 'js/book_ajax.js' %}"></script>
+{% endblock scripts %}
+
+{%endblock%}

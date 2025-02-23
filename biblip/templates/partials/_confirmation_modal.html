@@ -1,0 +1,28 @@
+<div modal_type="{{modal_type}}"  borrow_id="{{borrow.id}}" class="modal-button" id="{{modal_type}}{{borrow.id}}">
+    {%if icon%}
+    <img
+      src="{{icon}}"
+      alt="{{icon_alt}}"
+      style="filter: invert(92%) sepia(100%) saturate(0%) hue-rotate(202deg) brightness(106%) contrast(106%);"
+  />
+    {%else%}
+      <p>{{button_value}}</p>
+    {%endif%}
+  </div>
+
+  <dialog class="modal-cancel-borrow" id="modal-{{modal_type}}-{{borrow.id}}">
+    <div>
+      <p>{{text_1}}</p>
+      {%if text_2%}
+      <p>{{text_2}} </p>
+        {%endif%}
+    <div class='modal-buttons-div'>
+      <button class="close-dialog" id="close-{{modal_type}}-{{borrow.id}}">voltar</button>
+      {%if confirmation%}
+      <a href="{{next_url}}" id="next-{{modal_type}}-button{{borrow.id}}" class="cancel-borrow button-danger">{{next_text}}</a>
+        </div>
+      {%else%}
+      </div>
+      <span id="next-{{modal_type}}-button{{borrow.id}}"></span>
+      {%endif%}
+  </dialog>
