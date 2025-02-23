@@ -10,6 +10,10 @@ urlpatterns = [
     path('employer/book_register',BookFormCreateView.as_view(),name='book_register'),
     path('search_genre/', SearchGenreView.as_view(), name='search_genre'),
     path('search_author/', SearchAuthorView.as_view(), name='search_author'),
+    path('employer/book_edit/<int:pk>', BookEditView.as_view(), name='book_edit'),
+    path('book/<int:book_id>/update-associated-datas/', UpdateBookAssociatedDatas.as_view(), name='update_book_associated_data'),
+    path('book/<int:book_id>/associated-datas/', GetBookAssociatedDatas.as_view(), name='book_associated_data'),
+    path('book/delete/<int:pk>/', BookDeleteView.as_view(), name='book_delete'),
 
 ]
 
