@@ -4,7 +4,8 @@ from django.contrib import messages
 from django.views.generic import ListView,DetailView,FormView,CreateView, FormView
 from .forms import LoginForm, ProfileRegistrationForm,SchoolClassForm
 from employee.forms import BorrowForm
-from employee.models import Book,Borrow,Profile,BorrowStudent
+from employee.models import Book,Borrow,Profile,BorrowStudent, Genre
+
 
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy, reverse
@@ -13,6 +14,13 @@ from django.contrib.auth.views import LogoutView
 from django.shortcuts import redirect, get_object_or_404
 
 
+import math
+
+def split_columns(lista):
+    num_colls = math.ceil(math.sqrt(len(lista)+1))
+    return [lista [i::num_colls] for i in range(num_colls)] 
+  
+  
 class index(ListView):
     model=Book
     context_object_name='books'
@@ -20,12 +28,36 @@ class index(ListView):
 
     def get_queryset(self):
         search=self.request.GET.get('search')
-        if search:
-            queryset=Book.objects.filter(book_title__icontains=search)
-            return queryset
-        queryset=super().get_queryset()
-        return queryset
+        genre_id = self.request.GET.get("genre")
+        books = Book.objects.all()
 
+        if genre_id:
+            books = books.filter(book_genre__id=genre_id)
+
+        if search:
+            books = books.filter(book_title__icontains=search)
+
+        
+        return books  # Retorna apenas o queryset, sem adicionar outras variáveis
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        filters = Genre.objects.all()
+
+        todos_filter = Genre(id=None, genre_name="Todos")  
+        filters = [todos_filter] + list(filters)
+        filters = split_columns(filters)
+
+        context.update({
+            'filters': filters,
+            'filter_type': 'genre',
+            'filter_url': 'index',
+            'filter_name': "genre_name"
+        })
+
+        return context
+    
 
 class details(DetailView):
     model=Book
@@ -62,7 +94,7 @@ class borrow(CreateView):
 
 class borrow_history(ListView):
     model=Borrow
-    template_name='core/borrow_history.html'
+    template_name='employer_borrow_list.html'
     context_object_name='borrow_history'
 
     def get_queryset(self):

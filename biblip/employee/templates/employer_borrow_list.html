@@ -6,17 +6,17 @@
 {% block 'main' %}
 <main class="borrow-history ">
   <div class="back-arrow">
-    <a href="{% if employer %}{% url 'borrow_management' %}{% else %}{% url 'index' %}{% endif %}"
+    <a href="{%if request.user.profile.profile_type == 1%}{% url 'borrow_management' %}{% else %}{% url 'index' %}{% endif %}"
       ><img src="{% static 'assets/icons/back-arrow.svg' %}" alt=""
     /></a>
   </div>
   <div class="borrow-history-container">
     {%include 'partials/_filter_header.html'%}
     <div class="table-container">
-      <table class="history-table employ-table">
+      {% if borrow_history %}
+      <table class="history-table">
         <tr class="history-table-header">
-          <th id="teacher">Professor</th>
-          <th id="book-name">Livro</th>
+          <th id="book-name">Nome do livro</th>
           <th id="school-class">Sala</th>
           <th id="receipt-date">Data de recebimento</th>
           <th id="delivery-date">Data de entrega</th>
@@ -24,17 +24,12 @@
         </tr>
         {% for borrow in borrow_history %}
         <tr>
-          <td>{{ borrow.borrow_teacher }}</td>
           <td>{{ borrow.borrow_book }}</td>
-          <td>{{borrow.borrow_schoolclass|slice:":13"}}</td>
-          <td>{{ borrow.borrow_receipt_date|date:'d/m/Y' }}</td>
-          <td>{{ borrow.borrow_delivery_date|date:'d/m/Y' }}</td>
+          <td>{{ borrow.borrow_schoolclass }}</td>
+          <td>{{ borrow.borrow_receipt_date|date:"d/m/Y" }}</td>
+          <td>{{ borrow.borrow_delivery_date|date:"d/m/Y" }}</td>
           <td class="actions-td">
-            <a href="{% if employer %}
-              {% url 'employer_borrow_details' borrow.id %}
-            {% else %}
-              {% url 'borrow_history_details' borrow.id %}
-            {% endif %}">
+            <a href="{% url 'borrow_history_details' borrow.id %}">
               <img
                 src="{% static 'assets/icons/eye.svg' %}"
                 alt="botão ver empréstimo"
@@ -84,6 +79,9 @@
         </tr>
         {% endfor %}
       </table>
+      {% else %}
+        <span>Nenhum empréstimo foi feito</span>
+      {% endif %}
     </div>
   </div>
 </main>
