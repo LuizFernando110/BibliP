@@ -8,7 +8,11 @@ from .forms import BookForm
 from .models import Book, Borrow, Genre, Author, BookAuthor, BookGenre
 from datetime import datetime, timedelta
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from .decorators import is_employer
 
+@method_decorator(is_employer,name='dispatch')
 class borrow_management(ListView):
     model=Borrow
     template_name="employer_index.html"
@@ -51,6 +55,7 @@ class borrow_management(ListView):
         }
         return context
 
+@method_decorator(is_employer,name='dispatch')
 class books_management(ListView):
     model=Book
     context_object_name='books'
@@ -67,6 +72,7 @@ class books_management(ListView):
         return books  # Retorna apenas o queryset, sem adicionar outras variáveis
 
 
+@method_decorator(is_employer,name='dispatch')
 class employer_borrow_list(ListView):
     model=Borrow
     template_name='employer_borrow_list.html'
@@ -96,22 +102,26 @@ class employer_borrow_list(ListView):
         return {'borrow_history':appointments,'employer':True}
 
 
+@method_decorator(is_employer,name='dispatch')
 class employer_borrow_details(DetailView):
     model=Borrow
     pk_url_kwarg='borrow_pk'  
     template_name='employer_borrow_details.html'
         
 
-
+@is_employer
 def create_book(request):
     return HttpResponse('<h1>Livro Criado!!</h1>')
 
+@is_employer
 def update_book(request):
     return HttpResponse('<h1>Livro Editado</h1>')
 
+@is_employer
 def delete_book(request):
     return HttpResponse('<h1>Livro Deletado</h1>')
 
+@method_decorator(is_employer,name='dispatch')
 class BookFormCreateView(CreateView):
     form_class = BookForm
     model = Book
