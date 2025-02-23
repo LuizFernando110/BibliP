@@ -14,6 +14,7 @@ from django.contrib.auth.views import LogoutView
 from django.shortcuts import redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from .decorators import is_teacher
 
 import math
 
@@ -66,7 +67,7 @@ class details(DetailView):
     pk_url_kwarg='book_pk'
     context_object_name='book'
 
-
+@method_decorator(is_teacher,name='dispatch')
 class borrow(CreateView):
     form_class = BorrowForm
     model = Borrow
@@ -204,7 +205,7 @@ class LogoutView(LogoutView):
     next_page = reverse_lazy('login')
 
 
-@method_decorator(login_required(login_url='login'), name='dispatch')
+@method_decorator(is_teacher,name='dispatch')
 class school_class_creation(FormView):
     form_class=SchoolClassForm
     template_name='core/class_register_modal.html'
