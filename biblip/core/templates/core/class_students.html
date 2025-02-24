@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% load static %} {%block 'head'%}
+<link rel="stylesheet" href="{%static 'css/table.css'%}" />
+<link rel="stylesheet" href="{% static 'css/class_students.css' %}">
+{%endblock%} {% block 'main' %}
+<main class="borrow-history ">
+  <div class="back-arrow">
+    <a href="{% url 'school_class_creation' %}"
+      ><img src="{% static 'assets/icons/back-arrow.svg' %}" alt="Voltar"/></a>
+  </div>
+  <div class="class-data">
+    <h1>{{ school_class.school_class_name }}</h1>
+    <div class="students">
+      <table class="history-table">
+        <tr class="history-table-header">
+            <th>Alunos</th>
+            <th id="registration">Matrícula</th>
+        </tr>
+        {% for student in school_class.school_class_students.all %}
+        <tr>
+            <td>{{ student.student_name }}</td>
+            <td id="registration">{{ student.student_registration }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+    
+  </div>
+</main>
+{% endblock %}

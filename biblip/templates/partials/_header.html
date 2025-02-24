@@ -1,25 +1,36 @@
 {%load static%}
 <header>
   <div class="ifrn-logo">
-    <a href="{% url "index" %}"><img src="{% static 'assets/IFRN-Logo-default.png' %}" alt="" /></a>
+    <a href="{% url 'index' %}"><img src="{% static 'assets/IFRN-Logo-default.png' %}" alt="" /></a>
   </div>
 
   <div class="pnld-text">
     <p><span>PNLD</span> Programa Nacional do Livro Didático</p>
   </div>
 
-  <div class="search-input-container">
-    <input type="text" placeholder="Pesquisar por nome, código, autor ... " />
-    <button class="search-button">
-      <img src="{% static 'assets/icons/search.svg' %}" alt="" />
-    </button>
-  </div>
-
-  <a href="" class="header-btn">
-    <img src="{% static '/assets/icons/bell.svg' %}" alt="" />
+  <form action="" method="get" class="search-input-container">
+      <input type="text" placeholder="Pesquisar por nome, código, autor ... "  name="search" value="{{ request.GET.search }}"/>
+      {% for key, value in request.GET.items %}
+        {% if key != "search" %}
+            <input type="hidden" name="{{ key }}" value="{{ value }}">
+        {% endif %}
+    {% endfor %}
+      <button class="search-button">
+        <img src="{% static 'assets/icons/search.svg' %}" alt="" />
+      </button>
+  </form>
+  <a href="{% url 'school_class_creation' %}" class="header-btn">
+    <img src="{% static '/assets/icons/Mortarboard.svg' %}" alt="" />
   </a>
   <a href="{% url 'borrow_history' %}" class="header-btn">
     <img src="{% static '/assets/icons/book.svg' %}" alt="" />
   </a>
-  <a href="{% url "login_teacher" %}" class="sign-in-button">Entrar</a>
+  {% if request.user.is_authenticated == False %}
+    <a href="{% url "login" %}" class="sign-in-button">Entrar</a>
+  {% else %}
+    <form action="{% url 'logout' %}" method='post'> 
+      {% csrf_token %} 
+      <button type="submit">deslogar</button>
+    </form>
+  {% endif %}
 </header>

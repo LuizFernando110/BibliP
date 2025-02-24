@@ -1,6 +1,7 @@
 .borrow-history{
   padding-left: 8.4rem;
   padding-right: 8.4rem;
+  font-size: 1.6rem;
 }
   
 .back-arrow{
@@ -29,8 +30,7 @@
   font-weight: 700;
   color: var(--cinza-palido);
   border-radius: .8rem .8rem 0 0;
-  overflow: hidden;
-  
+  overflow: hidden;  
 }
 .history-table .history-table-header{
   color: white;
@@ -163,15 +163,23 @@
   justify-content: center;
   color: white;
 }
-.student-status.delivered{
-  background-color: rgba(0, 131, 0, 0.70);
+
+.student-status.status1{
+  background-color: rgba(25, 96, 248, 1);
 }
-.student-status.waiting{
-  background-color: rgba(25, 96, 248, 0.70);
+.student-status.status2{
+  background-color: rgba(0, 131, 0, 1);
 }
-.student-status.received{
-  background-color: rgba(211, 162, 0, 0.877);
+
+.student-status.status3{
+  background-color: rgba(211, 162, 0, 1);
 }
-.student-status.delayed{
-  background-color: rgba(255, 0, 0, 0.55);
+.student-status.status4{
+  background-color: rgba(255, 0, 0, 1);
+}
+.student-status.status5{
+  background-color: rgba(0, 0, 0, 1);
+}
+.student-status.status6{
+  background-color: rgba(109, 109, 109, 1);
 }

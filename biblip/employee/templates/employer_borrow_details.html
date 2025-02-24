@@ -1,7 +1,11 @@
-{% extends "base.html" %} {% load static %} {%block 'head'%}
+{% extends "base.html" %} {% load static %} 
+{%block 'head'%}
 <link rel="stylesheet" href="{%static 'css/table.css'%}" />
-{%endblock%} {% block 'main' %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+{%endblock%} 
+{% block 'main' %}
 <main class="borrow-history employ-borrow-detail">
+
   
   <div class="borrow-history-container">
 
@@ -9,7 +13,7 @@
       
       <div class="title-div">
         <div class="back-arrow">
-          <a href="{% if employer %}{% url 'employer_borrow_list' %}{% else %}{% url 'borrow_history' %}{% endif %}"
+          <a href="{%if request.user.profile.profile_type == 1%}{% url 'employer_borrow_list' %}{% else %}{% url 'borrow_history' %}{% endif %}"
             ><img src="{% static 'assets/icons/back-arrow.svg' %}" alt=""
           /></a>
         </div>
@@ -17,14 +21,34 @@
       </div>
       
       <div class="table-label">
-        <span>Mitos e Lendas do Brasil</span>
-        <span>03/11/2024-16/12/2024</span>
-        <span>Prof.John Doe</span>
+        <span>{{borrow.borrow_book}}</span>
+        <span>{{borrow.borrow_receipt_date|date:"d/m/Y"}}-{{borrow.borrow_delivery_date|date:"d/m/Y"}}</span>
+        <span>Prof.{{borrow.borrow_teacher}}</span>
+        <span>Status: {{borrow.get_borrow_status_display}}</span>
+        <div class="d-flex" >
+          {%if borrow.borrow_status == 1 and request.user.profile.profile_type == 1%}
+            {%url 'employer_accept_borrow' borrow.id as url %}
+            {% static 'assets/icons/edit_fill.svg' as accept_icon%}
+            {% include "partials/_confirmation_modal.html" with modal_type="accept" icon=accept_icon icon_text="botão aceitar empréstimo" next_url=url confirmation="True" next_text="confirmar" button_value="aceitar emprestimo" text_1="aceitar empréstimo" borrow=borrow %}
+          {%endif%}
+          {%if borrow.borrow_status == 1 or borrow.borrow_status == 2 %}
+              {%if borrow.borrow_status == 1 %}
+                {%url "employer_cancel_borrow" borrow.id as url%}
+                {% static 'assets/icons/cancel.svg' as cancel_icon%}
+                {% include "partials/_confirmation_modal.html" with modal_type="cancel" icon=cancel_icon icon_text="botão cancelar empréstimo" next_url=url confirmation="True" next_text="cancelar" button_value="rejeitar emprestimo" borrow=borrow text_1="deseja rejeitar o emprestimo?" text_2="todos os estudantes que não devolveram o livro vão ser marcados como 'atrasado'" %}
+
+              {%else%}
+                  {%url "employer_cancel_borrow" borrow.id as url%}
+                  {% static 'assets/icons/cancel.svg' as cancel_icon%}
+                  {% include "partials/_confirmation_modal.html" with modal_type="cancel" icon=cancel_icon icon_text="botão cancelar empréstimo" next_url=url confirmation="True" next_text="cancelar" button_value="cancelar emprestimo" borrow=borrow text_1="deseja encerrar o emprestimo?" text_2="todos os estudantes que não devolveram o livro vão ser marcados como 'atrasado'"%}
+              {%endif%}
+          {%endif%}
+      </div>
       </div>
     </div>
     
   
-    <h2>Turma 3° ano Apicultura</h2>
+    <h2>{{borrow.borrow_schoolclass}}</h2>
 
 
     <div class="table-container">
@@ -34,19 +58,60 @@
           <th id="receipt-date">Data de recebimento</th>
           <th id="delivery-date">Data de entrega</th>
           <th id="actions">Status</th>
+          {%if request.user.profile.profile_type == 1 %}
+            <th>ações</th>
+          {%endif%}
         </tr>
-        {% for borrow in borrow_history %}
+
+        {% for student_borrow in student_borrows %}
         <tr>
-          <td>{{ borrow.book_name }}</td>
-          <td>{{ borrow.receipt_date }}</td>
-          <td>{{ borrow.delivery_date }}</td>
+          <td>{{ student_borrow.borrow_student }}</td>
+
+          <td>{%if student_borrow.borrow_student_receipt_date%}
+            {{ student_borrow.borrow_student_receipt_date|date:'d/m/Y' }}
+          {%else%}
+            ainda não entrege
+          {%endif%}</td>
+
+          <td>{%if student_borrow.borrow_student_delivery_date%}
+            {{student_borrow.borrow_student_delivery_date|date:'d/m/Y' }}
+          {%else%}
+            não devolvido
+          {%endif %}
+        </td>
+
           <td>
-            <span class="student-status delivered">status</span>
+            <span class="student-status status{{student_borrow.borrow_student_status}}">{{student_borrow.get_borrow_student_status_display}}</span>
           </td>
+          
+          
+          {%if request.user.profile.profile_type == 1 %}
+          <td>
+          {%if student_borrow.borrow_student_status == 1 %}
+            {%url "receipt_borrowstudent" student_borrow.id as url%}
+            {% static 'assets/icons/backpack.svg' as accept_icon%}
+            {% include "partials/_confirmation_modal.html" with modal_type="accept" icon=accept_icon icon_text="botão aceitar emprestimo" next_url=url confirmation="True" next_text="emprestar"  borrow=student_borrow text_1="ao apertar em 'emprestar' você entregara um livro" text_2="tem certeza?"%}
+
+          {%elif student_borrow.borrow_student_status == 2 or  student_borrow.borrow_student_status == 4 %}
+            {%url "deliver_borrowstudent" student_borrow.id as url%}
+            {% static 'assets/icons/check.svg' as accept_icon%}
+            {% include "partials/_confirmation_modal.html" with modal_type="deliver" icon=accept_icon icon_text="botão devolução" next_url=url confirmation="True" next_text="devolver"  borrow=student_borrow text_1="apertar em 'devolver' ira marcar este emprestimo como devolvido" text_2="tem certeza?"%}
+          {%endif%}
+          
+          </td>
+        {%endif%}
         </tr>
+        
         {% endfor %}
       </table>
     </div>
   </div>
+
+
+
+
+  
 </main>
+
+<script src="{%static 'js/confirmation_modal.js' %}"></script>
 {% endblock %}

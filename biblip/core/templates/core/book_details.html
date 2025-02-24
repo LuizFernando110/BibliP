@@ -5,47 +5,55 @@
     <main>
         <a href="{% url 'index' %}"><img id="back-arrow" src="{%static 'assets/arrow.svg'%}" alt="Voltar"></a>
         <div class="book-info">
-            <img id="book-cover" src="{%static 'assets/image-book-test.png'%}" alt="Foto do livro">
+            <img id="book-cover" src="{{book.book_picture.url}}" alt="Foto do livro">
             <div class = "book-content">
                 <div class="main-book-info">
-                    <h1 id="book-title">Os sertões</h1>
-                    <p id="book-writer">da Cunha, Euclides</p>
+                    <h1 id="book-title">{{book.book_title}}</h1>
+
+                    
+                    <p id="book-writer">
+                        {%for author in book.book_author.all%}
+                        {{author}}<br>
+                        {%endfor%}
+                    </p>
                 </div>
     
                 <div class="book-details">
-                    <p>Páginas: 152</p>
-                    <p>Editora: Ática</p>
-                    <p>Edição: 1º</p>
+                    <p>Páginas: {{book.book_number_pages}}</p>
+                    <p>Editora: {{book.book_publisher}}</p>
+                    <p>Edição: {{book.book_edition_number}}</p>
                 </div>
     
                 <div class="pnld-details">
-                    <p>Código PNLD: <b>5B55R5A</b></p>
-                    <p>Q. Estoque: 25 uni.</p>
+                    <p>Código PNLD: <b>{{book.book_pnld_code}}</b></p>
+                    <p>Q. Estoque: {{book.number_available}} uni.</p>
                 </div>
     
-                <div id="book-tags">
-                    <span>Tags: #ossertoes #cultura #brasileiro #brasileira #euclides #cunha</span>
-                </div>
 
             </div>
 
             <div id="storage-status">
-                <p>Livre</p>
+                <p>{{book.get_book_status_display}}</p>
             </div>
 
         </div>
 
-
-
         <div id="book-description">
             <h2>Descrição</h2>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi, illo! Aliquid aut molestias odio nulla earum asperiores quia necessitatibus ipsum ipsam beatae ad inventore aspernatur, quaerat nam aperiam rerum quas.</p>
+            <p>{{book.book_description}}</p>
         </div>
-        <a href="{% url 'borrow' 3 %}">
+        {%if book.book_status == 1 %}
+        <a href="{% url 'borrow' book.id %}">
             <div id="borrow-button">
                 <p>Alugar</p>
             </div>
         </a>
+        {%else%}
+            <div id="borrow-button">
+                <p>Indisponível</p>
+            </div>
+        {%endif%}
+
         
     </main>
 {% endblock%}

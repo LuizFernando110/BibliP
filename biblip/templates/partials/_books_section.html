@@ -3,19 +3,19 @@
   {% for book in books %}
   <div class="book">
     <a
-      href="{%if employer%} {% url 'book_register' %} {% else %} {% url 'details' book.id %} {%endif%}"
+      href="{%if request.user.profile.profile_type == 1 %} {% url 'book_edit' book.id %} {% else %} {% url 'details' book.id %} {%endif%}"
     >
       <div class="book-img-section">
-        <img src="{% static book.image %}" alt="capa do livro" />
+        <img src={{ book.book_picture.url }} alt="capa do livro" />
         <div
-          class="book-status {% if book.status == 'Reservado' %}book-reserved{% endif %}"
+          class="book-status {% if book.book_status == 2 %}book-reserved{% endif %}"
         >
-          {{ book.status }}
+          {% if book.book_status == 1 %}Livre{% else %}Reservado{% endif %}
         </div>
-        <div class="book-quantity">{{ book.quantity }} unidades</div>
+        <div class="book-quantity">{{ book.number_in_stock }} unidades</div>
       </div>
     </a>
-    <span class="clamp-2">{{ book.title }}</span>
+    <span class="clamp-2">{{ book.book_title }}</span>
   </div>
   {% empty %}
   <div class="empty"><span>Não há livros cadastrados</span></div>
