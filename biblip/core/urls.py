@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import index,search,details,borrow,borrow_history, borrow_details, ProfileRegistrationCreateView, school_class_creation, LoginView, LogoutView, SchoolClassDetailView
+from .views import index,details,borrow,borrow_history, borrow_details, ProfileRegistrationCreateView, school_class_creation, LoginView, LogoutView, SchoolClassDetailView
 from employee.ajax_endpoints import cancel_borrow
 
 urlpatterns = [
