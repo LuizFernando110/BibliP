@@ -272,6 +272,7 @@ main{
   border-radius: .8rem;
   background-color: white;
   display: none;
+  z-index: 1;
 }
 .catalog-header .filter-container .dropdown-menu.open{
   display: flex;
