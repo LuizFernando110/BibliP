@@ -93,6 +93,10 @@ header .header-btn{
   background-color: transparent;
 }
 
+header .header-btn img{
+  height: 3.2rem;
+  width: 3.2rem;
+}
 
 
 header.employer-header{

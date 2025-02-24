@@ -12,6 +12,7 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import LogoutView
 from django.shortcuts import redirect, get_object_or_404
+from core.models import SchoolClass
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from .decorators import is_teacher
@@ -208,10 +209,21 @@ class LogoutView(LogoutView):
 @method_decorator(is_teacher,name='dispatch')
 class school_class_creation(FormView):
     form_class=SchoolClassForm
-    template_name='core/class_register_modal.html'
+    template_name='core/school_classes_list.html'
     success_url=reversed('index')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['school_classes'] = SchoolClass.objects.all()
+        return context
+    
     def form_valid(self, form):
         form.save(profile=self.request.user.profile)
         messages.add_message(self.request,messages.SUCCESS,"Turma adicionada com sucesso")
         return redirect('index')
+
+
+class SchoolClassDetailView(DetailView):
+    model = SchoolClass
+    template_name = 'core/class_students.html'
+    context_object_name = 'school_class'

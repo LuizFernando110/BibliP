@@ -7,12 +7,16 @@ dialog{
     width: 40%;
     flex-direction: column;
     padding: 2.4rem 3.6rem 2.4rem 3.6rem;
-    margin: 0 auto;
+    margin: auto auto;
     gap: 4rem;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: white;
     backdrop-filter: blur(1rem);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     margin: auto;
+}
+
+dialog[open]{
+    display: flex;
 }
 
 dialog[open]{
