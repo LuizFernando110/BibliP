@@ -214,7 +214,8 @@ class school_class_creation(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['school_classes'] = SchoolClass.objects.all()
+        teacher = self.request.user.profile
+        context['school_classes'] = SchoolClass.objects.filter(school_class_teacher = teacher)
         return context
     
     def form_valid(self, form):
