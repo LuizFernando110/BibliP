@@ -7,7 +7,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
 
-@method_decorator(login_required(login_url='login'),name='dispatch')
+@login_required(login_url='login')
 def cancel_borrow(request,borrow_pk):
     borrow=Borrow.objects.get(id=borrow_pk)
     if (request.user.profile==borrow.borrow_teacher or request.user.profile.profile_type==1) and borrow.borrow_status not in [3,4]:
@@ -35,16 +35,16 @@ def cancel_borrow(request,borrow_pk):
             
         })
     
-@method_decorator(is_employer,name='dispatch')
+@is_employer
 def accept_borrow(request,borrow_pk):
     borrow=Borrow.objects.get(id=borrow_pk)
-    if borrow.borrow_status ==1:
+    if borrow.borrow_status == 1:
         borrow.borrow_status=2
         borrow.save()
 
         
         return JsonResponse({
-            
+
             'success':True,
             'message':'aceito com sucesso'
         })
@@ -53,7 +53,7 @@ def accept_borrow(request,borrow_pk):
             'success':False,
         })
 
-@method_decorator(is_employer,name='dispatch')
+@is_employer
 def student_borrow_receipt(request,borrow_student_pk):
     borrow_student=BorrowStudent.objects.get(id=borrow_student_pk)
     borrow_student.borrow_student_receipt_date=date.today()
@@ -71,7 +71,7 @@ def student_borrow_receipt(request,borrow_student_pk):
             'success':False,
         })
     
-@method_decorator(is_employer,name='dispatch')
+@is_employer
 def student_borrow_deliver(request,borrow_student_pk):
     borrow_student=BorrowStudent.objects.get(id=borrow_student_pk)
     book=borrow_student.borrow_holder.borrow_book

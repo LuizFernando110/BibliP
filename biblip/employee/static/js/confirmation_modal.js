@@ -25,6 +25,7 @@ $('.modal-button').click(function(){
           if (response.success) {
 
             location.reload();
+            console.log(response.message)
           } 
         },
         error:function(e){

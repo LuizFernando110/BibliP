@@ -139,7 +139,7 @@ class BookFormCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         return context
     
-
+@method_decorator(is_employer,name='dispatch')
 class SearchGenreView(ListView):
     model = Genre
 
@@ -150,7 +150,7 @@ class SearchGenreView(ListView):
                 'results': [obj.genre_name for obj in results]}
         return JsonResponse(data)
 
-   
+@method_decorator(is_employer,name='dispatch')
 class SearchAuthorView(ListView):
     model = Author
 
@@ -161,7 +161,7 @@ class SearchAuthorView(ListView):
                 'results': [obj.author_name for obj in results]}
         return JsonResponse(data)
 
-
+@method_decorator(is_employer,name='dispatch')
 class BookCreateAjaxView(View):
 
     def post(self, request, *args, **kwargs):
@@ -200,20 +200,13 @@ class BookCreateAjaxView(View):
         else:
             return JsonResponse({"erros": form.errors}, status=400)
 
+@method_decorator(is_employer,name='dispatch')
 class BookEditView(UpdateView):
     model = Book
     form_class = BookForm
     template_name = "book_edit.html"
     success_url = reverse_lazy("books_management")
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        book = self.object
-
-        context['employer'] = True
-        context['book'] = self.object
-
-        return context
+    context_object_name = "book"
     
     def form_valid(self, form):
         book = form.save(commit=False)
@@ -221,7 +214,7 @@ class BookEditView(UpdateView):
 
         return super().form_valid(form)
     
-
+@method_decorator(is_employer,name='dispatch')
 class GetBookAssociatedDatas(View):
 
     def get(self, request, book_id , *args, **kwargs):
@@ -251,7 +244,7 @@ class GetBookAssociatedDatas(View):
             print(f"Erro ao buscar dados do livro: {str(e)}")
             return JsonResponse({"error": "Erro interno do servidor"}, status=500)
 
-
+@method_decorator(is_employer,name='dispatch')
 class UpdateBookAssociatedDatas(View):
 
     def post(self, request, book_id, *args, **kwargs):
@@ -303,7 +296,7 @@ class UpdateBookAssociatedDatas(View):
         except Exception as e:
             return JsonResponse({"message": f"Erro: {str(e)}", "success": False}, status=400)
 
-
+@method_decorator(is_employer,name='dispatch')
 class BookDeleteView(View):
 
     def delete(self, request, *args, **kwargs):

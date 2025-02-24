@@ -17,8 +17,8 @@
       </button>
     </div>
     <div class="teacher_class_list">
-      <div class="class-name-container">
         {% for s_class in school_classes %}
+        <div class="class-name-container">
           <a href="{% url 'school_class_management' s_class.id %}">{{s_class.school_class_name}}</a>
         {% endfor %}
       </div>

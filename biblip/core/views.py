@@ -201,7 +201,7 @@ class LoginView(FormView):
             return redirect(self.get_success_url(request.user))
         return super().dispatch(request, *args, **kwargs)
     
-
+@method_decorator(login_required(login_url='login'), name='dispatch')
 class LogoutView(LogoutView):
     next_page = reverse_lazy('login')
 
@@ -222,7 +222,7 @@ class school_class_creation(FormView):
         messages.add_message(self.request,messages.SUCCESS,"Turma adicionada com sucesso")
         return redirect('index')
 
-
+@method_decorator(is_teacher,name='dispatch')
 class SchoolClassDetailView(DetailView):
     model = SchoolClass
     template_name = 'core/class_students.html'

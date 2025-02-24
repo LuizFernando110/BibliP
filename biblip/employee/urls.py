@@ -19,10 +19,6 @@ urlpatterns = [
 
 ajax_endpoints=[
     path('book_create_ajax/', BookCreateAjaxView.as_view(), name='book_create_ajax'),
-    path('employer/book_edit/<int:pk>', BookEditView.as_view(), name='book_edit'),
-    path('book/<int:book_id>/update-associated-datas/', UpdateBookAssociatedDatas.as_view(), name='update_book_associated_data'),
-    path('book/<int:book_id>/associated-datas/', GetBookAssociatedDatas.as_view(), name='book_associated_data'),
-    path('book/delete/<int:pk>/', BookDeleteView.as_view(), name='book_delete'),
     path('employer/borrow/<int:borrow_pk>/accept_borrow',accept_borrow,name='employer_accept_borrow'),
     path('employer/borrow/<int:borrow_pk>/cancel_borrow',cancel_borrow,name='employer_cancel_borrow'),
     path('employer/borrow/<int:borrow_student_pk>/receipt_borrowstudent',student_borrow_receipt,name='receipt_borrowstudent'),
