@@ -39,7 +39,7 @@ class Book(models.Model):
 
     book_title=models.CharField(max_length=244)
     book_picture=models.ImageField(upload_to=bookpath)
-    book_author=models.ManyToManyField(Author)
+    book_author=models.ManyToManyField(Author, through="BookAuthor")
     book_publisher=models.CharField(max_length=244)
     book_edition_number=models.IntegerField()
     book_pnld_code=models.CharField(max_length=50)
@@ -48,7 +48,7 @@ class Book(models.Model):
     number_in_stock=models.IntegerField()
     number_available=models.IntegerField()
     book_status=models.IntegerField(choices=STATUS_CHOICES)
-    book_genre=models.ManyToManyField(Genre)
+    book_genre=models.ManyToManyField(Genre, through="BookGenre")
 
 
     def __str__(self):
